@@ -1,0 +1,189 @@
+/* .flex-container{
+    color: white;
+} */
+.signin-container{
+    display: flex;
+    justify-content: center;
+}
+
+.login-wrapper{
+    display: flex;
+    height: 100%;
+}
+.login-wrapper .login {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    min-height: 100vh;
+    width: 21rem;
+}
+.login-wrapper .login .title {
+    color: white;
+    font-weight: 200;
+    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.333333rem;
+    letter-spacing: normal;
+    line-height: 1.5rem; 
+}
+.login-wrapper .login .title .welcome{
+    line-height: 1.5rem;
+}
+.login-wrapper .login .title .hint {
+    color: white;
+    margin-top: 1.25rem;
+    font-size: 0.5833rem;
+}
+
+.login-wrapper .login .login-group {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0 0 0;
+}
+.login-wrapper .login .login-group .username,
+.login-wrapper .login .login-group .password{
+    background: linear-gradient(to bottom, transparent 95%, #0094d2 95%) no-repeat;
+    background-size: 0% 100%;
+    transition: background-size 0.2s ease;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    height: 1rem;
+    
+    display: inline-block;
+    min-width: 2.5rem;
+    border-bottom: 1px solid #9a9a9a;
+    padding: 0 0.25rem;
+}
+.login-wrapper .login .login-group .username,
+.login-wrapper .login .login-group .password,
+.login-wrapper .login .login-group .checkbox{
+    margin: 0.25rem 0 0.75rem 0;
+    color: #9a9da0;
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border: 1.5px solid #9a9da0;
+}
+
+/* .checkbox.btn label,
+.checkbox-inline.btn label {
+  width: 100%; 
+} */
+
+.mat-flat-button{
+    border: 1px solid #525252;
+    background-color: #212121;
+    color: #fff;
+}
+
+.mat-flat-button:hover{
+    color: #959BA4;
+}
+.change-password-group {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0 0 0;
+
+    color: #9A9A9A;
+    font-weight: 400;
+    font-size: 0.583333rem;
+    letter-spacing: normal;
+    line-height: 1rem;
+    margin-bottom: 0;
+    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    margin-top: 0 !important;
+}
+
+/* .main-banner-image {
+    width: 990px;margin:0 auto; background-image: url('../../assets/dicom-main.jpg');background-size: cover; background-repeat: no-repeat;background-position: center center;
+}
+
+.non-banner-image {
+    width: 500px;margin:0 auto; background-image: url('../../assets/black-pixel.png');background-size: cover; background-repeat: no-repeat;background-position: center center;
+} */
+
+/*** temp about */
+.top-right-layout {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+}
+
+.flex-top-menu-tools-icon-item-text {
+/* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+-webkit-font-smoothing: antialiased; */
+    color: #cecece;
+    font-size: 0.6rem;
+    padding: 3px 0px 0px 0px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: text-top;
+    line-height: 0.6rem;
+}
+
+.about-body {
+    font-size:13px;
+    color:#f2f2f2;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-font-smoothing: antialiased;
+}
+
+.check-for-integrity {
+    padding: 0.8rem 0 0.5rem 0 ;
+}
+
+.check-for-integrity-about {
+    padding: 0 0 0 0;
+}
+
+.check-for-integrity-child {
+    /* float: right; */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.check-for-integrity-spinner-custom {
+    /* min-height: 0.6rem;
+    min-width: 0.6rem; */
+    height: 13px;
+    width: 13px;
+    font-size: small
+}
+
+.check-for-integrity-spinner-custom-error {
+    min-height: 0.55rem;
+    min-width: 0.55rem;
+    height: 0.55rem;
+    width: 0.55rem;
+    color: #d9401e;
+}
+
+.check-for-integrity-spinner-inline-text {
+    padding: 0 0.3rem 0 0;
+    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    font-weight: bold;
+    line-height: 1rem;
+    font-size: 0.45rem;
+}
+
+.check-for-integrity-spinner-inline-text-error {
+    padding: 0 0.3rem 0 0;
+    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    font-weight: bold;
+    line-height: 1rem;
+    font-size: 0.45rem;
+    color: #d9401e;
+}
+
+.check-for-integrity-spinner-inline-underline {
+    padding: 0 0.3rem 0 0;
+    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    font-weight: bold;
+    line-height: 1rem;
+    font-size: 0.45rem;
+    text-decoration: underline;
+    cursor: pointer;
+}

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { SigninComponent } from './signin/signin.component';
 
 const routes: Routes = [
     {
@@ -7,10 +8,10 @@ const routes: Routes = [
         redirectTo: 'signin',
         pathMatch: 'full'
     },
-    // {
-    //     path: 'signin',
-    //     component: SignInComponent
-    // }
+    {
+        path: 'signin',
+        component: SigninComponent
+    }
 ];
 
 @NgModule({
