@@ -1,7 +1,31 @@
-.study-list-container {
-    margin-left: 1%
+.main-container{
+    display: flex;
 }
 
-.worklist-title{
+.study-list-container, .report-container {
+    width: 50%;
+    margin-left: 1%;
+    padding-right: 1%;
+    border-right:1px solid red;
+}
+
+.section-title{
     font-size: 1.4rem;
+}
+
+/* .report_image{
+    max-height: 50vh;
+    max-width: auto;
+    background-color: black;
+} */
+.report_image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+img{
+    max-height: 60vh;
+    max-width: auto;
+    /* width: 500px;
+    height: auto; */
 }

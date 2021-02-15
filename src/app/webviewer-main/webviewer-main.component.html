@@ -1,9 +1,19 @@
 <!-- <app-header></app-header> -->
-<div class="study-list-container">
-    <ng-container #iconMenu>
-        <div class="worklist-title" style="margin-top: 0.4em;"><i [ngClass]="['fa fa-bars fa-sx']"></i>&nbsp;Study List</div>
-    </ng-container>
-    <app-study-table></app-study-table>
-</div>
+<div class="main-container">
+    <div class="study-list-container">
+        <ng-container #iconMenu>
+            <div class="section-title" style="margin-top: 0.4em;"><i [ngClass]="['fa fa-bars fa-sx']"></i>&nbsp;Study List</div>
+        </ng-container>
+        <app-study-table></app-study-table>
+    </div>
 
-<!-- <toolbar-pacs></toolbar-pacs> -->
+    <div class="report-container">
+        <ng-container>
+            <div class="section-title" style="margin-top: 0.4em;"><i [ngClass]="['fa fa-bars fa-sx']"></i>&nbsp;BEAT Report</div>
+        </ng-container>
+        <!-- <div class="report_image"></div> -->
+        <div class="report_image">
+            <img src="assets/report_example/13713713_0.jpg">
+        </div>
+    </div>
+</div>

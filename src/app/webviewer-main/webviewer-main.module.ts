@@ -5,9 +5,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import {WebviewerMainComponent} from './webviewer-main.component';
 import { ToolbarPacsComponent } from './toolbar/toolbar-pacs/toolbar-pacs.component';
+import { ReportImageListComponent } from './report-image-list/report-image-list.component';
 
 @NgModule({
-  declarations: [ToolbarPacsComponent],
+  declarations: [ToolbarPacsComponent, ReportImageListComponent],
   imports: [
     CommonModule,
     AngularMaterialsModule,
