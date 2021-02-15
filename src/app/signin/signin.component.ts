@@ -65,7 +65,8 @@ export class SigninComponent implements OnInit {
     }
 
     onSubmit(){
-        console.log('submit')
+        console.log('submit');
+        this.router.navigate(['/webviewer'])
     }
 
     isRememberedIdExist():boolean {
