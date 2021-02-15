@@ -4,8 +4,8 @@
 
 <!-- Study List -->
 <ng-template #main_study let-data="data" let-isMainStudy="main">
-    <mat-paginator [pageSize]=100 [hidePageSize]="true" showFirstLastButtons  style="max-width: 49%; margin-left: 15px"></mat-paginator>
-    <section style="background-color: black; max-width: 50%;" class="worklist-study-list mat-elevation-z8">
+    <mat-paginator [pageSize]=100 [hidePageSize]="true" showFirstLastButtons  style="margin-left: 15px"></mat-paginator>
+    <section style="background-color: black;" class="worklist-study-list mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" class="mat-cell" aria-label="Elements">
             <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns; let idx=index">
                 <th mat-header-cell *matHeaderCellDef id="{{column}}">{{displayedTitle[idx]}}</th>
@@ -13,7 +13,7 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="study-element-row" (click)="onClick($event, row)"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="study-element-row" (dblclick)="onClick($event, row)"></tr>
         </table>
     </section>
 </ng-template>
