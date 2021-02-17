@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
+
 import { SigninComponent } from './signin/signin.component';
 import { WebviewerMainComponent } from './webviewer-main/webviewer-main.component';
+import { AngularMaterialsModule } from './common/shared/angular-materials.module';
 
 const routes: Routes = [
     {
@@ -22,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes, {useHash: true})],
+    imports: [BrowserModule, FormsModule,AngularMaterialsModule, RouterModule.forRoot(routes, {useHash: true})],
     exports: [RouterModule],
     // declarations:[
     //     SigninComponent,

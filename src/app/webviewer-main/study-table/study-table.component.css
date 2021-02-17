@@ -10,22 +10,14 @@ th.mat-header-cell:first-of-type {
 .worklist-study-list{
     position: relative;
     /* top: -10px; */
-    max-height: 85vh;
+    max-height: 83vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
-/* .mat-paginator{
-    color: whitesmoke;
-    background:transparent;
-} */
-/* .mat-paginator-container .mat-paginator-range-actions{
-    color: whitesmoke;
-}
-.mat-paginator-icon{
-    fill: whitesmoke;
-} */
+
 
 .mat-header-cell {
+    font-size: 14px;
     padding-left: 5px;
     border: 1px solid darkgray;
     text-align: left;
@@ -34,8 +26,8 @@ th.mat-header-cell:first-of-type {
 }
 
 .mat-cell {
-    font-size: 11px;
-    line-height: 23px;
+    font-size: 14px;
+    line-height: 27px;
     color: lightgray;
     border: 1px solid #5a5a5a;
     text-align: left;
@@ -65,9 +57,9 @@ tr.study-element-row {
 .mat-row:hover{
     background-color: #3d3d3d;
 }
-tr.study-element-row:active {
+/* tr.study-element-row:active {
     background: seagreen;
-}
+} */
 
 table.mat-table {
     padding: 0px;
@@ -80,8 +72,8 @@ table.mat-table {
 .mat-column-patient_id {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 14% !important;
-    width: 14% !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
     overflow: hidden;
@@ -121,13 +113,13 @@ table.mat-table {
     width: 7% !important;
 }
 
-.mat-column-birth_date {
-    flex: 0 0 15% !important;
-    width: 15% !important;
+.mat-column-age {
+    flex: 0 0 6% !important;
+    width: 6% !important;
 }
 .mat-column-study_date, .mat-column-analysis_date {
-    flex: 0 0 21% !important;
-    width: 21% !important;
+    flex: 0 0 15% !important;
+    width: 15% !important;
 }
   
 
@@ -137,13 +129,29 @@ table.mat-table {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    min-height: 40px;
+    min-height: fit-content !important;
+    max-height: 30px !important;
     padding: 0 0px !important;
     flex-wrap: wrap-reverse;
     width: 100%;
-    background: #2d2d2d;
+    background: #2b2b2b;
     color: lightgray;
 }
 ::ng-deep .mat-paginator-range-label {
+    font-size:13px ;
     margin: 0px !important;
+}
+
+/* .mat-paginator{
+    color: whitesmoke;
+    background:transparent;
+}  */
+/* .mat-paginator-container .mat-paginator-range-actions{
+    color: whitesmoke;
+    background-color:transparent;
+} */
+::ng-deep .mat-paginator-icon{
+    width: 22px !important;
+    fill: lightgray !important; 
+    padding-left: 10px;
 }

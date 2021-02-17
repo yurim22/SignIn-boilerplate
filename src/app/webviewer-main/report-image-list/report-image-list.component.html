@@ -1,1 +1,11 @@
-<p>report-image-list works!</p>
+<ng-template [ngIf]="isAnalyzed" class="img-btn-container" appMousewheelEvent>
+    <div class="report_image">
+        <!-- <img src="assets/report_test_210216/1.jpg"> -->
+        <img src="{{report_img}}">
+    </div>
+    <div class="btn-container">
+        <button class="custom-btn" (click)="confirm()">
+            <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>&nbsp;Confirm
+        </button>
+    </div>
+</ng-template>

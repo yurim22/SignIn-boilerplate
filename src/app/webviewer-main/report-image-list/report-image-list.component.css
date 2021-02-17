@@ -1,0 +1,42 @@
+.report_image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3.2%;
+}
+img{
+    max-height:80vh;
+    max-width: auto;
+    /* width: 500px;
+    height: auto; */
+} 
+
+.custom-btn {
+    cursor: pointer;
+    display: block;
+    -webkit-appearance: none !important;
+    border-radius: 0.125rem;
+    border: 1.2px solid rgb(126, 126, 126);
+    min-width: 3rem;
+    max-width: 10rem;
+    min-height: 1.9rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    letter-spacing: 0.073em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background-color: transparent;
+    color: rgb(126, 126, 126);
+    float: right;
+}
+
+.custom-btn:hover {
+    border: 2px solid rgb(126, 126, 126);
+    font-weight: 700;
+}
+
+.btn-container{
+    padding: 1rem 5rem 0 0;
+}

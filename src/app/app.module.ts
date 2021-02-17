@@ -10,28 +10,29 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialsModule } from './common/shared/angular-materials.module';
-import { WebviewerMainComponent } from './webviewer-main/webviewer-main.component';
-import { StudyTableComponent } from './webviewer-main/study-table/study-table.component';
-import { HeaderComponent } from './webviewer-main/header/header.component';
+
+// import { StudyTableComponent } from './webviewer-main/study-table/study-table.component';
+import { WebviewerMainModule } from './webviewer-main/webviewer-main.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SigninComponent,
-    WebviewerMainComponent,
-    StudyTableComponent,
-    HeaderComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    AngularMaterialsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        SigninComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        AngularMaterialsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        WebviewerMainModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
+    exports: [
+        SigninComponent
+    ]
 })
 export class AppModule { }

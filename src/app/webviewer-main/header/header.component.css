@@ -1,0 +1,96 @@
+.top-layout {
+    background-color: #434243;
+    min-height: 53px;
+    max-height: 53px;
+}
+
+.top-left-layout {
+    order: 0;
+    flex: 3 1 auto;
+    align-self: stretch;
+}
+
+.top-right-layout {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+    min-height: 53px;
+    max-height: 53px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+    padding-top: 0px;
+}
+
+/* .flex-item:nth-child(1) {
+    order: 0;
+    flex: 0 1 auto;
+    align-self: stretch;
+}
+
+.flex-item:nth-child(2) {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+}
+
+.flex-item:nth-child(3) {
+    order: 0;
+    flex: 0 1 auto;
+    align-self: stretch;
+} */
+
+.flex-container-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: stretch;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.top-menu-tools-container:hover{
+    background-color: #2d2d2d;
+}
+
+/* .flex-item-row:nth-child(1) {
+    order: 0;
+    flex: 0 1 auto;
+    align-self: stretch;
+}
+
+.flex-item-row:nth-child(2) {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+}
+
+.flex-item-row:nth-child(3) {
+    order: 0;
+    flex: 0 1 auto;
+    align-self: stretch;
+} */
+
+.top-menu-tools-container {
+    /* 18px는 아이콘 사이의 간격 */
+    padding: 0px 11px 0px 11px;
+    cursor: pointer;
+    flex: 1 1 auto;
+    min-width: 35px;
+}
+
+/* .top-menu-tools-icon-button {
+    width: 20px;
+    height: auto;
+} */
