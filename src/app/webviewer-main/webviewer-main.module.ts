@@ -4,17 +4,27 @@ import {AngularMaterialsModule} from '../common/shared/angular-materials.module'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import {WebviewerMainComponent} from './webviewer-main.component';
-import { ToolbarPacsComponent } from './toolbar/toolbar-pacs/toolbar-pacs.component';
+
 import { ReportImageListComponent } from './report-image-list/report-image-list.component';
+import { HeaderModule } from './header/header.module';
+import { StudyTableComponent } from './study-table/study-table.component';
+import { MousewheelEventDirective } from './mousewheel-event.directive';
+
 
 @NgModule({
-  declarations: [ToolbarPacsComponent, ReportImageListComponent],
+  declarations: [WebviewerMainComponent, ReportImageListComponent, StudyTableComponent, MousewheelEventDirective],
   imports: [
     CommonModule,
     AngularMaterialsModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HeaderModule
   ],
-  bootstrap: [WebviewerMainComponent]
+  bootstrap: [WebviewerMainComponent],
+  exports: [
+    ReportImageListComponent,
+    StudyTableComponent,
+    MousewheelEventDirective
+  ]
 })
 export class WebviewerMainModule { }

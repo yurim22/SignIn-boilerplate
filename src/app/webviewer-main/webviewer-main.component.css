@@ -1,31 +1,56 @@
 .main-container{
     display: flex;
 }
-
+.study-list-container{
+    width: 53%;
+}
+.report-container {
+    width: 47%;
+}
 .study-list-container, .report-container {
-    width: 50%;
     margin-left: 1%;
     padding-right: 1%;
-    border-right:1px solid red;
+    /* border-right:1px solid red; */
 }
 
 .section-title{
-    font-size: 1.4rem;
+    padding-top: 8px;
+    font-size: 1.3rem;
+    color: rgb(214, 212, 212);
 }
 
 /* .report_image{
-    max-height: 50vh;
-    max-width: auto;
-    background-color: black;
-} */
-.report_image{
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 5.5%;
 }
 img{
-    max-height: 60vh;
+    max-height: 78vh;
     max-width: auto;
-    /* width: 500px;
-    height: auto; */
+} 
+
+.custom-btn {
+    cursor: pointer;
+    display: block;
+    -webkit-appearance: none !important;
+    border-radius: 0.125rem;
+    border: 1.2px solid rgb(126, 126, 126);
+    min-width: 3rem;
+    max-width: 10rem;
+    min-height: 1.9rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    letter-spacing: 0.073em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background-color: transparent;
+    color: rgb(126, 126, 126);
+    float: right;
 }
+
+.btn-container{
+    padding: 1rem 5rem 0 0;
+} */
