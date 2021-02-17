@@ -24,7 +24,8 @@ import { MousewheelEventDirective } from './mousewheel-event.directive';
   exports: [
     ReportImageListComponent,
     StudyTableComponent,
-    MousewheelEventDirective
+    MousewheelEventDirective,
+    AngularMaterialsModule
   ]
 })
 export class WebviewerMainModule { }

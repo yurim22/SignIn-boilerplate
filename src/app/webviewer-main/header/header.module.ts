@@ -11,6 +11,8 @@ import { ToolbarLogoutComponent } from './toolbar/toolbar-logout/toolbar-logout.
 
 import { AngularMaterialsModule } from '../../common/shared/angular-materials.module';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
     declarations: [
         HeaderComponent, 
@@ -22,8 +24,11 @@ import { AngularMaterialsModule } from '../../common/shared/angular-materials.mo
     ],
     imports: [
         CommonModule,
-        AngularMaterialsModule
+        AngularMaterialsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule
     ],
-    exports:[HeaderComponent]
+    exports:[HeaderComponent, FormsModule, ReactiveFormsModule]
 })
 export class HeaderModule { }

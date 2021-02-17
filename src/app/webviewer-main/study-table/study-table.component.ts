@@ -35,25 +35,15 @@ export class StudyTableComponent implements OnInit {
     constructor(private http: HttpClient) {
         console.log('constructor');
         this.getPatientList();
-        
     }
 
     ngOnInit(): void {
-        // this.getPatientList();
-        // this.currentStudy$.pipe(
-        //     takeUntil(this.unsubscribe$)
-        // ).subscribe( studies => {
-        //     this.dataSource.data = studies
-        // })
+
     }
 
     ngAfterViewInit(): void {
         console.log('[StudyTableComponent.ngAfterViewInit]');
-        
-        /** only developer permission can see select box on worklist table */
-        // if (this.permission !== '') {
-        //     this.displayedColumns2.splice(0, 1);
-        // }
+    
         this.dataSource.paginator = this.paginator;
         
         setTimeout(() => {
@@ -69,15 +59,18 @@ export class StudyTableComponent implements OnInit {
         })
     }
     
-    onClick(ev, row: any) {
-        ev.stopPropagation();
-        // this.preventSingleClick = false;
-        console.log(row,' clicked')
-        if(row.status === 'Analyzed'){
-            console.log('success report');
-            this.isAnalyzed = true;
-        }
-
+    updateStatus() {
+        
     }
+    // onClick(ev, row: any) {
+    //     ev.stopPropagation();
+    //     // this.preventSingleClick = false;
+    //     console.log(row,' clicked')
+    //     if(row.status === 'Analyzed'){
+    //         console.log('success report');
+    //         this.isAnalyzed = true;
+    //     }
+
+    // }
     
 }

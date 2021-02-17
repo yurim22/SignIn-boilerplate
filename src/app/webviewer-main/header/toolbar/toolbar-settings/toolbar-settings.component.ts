@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, TemplateRef, ViewChild } from '@angular/core
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 
+
 export interface SettingsData{
     description: string;
     category: string;
@@ -30,7 +31,7 @@ export class ToolbarSettingsComponent implements OnInit {
         
         // this.dialog.open(UserSettingDialog, dialogConfig);
 
-        // const dialogRef = this.dialog.open(UserSettingDialog, {
+        // const dialogRef = this.dialog.open(UserSettingsDialog, {
         //     width: '200px'
         // })
 
@@ -44,24 +45,29 @@ export class ToolbarSettingsComponent implements OnInit {
 @Component({
     selector: 'user-settings-dialog',
     templateUrl:'./user-settings-dialog.component.html',
-    
+    styles:[`
+        .mat-dialog-container{
+            background-color: '#2d2d2d';
+        }
+    `
+    ]
 })
 
-export class UserSettingDialog{
+export class UserSettingsDialog{
 
     form: FormGroup;
-    description:string;
+    // description:string;
 
     constructor(
-        public dialogRef: MatDialogRef<UserSettingDialog>,
+        public dialogRef: MatDialogRef<UserSettingsDialog>,
         private fb: FormBuilder,
-        @Inject(MAT_DIALOG_DATA) {description, category}: SettingsData
+        @Inject(MAT_DIALOG_DATA) public data: SettingsData
     ){
-        this.description = 'settings'
+        //this.description = 'settings'
 
         this.form = fb.group({
-            description: [description, Validators.required],
-            category: [category, Validators.required],
+            description: ['', Validators.required],
+            category: ['', Validators.required],
             // releasedAt: [moment(), Validators.required],
             // longDescription: [longDescription,Validators.required]
         });
