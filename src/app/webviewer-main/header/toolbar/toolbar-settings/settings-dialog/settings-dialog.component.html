@@ -5,30 +5,47 @@
             <mat-icon class="close-icon">close</mat-icon>
         </button>
     </section>
-    <form class="settings" [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
-        <div class="receive-group">
-            <h3 class="title">Receive</h3>
-            <div class="input-group">
-                <div class="content">Hospital PACS - AE</div>
-                <input class="pacs pacs-ae" type="text" placeholder="dd" formControlName="ae">
-                <div class="content">Hospital PACS - Host</div>
-                <input class="pacs pacs-user" type="text" placeholder="client" formControlName="ip">
-                <div class="content">Hospital PACS - Port</div>
-                <input class="pacs pacs-port" type="text" placeholder="port" formControlName="port">
+    <section class="settings">
+        <form [formGroup]="receiveForm" (ngSubmit)="onSubmit('receiveForm')">
+            <div class="receive-group">
+                <h3 class="title">Receive</h3>
+                <div class="input-group">
+                    <div class="content">Hospital PACS - AE</div>
+                    <input class="pacs pacs-ae" type="text" placeholder="dd" formControlName="ae">
+                    <div class="content">Hospital PACS - Host</div>
+                    <input class="pacs pacs-user" type="text" placeholder="client" formControlName="ip">
+                    <div class="content">Hospital PACS - Port</div>
+                    <input class="pacs pacs-port" type="text" placeholder="port" formControlName="port">
+                </div>
+                <div class="save-test">
+                    <button type="submit" mat-flat-button>SAVE & TEST</button>
+
+                    <span *ngIf="!isSuccess_re" style="color: red;" class="test-result-string">FAIL</span>
+                    <span *ngIf="isSuccess_re" style="color: green;" class="test-result-string">OK</span>
+                </div>
+                    
+                <!-- <mat-icon  *ngIf="!isSuccess" style="color: red" class="test-result-icon">cancel</mat-icon> -->
+                <!-- <mat-icon  *ngIf="isSuccess" class="check-for-integrity-spinner-custom" style="color: green;">check_circle</mat-icon> -->
             </div>
-            <button type="submit" mat-flat-button>SAVE & TEST</button>
-        </div> 
-        <div class="receive-group">
-            <h3 class="title">Send</h3>
-            <div class="input-group">
-                <div class="content">Hospital PACS - AE</div>
-                <input class="pacs pacs-ae" type="text" placeholder="dd" formControlName="ae">
-                <div class="content">Hospital PACS - Host</div>
-                <input class="pacs pacs-user" type="text" placeholder="client" formControlName="ip">
-                <div class="content">Hospital PACS - Port</div>
-                <input class="pacs pacs-port" type="text" placeholder="port" formControlName="port">
-            </div>
-            <button type="submit" mat-flat-button>SAVE & TEST</button>
-        </div> 
-    </form>
+        </form>
+        <form [formGroup]="sendForm" (ngSubmit)="onSubmit('sendFrom')">
+            <div class="receive-group">
+                <h3 class="title">Send</h3>
+                <div class="input-group">
+                    <div class="content">Hospital PACS - AE</div>
+                    <input class="pacs pacs-ae" type="text" placeholder="dd" formControlName="ae">
+                    <div class="content">Hospital PACS - Host</div>
+                    <input class="pacs pacs-user" type="text" placeholder="client" formControlName="ip">
+                    <div class="content">Hospital PACS - Port</div>
+                    <input class="pacs pacs-port" type="text" placeholder="port" formControlName="port">
+                </div>
+                <div class="save-test">
+                    <button type="submit" mat-flat-button>SAVE & TEST</button>
+
+                    <span *ngIf="!isSuccess_se" style="color: red;" class="test-result-string">FAIL</span>
+                    <span *ngIf="isSuccess_se" style="color: green;" class="test-result-string">OK</span>
+                </div>
+            </div> 
+        </form>
+    </section>
 </div>

@@ -1,4 +1,5 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
+import { Component, HostListener, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-report-image-list',
@@ -8,9 +9,14 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 export class ReportImageListComponent implements OnInit {
 
     @Input() isAnalyzed;
+    @Output() confirmed = new EventEmitter<any>();
+
     isLastIndex: boolean = false;
     idx = 1
     report_img: string;
+
+    isConfirmed: boolean;
+
     constructor() { }
 
     ngOnInit(): void {
@@ -39,5 +45,7 @@ export class ReportImageListComponent implements OnInit {
 
     confirm() {
         console.log('confirm');
+        this.isConfirmed = true;
+        this.confirmed.emit(this.isConfirmed);
     }
 }

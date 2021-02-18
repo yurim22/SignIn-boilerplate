@@ -9,21 +9,32 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class SettingsDialogComponent {
 
-    settingsForm: FormGroup;
+    receiveForm: FormGroup;
+    sendForm: FormGroup;
     
-    ae: string;
-    ip: string;
-    port: string;
+    ae: string = 'ORTHANCHP';
+    ip: string = '58.151.234.205';
+    port: string = '5252';
 
+    isSuccess_re: boolean = false;
+    isSuccess_se: boolean = false;
+    cnt: number = 0;
+    // isFail: boolean;
     constructor(
         public dialogRef: MatDialogRef<SettingsDialogComponent>,
         private fb: FormBuilder,
     ){
-        this.settingsForm = fb.group({
+        this.receiveForm = fb.group({
             ae:[this.ae, Validators.required],
             ip:[this.ip,Validators.required],
             port:[this.port,Validators.required]
         });
+
+        this.sendForm = fb.group({
+            ae:[this.ae, Validators.required],
+            ip:[this.ip,Validators.required],
+            port:[this.port,Validators.required]
+        })
     }
 
     save() {
@@ -35,7 +46,16 @@ export class SettingsDialogComponent {
         this.dialogRef.close();
     }
 
-    onSubmit() {
-        console.log('submit');
+    onSubmit(type: string) {
+        // console.log(this.${type}.value);
+        
+        if(type === "receiveForm" && this.cnt === 0){
+            console.log(this.receiveForm.value)
+            this.isSuccess_re = false;
+            console.log(this.cnt);
+            this.cnt += 1;
+        } else if(type === "receiveForm") {
+            this.isSuccess_re = true;
+        }
     }
 }

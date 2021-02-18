@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit {
     }
 
     get userId(): string {
-        console.log(this.userInfoService.userId)
         return this.userInfoService.userId
     }
 }
