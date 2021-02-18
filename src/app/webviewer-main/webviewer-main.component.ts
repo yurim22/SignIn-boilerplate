@@ -24,6 +24,10 @@ export class WebviewerMainComponent implements OnInit {
         e.result = 10;
     }
 
+    confirmReport(e) {
+        console.log(e);
+    }
+
     // confirm() {
     //     console.log('confirm');
         

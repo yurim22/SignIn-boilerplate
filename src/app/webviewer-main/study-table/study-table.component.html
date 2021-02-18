@@ -5,13 +5,13 @@
 <!-- Study List -->
 <mat-paginator [pageSize]="40" [hidePageSize]="true"></mat-paginator>
 <section style="background-color: black;" class="worklist-study-list mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" class="mat-cell" aria-label="Elements">
+    <table mat-table matSort [dataSource]="dataSource" #sort="matSort" class="mat-cell" aria-label="Elements">
         <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns; let idx=index">
-            <th mat-header-cell *matHeaderCellDef id="{{column}}">{{displayedTitle[idx]}}</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header id="{{column}}">{{displayedTitle[idx]}}</th>
             <td mat-cell *matCellDef="let row">{{row[column]}}</td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" ></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="study-element-row" (dblclick)="clickRow.emit(row)"></tr>
     </table>
 </section>

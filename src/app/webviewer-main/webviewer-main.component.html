@@ -11,6 +11,6 @@
         <ng-container>
             <div class="section-title" style="margin-top: 0.4em;"><i [ngClass]="['fa fa-bars fa-sx']"></i>&nbsp;BEAT Report</div>
         </ng-container>
-        <app-report-image-list [isAnalyzed]="isAnalyzed"></app-report-image-list>
+        <app-report-image-list [isAnalyzed]="isAnalyzed" (confirmed)="confirmReport($event)"></app-report-image-list>
     </div>
 </div>
