@@ -1,0 +1,34 @@
+<div class="flex-container">
+    <section class="header">
+        <h2>Settings</h2>
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon">close</mat-icon>
+        </button>
+    </section>
+    <form class="settings" [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+        <div class="receive-group">
+            <h3 class="title">Receive</h3>
+            <div class="input-group">
+                <div class="content">Hospital PACS - AE</div>
+                <input class="pacs pacs-ae" type="text" placeholder="dd" formControlName="ae">
+                <div class="content">Hospital PACS - Host</div>
+                <input class="pacs pacs-user" type="text" placeholder="client" formControlName="ip">
+                <div class="content">Hospital PACS - Port</div>
+                <input class="pacs pacs-port" type="text" placeholder="port" formControlName="port">
+            </div>
+            <button type="submit" mat-flat-button>SAVE & TEST</button>
+        </div> 
+        <div class="receive-group">
+            <h3 class="title">Send</h3>
+            <div class="input-group">
+                <div class="content">Hospital PACS - AE</div>
+                <input class="pacs pacs-ae" type="text" placeholder="dd" formControlName="ae">
+                <div class="content">Hospital PACS - Host</div>
+                <input class="pacs pacs-user" type="text" placeholder="client" formControlName="ip">
+                <div class="content">Hospital PACS - Port</div>
+                <input class="pacs pacs-port" type="text" placeholder="port" formControlName="port">
+            </div>
+            <button type="submit" mat-flat-button>SAVE & TEST</button>
+        </div> 
+    </form>
+</div>

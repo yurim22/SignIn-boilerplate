@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { UserInfoService } from 'src/app/user-info.service';
 
 @Component({
     selector: 'app-header',
@@ -9,7 +10,10 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 export class HeaderComponent implements OnInit {
 
     isToolbarReady: boolean = true;
-    constructor(public dialog: MatDialog) { }
+    permission= '';
+    diskTotalUsage= 3;
+    diskTotalSpace= 256;
+    constructor(public dialog: MatDialog, private userInfoService: UserInfoService) { }
 
     ngOnInit(): void {
     }
@@ -17,5 +21,10 @@ export class HeaderComponent implements OnInit {
     openSettingsDialog(): void {
         console.log('settings')
         // const dialogRef = this.dialog.open()
+    }
+
+    get userId(): string {
+        console.log(this.userInfoService.userId)
+        return this.userInfoService.userId
     }
 }

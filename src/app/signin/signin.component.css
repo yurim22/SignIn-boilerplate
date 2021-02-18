@@ -1,70 +1,97 @@
-/* .flex-container{
-    color: white;
-} */
 .signin-container{
     display: flex;
     justify-content: center;
 }
 
-.login-wrapper{
+/* .login-wrapper{
     display: flex;
     height: 100%;
-}
-.login-wrapper .login {
+} */
+.login {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 1rem 2.5rem;
     min-height: 100vh;
-    width: 21rem;
+    width: 23rem;
 }
-.login-wrapper .login .title {
+.login .title {
     color: white;
-    font-weight: 200;
-    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 100;
     font-size: 1.333333rem;
     letter-spacing: normal;
-    line-height: 1.5rem; 
+
+    /* line-height: 1.5rem;  */
 }
-.login-wrapper .login .title .welcome{
-    line-height: 1.5rem;
+.login .title .welcome{
+    font-weight: lighter;
+    /* font-size: 1.4rem; */
+    line-height: 1.6rem;
+    margin: 0;
+    /* font-family: 'Poppins', sans-serif; */
+    /* letter-spacing: 1px; */
+    /* font-size: 1.5rem; */
 }
-.login-wrapper .login .title .hint {
+.login .title .prd-name{
+    font-size: xx-large;
+    padding: 18px 0 20px 0; 
+}
+.login .title .hint {
     color: white;
     margin-top: 1.25rem;
-    font-size: 0.5833rem;
+    font-weight: lighter;
+    font-size: 0.9rem;
+    
 }
 
-.login-wrapper .login .login-group {
+.login .login-group {
     display: flex;
     flex-direction: column;
-    padding: 2rem 0 0 0;
+    padding: 1.7rem 0 0 0;
+    /* font-family: 'Montserrat', sans-serif; */
 }
-.login-wrapper .login .login-group .username,
-.login-wrapper .login .login-group .password{
-    background: linear-gradient(to bottom, transparent 95%, #0094d2 95%) no-repeat;
+.login .login-group .username,
+.login .login-group .password{
+    background: transparent;
+    /* background: linear-gradient(to bottom, transparent 95%, #0094d2 95%) no-repeat;
     background-size: 0% 100%;
-    transition: background-size 0.2s ease;
+    transition: background-size 1s ease; */
     border: none;
     border-radius: 0;
     box-shadow: none;
-    height: 1rem;
-    
+
+    height: 1.5rem;
     display: inline-block;
     min-width: 2.5rem;
-    border-bottom: 1px solid #9a9a9a;
+    border-bottom: 1.5px solid #9a9a9a;
     padding: 0 0.25rem;
+    font-family: 'Montserrat', sans-serif ;
+    font-weight: 500;
+    font-size: 0.83rem;
+    transition: border 0.2s ease;
 }
-.login-wrapper .login .login-group .username,
-.login-wrapper .login .login-group .password,
-.login-wrapper .login .login-group .checkbox{
-    margin: 0.25rem 0 0.75rem 0;
+.login .login-group .username:focus,
+.login .login-group .password:focus {
+    border-bottom: 1.5px solid #0094d2;
+}
+.login .login-group .username,
+.login .login-group .password,
+.login .login-group .checkbox{
+    margin: 0.25rem 0 1rem 0;
     color: #9a9da0;
 }
 
+.login .login-group .checkbox{
+    margin-bottom: 1.5rem;
+}
+/* ::ng-deep .mat-checkbox-inner-container{
+    margin-right: 0;
+} */
 ::ng-deep .mat-checkbox .mat-checkbox-frame {
     border: 1.5px solid #9a9da0;
+    width: 14px;
+    height: 14px;
 }
 
 /* .checkbox.btn label,
@@ -76,6 +103,8 @@
     border: 1px solid #525252;
     background-color: #212121;
     color: #fff;
+    letter-spacing: 1px;
+    margin: 1rem 0;
 }
 
 .mat-flat-button:hover{
@@ -163,27 +192,31 @@
 
 .check-for-integrity-spinner-inline-text {
     padding: 0 0.3rem 0 0;
-    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-weight: bold;
+    /* font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif; */
+    /* font-weight: bold; */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
     line-height: 1rem;
-    font-size: 0.45rem;
+    font-size: 0.6rem;
+    word-spacing: 1.5px;
 }
 
 .check-for-integrity-spinner-inline-text-error {
     padding: 0 0.3rem 0 0;
-    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-weight: bold;
+    /* font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif; */
+    /* font-weight: bold; */
     line-height: 1rem;
-    font-size: 0.45rem;
+    font-size: 0.7rem;
     color: #d9401e;
 }
 
 .check-for-integrity-spinner-inline-underline {
     padding: 0 0.3rem 0 0;
-    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-weight: bold;
+    /* font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif; */
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
     line-height: 1rem;
-    font-size: 0.45rem;
+    font-size: 0.6rem;
     text-decoration: underline;
     cursor: pointer;
 }

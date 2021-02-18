@@ -13,6 +13,9 @@ import { AngularMaterialsModule } from '../../common/shared/angular-materials.mo
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SettingsDialogComponent } from './toolbar/toolbar-settings/settings-dialog/settings-dialog.component';
+
 @NgModule({
     declarations: [
         HeaderComponent, 
@@ -20,14 +23,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         ToolbarUsersComponent, 
         ToolbarSettingsComponent, 
         ToolbarAboutComponent, 
-        ToolbarLogoutComponent
+        ToolbarLogoutComponent, SettingsDialogComponent
     ],
     imports: [
         CommonModule,
         AngularMaterialsModule,
         FormsModule,
         ReactiveFormsModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        BrowserAnimationsModule,
     ],
     exports:[HeaderComponent, FormsModule, ReactiveFormsModule]
 })
