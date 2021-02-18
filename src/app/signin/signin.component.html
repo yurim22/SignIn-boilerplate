@@ -3,27 +3,27 @@
       <div class="flex-container">
         <form class="login" [formGroup]="signInForm" (ngSubmit)="onSubmit()" style="background-color:#2B2B2B">
             <label class="title">
-                <h3 class="welcome">Sign in to</h3>
-                BEAT
+                <h4 class="welcome">Sign in to</h4>
+                <div class="prd-name">BEAT</div>
                 <h5 class="hint" *ngIf="!passwordExpired">Enter your username and password.</h5>
                 <h5 class="hint" *ngIf="passwordExpired">Your password has been expired. Change to new password.</h5>
             </label>
             <div class="login-group" *ngIf="!passwordExpired">
                 <input class="username" type="text" id="login_username" placeholder="Username" formControlName="id">
                 <input class="password" type="password" id="login_password" placeholder="Password" formControlName="password">
-                <mat-checkbox class="checkbox" color="primary" id="rememberme" [checked]="isRememberedIdExist()" (change)="onRemembermeChanged($event)">Remember me</mat-checkbox>
+                <mat-checkbox class="checkbox" color="primary" id="rememberme" [checked]="isRememberedIdExist()" (change)="onRemembermeChanged($event)" style="font-size: 14px;">Remember me</mat-checkbox>
                 <!-- <div class="checkbox">
                     <input type="checkbox" id="rememberme" [checked]="isRememberedIdExist()" (change)="onRemembermeChanged($event)">
                     <label for="rememberme">
                         Remember me
                     </label>
                 </div> -->
-                <div class="error active" [hidden]="signInFailed==0">
+                <!-- <div class="error active" [hidden]="signInFailed==0">
                     Invalid username or password.
                 </div>
                 <div class="error active" *ngIf="invalidPasswordCountOver">
                     Bad passwords count is over than 5, Your account lockout.
-                </div>
+                </div> -->
                 <button type="submit" mat-flat-button >SIGN IN</button>
                 <!-- <button type="submit" class="btn btn-primary">SIGN IN</button> -->
             </div>

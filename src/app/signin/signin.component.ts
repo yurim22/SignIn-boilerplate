@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserInfoService } from '../user-info.service';
 
 @Component({ 
     selector: 'app-signin',
@@ -38,7 +39,8 @@ export class SigninComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
                 private router: Router,
                 private dialog: MatDialog,
-                private snackbar: MatSnackBar) {
+                private snackbar: MatSnackBar,
+                private userInfoService: UserInfoService) {
 
         this.signInForm = formBuilder.group({
             id: [this.rememberedId, Validators.required],
@@ -67,6 +69,9 @@ export class SigninComponent implements OnInit {
     onSubmit(){
         console.log('submit');
         this.router.navigate(['/webviewer'])
+        console.log('loginid:',this.signInForm.value);
+        this.userInfoService.userId = this.signInForm.value.id
+        console.log(this.userInfoService.userId)
     }
 
     isRememberedIdExist():boolean {
@@ -80,5 +85,9 @@ export class SigninComponent implements OnInit {
     showAboutDialog(){
         console.log('show about dialog')
     }
+
+    // set userName(id: string){
+    //     this.userInfoService.userId = id;
+    // }
 
 }
