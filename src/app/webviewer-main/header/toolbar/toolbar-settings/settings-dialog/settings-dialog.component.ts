@@ -16,6 +16,10 @@ export class SettingsDialogComponent {
     ip: string = '58.151.234.205';
     port: string = '5252';
 
+    pacsConnectionChecking: boolean;
+    pacsConnectionChecking_se: boolean;
+    reTestResult: string = ''
+    seTestResult: string = ''
     isSuccess_re: boolean = false;
     isSuccess_se: boolean = false;
     cnt: number = 0;
@@ -46,16 +50,29 @@ export class SettingsDialogComponent {
         this.dialogRef.close();
     }
 
-    onSubmit(type: string) {
+    onSubmit_Re(type: string) {
         // console.log(this.${type}.value);
-        
+        this.pacsConnectionChecking = true
+        setTimeout( () =>
+            this.pacsConnectionChecking = false , 1000
+        )
         if(type === "receiveForm" && this.cnt === 0){
-            console.log(this.receiveForm.value)
             this.isSuccess_re = false;
             console.log(this.cnt);
             this.cnt += 1;
-        } else if(type === "receiveForm") {
+            this.reTestResult = 'FAIL';
+        } else if(type === 'receiveForm') {
             this.isSuccess_re = true;
+            this.reTestResult = 'OK';
         }
+    }
+    onSubmit_Se(type: string) {
+        // console.log(this.${type}.value);
+        this.pacsConnectionChecking_se = true
+        setTimeout( () =>
+            this.pacsConnectionChecking_se = false , 1000
+        )
+        this.isSuccess_se = true;
+        this.seTestResult = 'OK'
     }
 }

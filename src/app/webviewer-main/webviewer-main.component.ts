@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./webviewer-main.component.css']
 })
 export class WebviewerMainComponent implements OnInit {
+
+    clickedStudy: number;
     isAnalyzed: boolean  = false;
 
+    isConfirmed: boolean
     constructor() { }
 
     ngOnInit(): void {
@@ -15,17 +18,20 @@ export class WebviewerMainComponent implements OnInit {
 
     onDblclick(e){
         console.log(e);
-        if(e.status === 'Analyzed'){
+        this.isConfirmed = false;
+        if(e.status === 'Analyzed' || e.status === 'Reviewed'){
             console.log('success report');
             this.isAnalyzed = true;
+            this.clickedStudy = e.id;
         } else if(e.status === 'Received'){
             this.isAnalyzed = false;
         }
-        e.result = 10;
+        //e.result = 10;
     }
 
-    confirmReport(e) {
-        console.log(e);
+    confirmReport(result) {
+        console.log(result);
+        this.isConfirmed = result;
     }
 
     // confirm() {

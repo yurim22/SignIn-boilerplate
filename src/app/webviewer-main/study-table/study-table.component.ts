@@ -22,6 +22,7 @@ export class StudyTableComponent implements OnInit, OnChanges {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     @Input() isConfirmed: boolean;
+    @Input() confirmedStudy: number;
 
     @Output() clickRow = new EventEmitter<StudyRow>();
     unsubscribe$ = new Subject<any>();
@@ -57,11 +58,13 @@ export class StudyTableComponent implements OnInit, OnChanges {
         setTimeout(() => {
             this.isGetStudies = true;
         });
+        // console.log(this.isConfirmed);
     }
 
     ngOnChanges():void {
         if(this.isConfirmed) {
-            console.log(this.dataSource.data)
+            console.log(this.dataSource.data[this.confirmedStudy-1])
+            this.dataSource.data[this.confirmedStudy-1].status = "Reviewed"
         }
     }
     getPatientList() {
