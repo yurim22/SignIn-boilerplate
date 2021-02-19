@@ -2,10 +2,10 @@
     display: flex;
 }
 .study-list-container{
-    width: 53%;
+    width: 57%;
 }
 .report-container {
-    width: 47%;
+    width: 43%;
 }
 .study-list-container, .report-container {
     margin-left: 1%;

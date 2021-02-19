@@ -4,7 +4,7 @@
         <ng-container #iconMenu>
             <div class="section-title" style="margin-top: 0.4em;"><i [ngClass]="['fa fa-bars fa-sx']"></i>&nbsp;Study List</div>
         </ng-container>
-        <app-study-table (clickRow)="onDblclick($event)"></app-study-table>
+        <app-study-table (clickRow)="onDblclick($event)" [isConfirmed]="isConfirmed" [confirmedStudy]="clickedStudy"></app-study-table>
     </div>
 
     <div class="report-container">

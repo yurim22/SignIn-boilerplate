@@ -66,14 +66,14 @@ table.mat-table {
 }
 
 .mat-column-status {
-    flex: 0 0 7% !important;
-    width: 7% !important;
+    flex: 0 0 7.5% !important;
+    width: 7.5% !important;
 }
 .mat-column-patient_id {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 10% !important;
-    width: 10% !important;
+    flex: 0 0 11% !important;
+    width: 11% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
     overflow: hidden;
@@ -118,8 +118,8 @@ table.mat-table {
     width: 6% !important;
 }
 .mat-column-study_date, .mat-column-analysis_date {
-    flex: 0 0 15% !important;
-    width: 15% !important;
+    flex: 0 0 16% !important;
+    width: 16% !important;
 }
   
 

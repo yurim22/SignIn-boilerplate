@@ -2,7 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 3.2%;
+    padding-top: 3.8%;
+    padding-right: 14px;
 }
 img{
     max-height:80vh;
@@ -41,5 +42,5 @@ img{
     position: fixed;
     bottom: 2.5%;
     right: 1%;
-    padding: 1rem 5rem 0 0;
+    padding: 1rem 3rem 0 0;
 }

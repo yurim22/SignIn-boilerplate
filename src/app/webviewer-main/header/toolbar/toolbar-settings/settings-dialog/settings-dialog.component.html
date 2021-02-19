@@ -6,7 +6,7 @@
         </button>
     </section>
     <section class="settings">
-        <form [formGroup]="receiveForm" (ngSubmit)="onSubmit('receiveForm')">
+        <form [formGroup]="receiveForm" (ngSubmit)="onSubmit_Re('receiveForm')">
             <div class="receive-group">
                 <h3 class="title">Receive</h3>
                 <div class="input-group">
@@ -19,16 +19,17 @@
                 </div>
                 <div class="save-test">
                     <button type="submit" mat-flat-button>SAVE & TEST</button>
-
-                    <span *ngIf="!isSuccess_re" style="color: red;" class="test-result-string">FAIL</span>
-                    <span *ngIf="isSuccess_re" style="color: green;" class="test-result-string">OK</span>
+                    <mat-spinner *ngIf="pacsConnectionChecking" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
+                    <span *ngIf="!pacsConnectionChecking" class="test-result-string" [ngStyle]="isSuccess_re? {'color':'green'} : {'color':'red'}">{{reTestResult}}</span>
+                    <!-- <span *ngIf="!isSuccess_re" style="color: red;" class="test-result-string">FAIL</span>
+                    <span *ngIf="isSuccess_re" style="color: green;" class="test-result-string">OK</span> -->
                 </div>
                     
                 <!-- <mat-icon  *ngIf="!isSuccess" style="color: red" class="test-result-icon">cancel</mat-icon> -->
                 <!-- <mat-icon  *ngIf="isSuccess" class="check-for-integrity-spinner-custom" style="color: green;">check_circle</mat-icon> -->
             </div>
         </form>
-        <form [formGroup]="sendForm" (ngSubmit)="onSubmit('sendFrom')">
+        <form [formGroup]="sendForm" (ngSubmit)="onSubmit_Se('sendFrom')">
             <div class="receive-group">
                 <h3 class="title">Send</h3>
                 <div class="input-group">
@@ -41,9 +42,10 @@
                 </div>
                 <div class="save-test">
                     <button type="submit" mat-flat-button>SAVE & TEST</button>
-
-                    <span *ngIf="!isSuccess_se" style="color: red;" class="test-result-string">FAIL</span>
-                    <span *ngIf="isSuccess_se" style="color: green;" class="test-result-string">OK</span>
+                    <mat-spinner *ngIf="pacsConnectionChecking_se" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
+                    <span *ngIf="!pacsConnectionChecking_se" class="test-result-string" [ngStyle]="isSuccess_se? {'color':'green'} : {'color':'red'}">{{seTestResult}}</span>
+                    <!-- <span *ngIf="!isSuccess_re" style="color: red;" class="test-result-string">FAIL</span>
+                    <span *ngIf="isSuccess_re" style="color: green;" class="test-result-string">OK</span> -->
                 </div>
             </div> 
         </form>
