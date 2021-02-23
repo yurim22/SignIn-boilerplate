@@ -52,7 +52,7 @@ export class ReportImageListComponent implements OnInit {
     }
 
     setImgPath(idx) {
-        console.log('setImgPath function');
+        // console.log('setImgPath function');
         return `assets/report_test_210216/${idx}.jpg`
     }
 

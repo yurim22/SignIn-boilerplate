@@ -32,25 +32,10 @@ export class WebviewerMainComponent implements OnInit {
             this.isReceived = true;
             this.isAnalyzed = false;
         }
-        // this.isSelected = true;
-        console.log(this.isSelected);
-        //e.result = 10;
-
-        // return {selectedRow:true}
     }
 
     confirmReport(result) {
-        console.log(result);
+        //console.log(result);
         this.isConfirmed = result;
     }
-
-    // confirm() {
-    //     console.log('confirm');
-        
-    // }
-
-    // setImgPath(idx) {
-    //     console.log(idx);
-    //     return `asset/report_test_210216/${idx}.jpg`
-    // }
 }
