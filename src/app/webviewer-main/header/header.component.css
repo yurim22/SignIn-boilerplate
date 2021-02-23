@@ -5,8 +5,9 @@
 }
 
 .top-left-layout {
+    display: flex;
     order: 0;
-    flex: 3 1 auto;
+    flex: 5 1 auto;
     align-self: stretch;
 }
 
@@ -32,24 +33,6 @@
     padding-top: 0px;
 }
 
-/* .flex-item:nth-child(1) {
-    order: 0;
-    flex: 0 1 auto;
-    align-self: stretch;
-}
-
-.flex-item:nth-child(2) {
-    order: 0;
-    flex: 1 1 auto;
-    align-self: stretch;
-}
-
-.flex-item:nth-child(3) {
-    order: 0;
-    flex: 0 1 auto;
-    align-self: stretch;
-} */
-
 .flex-container-row {
     display: flex;
     flex-direction: row;
@@ -63,24 +46,6 @@
 .top-menu-tools-container:hover{
     background-color: #2d2d2d;
 }
-
-/* .flex-item-row:nth-child(1) {
-    order: 0;
-    flex: 0 1 auto;
-    align-self: stretch;
-}
-
-.flex-item-row:nth-child(2) {
-    order: 0;
-    flex: 1 1 auto;
-    align-self: stretch;
-}
-
-.flex-item-row:nth-child(3) {
-    order: 0;
-    flex: 0 1 auto;
-    align-self: stretch;
-} */
 
 .top-menu-tools-container {
     /* 18px는 아이콘 사이의 간격 */

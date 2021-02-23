@@ -1,5 +1,6 @@
-import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 import { Component, HostListener, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { ignoreElements } from 'rxjs/operators';
 
 @Component({
     selector: 'app-report-image-list',
@@ -9,18 +10,24 @@ import { Component, HostListener, Input, OnInit, Output, EventEmitter } from '@a
 export class ReportImageListComponent implements OnInit {
 
     @Input() isAnalyzed;
+    @Input() isReceived;
+    
     @Output() confirmed = new EventEmitter<any>();
 
     isLastIndex: boolean = false;
     idx = 1
     report_img: string;
+    error_report_img: string;
 
     isConfirmed: boolean;
 
-    constructor() { }
+    snack_message: string;
+
+    constructor(private _snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
-        this.report_img = 'assets/report_test_210216/1.jpg'
+        this.report_img = 'assets/report_test_210216/1.jpg';
+        this.error_report_img = 'assets/report_test_210216/summary_test_error_1.jpg'
     }
 
     @HostListener('mousewheel', ['$event']) 
@@ -29,9 +36,14 @@ export class ReportImageListComponent implements OnInit {
         if (event.wheelDelta > 0 && this.idx !== 1) {
             console.log('wheel up')
             this.idx = (this.idx - step) < 0 ? 0 : this.idx - step;
-        }
-        if (event.wheelDelta < 0 && this.idx !== 13) {
+        } else if(event.wheelDelta < 0 && this.idx !== 13){
             this.idx = this.idx + step;
+        } else if(this.idx === 1){
+            this.snack_message = "This is the first page"
+            this.openSnackBar();
+        } else if(this.idx === 13) {
+            this.snack_message = "This is the last page"
+            this.openSnackBar();
         }
 
         this.report_img = this.setImgPath(this.idx);
@@ -48,4 +60,24 @@ export class ReportImageListComponent implements OnInit {
         this.isConfirmed = true;
         this.confirmed.emit(this.isConfirmed);
     }
+
+    openSnackBar() {
+        this._snackBar.open( this.snack_message, '', {
+            duration: 1000,
+            panelClass:'custom-snackbar',
+            // horizontalPosition: 'right'
+        }) 
+    }
 }
+
+// @Component({
+//     selector:'snack-bar-component-last-page',
+//     template: `
+//         <span>{{snack_message}}</span>
+//     `
+// })
+
+// export class LastPageComponent {
+//     @Input() snack_message: string; 
+
+// }
