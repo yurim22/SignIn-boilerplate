@@ -64,10 +64,10 @@ img{
 ::ng-deep snack-bar-container.custom-snackbar{
     display: flex;
     justify-content: center;
-    margin-bottom: 37px;
+    margin: 15px;
     position: absolute;
     right: 11%;
-    bottom: 0.5%;
+    bottom: 0.1%;
 }
 
 ::ng-deep .mat-simple-snackbar{
