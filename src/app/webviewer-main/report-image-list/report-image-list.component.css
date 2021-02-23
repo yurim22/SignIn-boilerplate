@@ -10,12 +10,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 2.5%;
+    padding-top: 3.8%;
     padding-right: 14px;
 }
 
 img{
-    max-height:80vh;
+    max-height:83vh;
     max-width: auto;
     /* width: 500px;
     height: auto; */
@@ -57,24 +57,20 @@ img{
     position: fixed;
     right: 0;
     top: 6%;
-    padding: 1rem 2rem 0 0;
+    padding: 1.3rem 2.8rem 0 0;
 }
 
-.cdk-overlay-pane{
-    margin-right: 11% !important;
-}
 
 ::ng-deep snack-bar-container.custom-snackbar{
     display: flex;
     justify-content: center;
     margin-bottom: 37px;
+    position: absolute;
+    right: 11%;
+    bottom: 0.5%;
 }
 
 ::ng-deep .mat-simple-snackbar{
     font-size: 18px;
 }
 
-::ng-deep .cdk-overlay-pane {
-    margin-right: -55%;
-    margin-top: 10%;
-}

@@ -1,11 +1,12 @@
-import { Component, HostListener, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, HostListener, Input, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ignoreElements } from 'rxjs/operators';
 
 @Component({
     selector: 'app-report-image-list',
     templateUrl: './report-image-list.component.html',
-    styleUrls: ['./report-image-list.component.css']
+    styleUrls: ['./report-image-list.component.css'],
+    //encapsulation: ViewEncapsulation.None
 })
 export class ReportImageListComponent implements OnInit {
 
@@ -65,7 +66,7 @@ export class ReportImageListComponent implements OnInit {
         this._snackBar.open( this.snack_message, '', {
             duration: 1000,
             panelClass:'custom-snackbar',
-            // horizontalPosition: 'right'
+            //horizontalPosition: 'right'
         }) 
     }
 }
