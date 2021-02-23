@@ -63,7 +63,7 @@ export class SettingsDialogComponent {
             this.reTestResult = 'FAIL';
         } else if(type === 'receiveForm') {
             this.isSuccess_re = true;
-            this.reTestResult = 'OK';
+            this.reTestResult = 'PASS';
         }
     }
     onSubmit_Se(type: string) {
@@ -73,6 +73,6 @@ export class SettingsDialogComponent {
             this.pacsConnectionChecking_se = false , 1000
         )
         this.isSuccess_se = true;
-        this.seTestResult = 'OK'
+        this.seTestResult = 'PASS'
     }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {map, takeUntil, tap} from 'rxjs/operators';
 
@@ -23,6 +23,7 @@ export class StudyTableComponent implements OnInit, OnChanges {
 
     @Input() isConfirmed: boolean;
     @Input() confirmedStudy: number;
+    @Input() isSelected: boolean;
 
     @Output() clickRow = new EventEmitter<StudyRow>();
     unsubscribe$ = new Subject<any>();
@@ -39,10 +40,12 @@ export class StudyTableComponent implements OnInit, OnChanges {
     sortedData: StudyRow[];
 
     @ViewChild('sort') sort: MatSort;
+    
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private el: ElementRef) {
         console.log('constructor');
         this.getPatientList();
+        // console.log(this.row)
     }
 
     ngOnInit(): void {
@@ -58,7 +61,7 @@ export class StudyTableComponent implements OnInit, OnChanges {
         setTimeout(() => {
             this.isGetStudies = true;
         });
-        // console.log(this.isConfirmed);
+       
     }
 
     ngOnChanges():void {
@@ -66,54 +69,47 @@ export class StudyTableComponent implements OnInit, OnChanges {
             console.log(this.dataSource.data[this.confirmedStudy-1])
             this.dataSource.data[this.confirmedStudy-1].status = "Reviewed"
         }
+        console.log(this.isSelected);
     }
     getPatientList() {
         console.log('getPatientList function')
         return this.http.get('assets/result_json_test_210216.json').pipe(
             map(val => val['data']),
         ).subscribe(arrs => {
+            console.log(arrs);
             // this.sortedData = arrs.slice()
             this.dataSource.data = arrs;  
             this.sortedData = this.dataSource.data.slice()
         })
     }
-    
-    updateStatus() {
-        
-    }
-
-    onSortRequest(sort: Sort) {
-        console.log(sort);
-        const data = this.dataSource.data.slice();
-        console.log(data);
-        if(!sort.active || sort.direction === ''){
-            this.sortedData = data;
-            return;
-        }
-
-        this.dataSource.data = data.sort((a,b) => {
-            const isAsc = sort.direction === 'asc';
-            console.log(a.patient_id)
-            switch (sort.active) {
-                case 'patient_id' : return compare(a.patient_id, b.patient_id, isAsc);
-                default: return 0;
-            }
-        })
-
-        console.log(this.sortedData)
-        console.log(this.dataSource.data);
-    }
-    // onClick(ev, row: any) {
-    //     ev.stopPropagation();
-    //     // this.preventSingleClick = false;
-    //     console.log(row,' clicked')
-    //     if(row.status === 'Analyzed'){
-    //         console.log('success report');
-    //         this.isAnalyzed = true;
+    // onSortRequest(sort: Sort) {
+    //     console.log(sort);
+    //     const data = this.dataSource.data.slice();
+    //     console.log(data);
+    //     if(!sort.active || sort.direction === ''){
+    //         this.sortedData = data;
+    //         return;
     //     }
 
+    //     this.dataSource.data = data.sort((a,b) => {
+    //         const isAsc = sort.direction === 'asc';
+    //         console.log(a.patient_id)
+    //         switch (sort.active) {
+    //             case 'patient_id' : return compare(a.patient_id, b.patient_id, isAsc);
+    //             default: return 0;
+    //         }
+    //     })
+
+    //     console.log(this.sortedData)
+    //     console.log(this.dataSource.data);
     // }
-    
+    getBackground(row){
+        if(this.confirmedStudy === row.id){
+            return {'selectedRow': true}
+        }else{
+            return {'selectedRow': false}
+        }
+    }
 }
 function compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1)

@@ -9,8 +9,11 @@ export class WebviewerMainComponent implements OnInit {
 
     clickedStudy: number;
     isAnalyzed: boolean  = false;
+    isReceived: boolean = false;
 
     isConfirmed: boolean
+    isSelected: boolean;
+
     constructor() { }
 
     ngOnInit(): void {
@@ -19,14 +22,21 @@ export class WebviewerMainComponent implements OnInit {
     onDblclick(e){
         console.log(e);
         this.isConfirmed = false;
+        this.clickedStudy = e.id;
         if(e.status === 'Analyzed' || e.status === 'Reviewed'){
             console.log('success report');
             this.isAnalyzed = true;
-            this.clickedStudy = e.id;
+            this.isReceived = false;
+            this.isSelected = true;
         } else if(e.status === 'Received'){
+            this.isReceived = true;
             this.isAnalyzed = false;
         }
+        // this.isSelected = true;
+        console.log(this.isSelected);
         //e.result = 10;
+
+        // return {selectedRow:true}
     }
 
     confirmReport(result) {

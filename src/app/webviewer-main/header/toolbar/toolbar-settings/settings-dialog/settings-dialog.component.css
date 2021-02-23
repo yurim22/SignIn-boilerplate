@@ -83,3 +83,12 @@
     font-size: 13px;
     font-weight: 600;
 }
+
+::ng-deep .check-for-integrity-spinner-custom{
+    stroke: #959BA4 !important;
+    /* margin: 0 3px; */
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+    stroke: white!important;
+}

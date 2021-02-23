@@ -5,6 +5,15 @@
     padding-top: 3.8%;
     padding-right: 14px;
 }
+
+.report_image2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2.5%;
+    padding-right: 14px;
+}
+
 img{
     max-height:80vh;
     max-width: auto;
@@ -43,4 +52,29 @@ img{
     bottom: 2.5%;
     right: 1%;
     padding: 1rem 3rem 0 0;
+}
+.btn-container2{
+    position: fixed;
+    right: 0;
+    top: 6%;
+    padding: 1rem 2rem 0 0;
+}
+
+.cdk-overlay-pane{
+    margin-right: 11% !important;
+}
+
+::ng-deep snack-bar-container.custom-snackbar{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 37px;
+}
+
+::ng-deep .mat-simple-snackbar{
+    font-size: 18px;
+}
+
+::ng-deep .cdk-overlay-pane {
+    margin-right: -55%;
+    margin-top: 10%;
 }
