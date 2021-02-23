@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'toolbar-about',
     template: `
-    <div id="icon_about" class="flex-item-row top-menu-tools-container">
+    <div id="icon_about" class="flex-item-row top-menu-tools-container" (click)="openAboutModal()">
         <div title="About" class="flex-top-menu-tools-icon-item-row">
             <img class="top-menu-tools-icon-button" src="assets/icons/info.svg">
         </div>
@@ -38,9 +39,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarAboutComponent implements OnInit {
 
-    constructor() { }
+    constructor(private dialog: MatDialog) { }
 
     ngOnInit(): void {
     }
 
+    openAboutModal(){
+        console.log('about');
+        const dialogRef = this.dialog.open(AboutDialogComponent, {
+            width: '570px',
+            height: '500px',
+        })
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('the dialog was closed');
+        })
+    }
 }
+
+@Component({
+    selector: 'about-dialog',
+    template:`
+        <p>about</p>
+    `,
+    styles:[`
+        p{
+            color: white;
+        }
+    `]
+})
+
+export class AboutDialogComponent {}
