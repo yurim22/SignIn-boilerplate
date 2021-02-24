@@ -1,30 +1,21 @@
-<!-- <ng-template [ngIf]="isAnalyzed" class="img-btn-container" appMousewheelEvent>
-    <div class="report_image">
-        <img src="assets/report_test_210216/1.jpg">
-        <img src="{{report_img}}">
-    </div>
-    <div class="btn-container">
-        <button class="custom-btn" (click)="confirm()">
-            <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>&nbsp;Confirm
-        </button>
-    </div>
-</ng-template> -->
-
 <ng-template [ngIf]="isReceived" class="img-btn-container">
-    <div class="report_image">
+    <!-- <div class="block"></div> -->
+    <div class="error-image">
         <!-- <img src="assets/report_test_210216/1.jpg"> -->
         <img src="{{error_report_img}}">
     </div>
 </ng-template>
 
-<ng-template [ngIf]="isAnalyzed" class="img-btn-container" appMousewheelEvent>
-    <div class="btn-container2">
-        <button class="custom-btn" (click)="confirm()">
-            <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>&nbsp;Confirm
-        </button>
-    </div>
-    <div class="report_image2">
-        <!-- <img src="assets/report_test_210216/1.jpg"> -->
-        <img src="{{report_img}}">
+<ng-template [ngIf]="isAnalyzed" appMousewheelEvent>
+    <div class="img-btn-container">
+        <div class="btn-container2">
+            <button class="custom-btn" (click)="confirm()">
+                <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>&nbsp;Confirm
+            </button>
+        </div>
+        <div class="report_image2">
+            <!-- <img src="assets/report_test_210216/1.jpg"> -->
+            <img src="{{report_img}}">
+        </div>
     </div>
 </ng-template>

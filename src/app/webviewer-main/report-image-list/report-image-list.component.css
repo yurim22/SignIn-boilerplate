@@ -10,32 +10,51 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 3.8%;
-    padding-right: 14px;
+    /* padding-top: 3.8%;
+    padding-right: 14px; */
+    /* max-height: 80vh; */
+    /* max-width: auto; */
 }
 
 img{
-    max-height:83vh;
-    max-width: auto;
+    /* max-height:83vh;
+    max-width: auto; */
     /* width: 500px;
     height: auto; */
+    max-width: 95%;
+    max-height: 95%;
+    display: block;
+    /* padding-top: 12%; */
+    /* padding-right: 14px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 } 
 
+.error-image{
+    display: flex;
+    justify-content: center;
+    margin-top: 2.25vw;
+}
 .custom-btn {
     cursor: pointer;
     display: block;
     -webkit-appearance: none !important;
     border-radius: 0.125rem;
     border: 1.2px solid rgb(126, 126, 126);
-    min-width: 3rem;
+    /* min-width: 3rem;
     max-width: 10rem;
-    min-height: 2.2rem;
+    min-height: 2.2rem; */
+    max-width: 8vw;
+    max-height: 1.8vw;
+    min-height: 1.8vw;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     letter-spacing: 0.073em;
     text-transform: uppercase;
-    font-size: 0.95rem;
+    /* font-size: 0.95rem; */
+    font-size: 0.9vw;
     font-weight: 500;
     background-color: transparent;
     color: rgb(126, 126, 126);
@@ -51,26 +70,54 @@ img{
     position: fixed;
     bottom: 2.5%;
     right: 1%;
-    padding: 1rem 3rem 0 0;
+    padding: 1rem 3.5rem 0 0;
 }
 .btn-container2{
-    position: fixed;
-    right: 0;
-    top: 6%;
-    padding: 1.3rem 2.8rem 0 0;
+    padding: 0 1.8rem 0.5rem 0;
 }
 
+.img-btn-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end ;
+    /* justify-content: flex-end; */
+}
 
 ::ng-deep snack-bar-container.custom-snackbar{
     display: flex;
     justify-content: center;
     margin: 15px;
     position: absolute;
-    right: 11%;
+    right: 15%;
     bottom: 0.1%;
+    min-width: fit-content;
+    padding: 14px 35px;
 }
 
 ::ng-deep .mat-simple-snackbar{
-    font-size: 18px;
+    font-size: 1vw;
 }
 
+@media (max-width: 1224px) {
+    /* .img-btn-container, .error-image{
+        max-height: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    } */
+    /* img{
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+        padding-top: 10%;
+        padding-right: 14px;
+    }  */
+
+    .btn-container2{
+        padding: 0.5rem 0.7rem 0.5rem 0;
+    }
+    .custom-btn{
+        min-height: 2.2vw;
+    }
+}

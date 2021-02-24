@@ -1,5 +1,6 @@
 .mat-table {
-    overflow: scroll;
+    overflow: auto;
+    table-layout: fixed;
 }
 
 td.mat-cell:first-of-type,
@@ -17,16 +18,19 @@ th.mat-header-cell:first-of-type {
 
 
 .mat-header-cell {
-    font-size: 14px;
+    font-size: 0.75vw;
     padding-left: 5px;
     border: 1px solid darkgray;
     text-align: left;
     background: #3d3d3d;
     color: whitesmoke;
+    line-height: fit-content;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .mat-cell {
-    font-size: 14px;
+    font-size:  0.75vw;
     line-height: 27px;
     color: lightgray;
     border: 1px solid #5a5a5a;
@@ -34,6 +38,8 @@ th.mat-header-cell:first-of-type {
     /* background: #212121; */
     width: 100%;
     padding-left: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .mat-header-row {
     padding-left:5px;
@@ -92,8 +98,8 @@ table.mat-table {
 .mat-column-patient_name {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 20.5% !important;
-    width: 20.5% !important;
+    flex: 0 0 20% !important;
+    width: 20% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
     overflow: hidden;
@@ -112,8 +118,8 @@ table.mat-table {
 }
 
 .mat-column-results, .mat-column-volumes {
-    flex: 0 0 3% !important;
-    width: 3% !important;
+    flex: 0 0 6.5% !important;
+    width: 6.5% !important;
 }
 
 .mat-column-age {
@@ -121,8 +127,8 @@ table.mat-table {
     width: 6% !important;
 }
 .mat-column-study_date, .mat-column-analysis_date {
-    flex: 0 0 18% !important;
-    width: 18% !important;
+    flex: 0 0 15% !important;
+    width: 15% !important;
 }
   
 
