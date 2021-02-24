@@ -40,10 +40,10 @@ export class ReportImageListComponent implements OnInit {
         } else if(event.wheelDelta < 0 && this.idx !== 13){
             this.idx = this.idx + step;
         } else if(this.idx === 1){
-            this.snack_message = "This is the first page"
+            this.snack_message = "This is the first page of the report"
             this.openSnackBar();
         } else if(this.idx === 13) {
-            this.snack_message = "This is the last page"
+            this.snack_message = "This is the last page of the report"
             this.openSnackBar();
         }
 
@@ -64,7 +64,7 @@ export class ReportImageListComponent implements OnInit {
 
     openSnackBar() {
         this._snackBar.open( this.snack_message, '', {
-            duration: 1000,
+            duration: 1500,
             panelClass:'custom-snackbar',
             //horizontalPosition: 'right'
         }) 
