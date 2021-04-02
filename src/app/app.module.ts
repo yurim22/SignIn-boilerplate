@@ -13,6 +13,11 @@ import { AngularMaterialsModule } from './common/shared/angular-materials.module
 
 // import { StudyTableComponent } from './webviewer-main/study-table/study-table.component';
 import { WebviewerMainModule } from './webviewer-main/webviewer-main.module';
+import { GraphQLModule } from './graphql.module';
+
+import {APOLLO_OPTIONS} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular/http';
+import {InMemoryCache} from '@apollo/client/core';
 
 @NgModule({
     declarations: [
@@ -20,6 +25,7 @@ import { WebviewerMainModule } from './webviewer-main/webviewer-main.module';
         SigninComponent
     ],
     imports: [
+        GraphQLModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -27,9 +33,22 @@ import { WebviewerMainModule } from './webviewer-main/webviewer-main.module';
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        WebviewerMainModule
+        WebviewerMainModule,
     ],
-    providers: [],
+    providers: [
+        // {
+        //     provide: APOLLO_OPTIONS,
+        //     useFactory: (httpLink: HttpLink) => {
+        //       return {
+        //         cache: new InMemoryCache(),
+        //         link: httpLink.create({
+        //           uri: 'http://localhost:3000/graphql',
+        //         }),
+        //       };
+        //     },
+        //     deps: [HttpLink],
+        // }
+    ],
     bootstrap: [AppComponent],
     exports: [
         SigninComponent

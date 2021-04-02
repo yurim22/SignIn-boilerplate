@@ -70,15 +70,3 @@ export class ReportImageListComponent implements OnInit {
         }) 
     }
 }
-
-// @Component({
-//     selector:'snack-bar-component-last-page',
-//     template: `
-//         <span>{{snack_message}}</span>
-//     `
-// })
-
-// export class LastPageComponent {
-//     @Input() snack_message: string; 
-
-// }
