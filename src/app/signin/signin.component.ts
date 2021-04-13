@@ -45,7 +45,7 @@ export class SigninComponent implements OnInit {
     accessToken: string;
     refreshToken: string;
     
-    isSigninFailed: boolean;
+    isSigninFailed: boolean = false;
 
     constructor(private formBuilder: FormBuilder,
                 private router: Router,
@@ -72,7 +72,7 @@ export class SigninComponent implements OnInit {
             this.isSystemIntegrityChecking = false;
             this.isSystemIntegrityCheckingSuccess = true;
         }, 2000)
-        
+
     }
 
     getMyClass() {
@@ -80,19 +80,23 @@ export class SigninComponent implements OnInit {
     }
 
     onSubmit(){
-        console.log('submit');
-
         this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password)
-        //promise 결과가 찍힌다.
-        //console.log(tokens)
-        console.log(LoginUserInfo());
-        this.userInfoService.setUserInfo();
+
+        if(Object.keys(LoginUserInfo()).length === 0) {
+            this.isSigninFailed = true
+            console.log(this.isSigninFailed)
+            setTimeout(()=> this.isSigninFailed = false, 3000)
+        }else{
+            this.isSigninFailed = false
+            this.userInfoService.setUserInfo();
+        }
+
+        //rememberme checkbox 
         if(this.rememberMeCheckboxChecked){
             this.cookieService.set('rememberedId', this.signInForm.value.id)
         } else{
             this.cookieService.set('rememberedId', '')
         }
-
         
     }
 

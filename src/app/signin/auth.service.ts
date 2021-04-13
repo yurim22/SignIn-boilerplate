@@ -19,8 +19,6 @@ export class AuthService implements OnInit, OnDestroy{
     accessToken: string;
     refreshToken: string;
 
-    signInFailed: boolean = false;
-
     private querySubscription: Subscription;
     
     constructor(
@@ -33,8 +31,8 @@ export class AuthService implements OnInit, OnDestroy{
     ngOnInit() {
         console.log('auth service ngonInit')
     }
-    async signIn(userid:string, userpwd:string) {
-        this.querySubscription = this.apollo.watchQuery<any>({
+    signIn(userid:string, userpwd:string) {
+        this.querySubscription =  this.apollo.watchQuery<any>({
             query: LOGIN_INFO,
             variables: {
                 data: {
@@ -48,15 +46,11 @@ export class AuthService implements OnInit, OnDestroy{
                 this.refreshToken = data.signIn.refreshToken
                 //accessToken을 localstorage에 저장
                 this.setToken(this.accessToken)
-
-                this.signInFailed = false;
                 
                 this.router.navigate(['/webviewer'])
             },
             (error) => {
                 console.log('login result is fail',error);
-                this.signInFailed = true;
-                console.log(this.signInFailed);
             }
         )
     }
