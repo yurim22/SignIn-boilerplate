@@ -1,0 +1,40 @@
+
+<section class="header">
+    <h2>User List</h2>
+    <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+        <mat-icon class="close-icon">close</mat-icon>
+    </button>
+</section>
+<section class="CRUser">
+    <button mat-icon-button (click)="openCreateNewUserDialog()">
+        <span class="material-icons">add</span>
+    </button>
+    <button mat-icon-button>
+        <span class="material-icons">tune</span>
+    </button>
+</section>
+<section class="user-table" style="background-color: black;">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container [matColumnDef]="column" *ngFor="let column of columnsFromDB; let idx=index">
+            <th mat-header-cell *matHeaderCellDef id="{{column}}">{{displayedTitle[idx]}}</th>
+            <td mat-cell *matCellDef="let row"><nobr>{{row[column]}}</nobr></td>
+        </ng-container>
+        
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef>Edit</th>
+            <td mat-cell *matCellDef = "let row">
+                <div class="edit-buttons" style="display: flex;">
+                    <button mat-icon-button>
+                        <span class="material-icons">create</span>
+                    </button>
+                    <button mat-icon-button (click)="deleteUser(row)">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</section>

@@ -9,7 +9,7 @@
                 <h5 class="hint" *ngIf="passwordExpired">Your password has been expired. Change to new password.</h5>
             </label>
             <div class="login-group" *ngIf="!passwordExpired">
-                <input class="username" type="text" id="login_username" placeholder="Username" formControlName="id">
+                <input class="username" type="text" id="login_username" placeholder="UserID" formControlName="id">
                 <input class="password" type="password" id="login_password" placeholder="Password" formControlName="password">
                 <mat-checkbox class="checkbox" color="primary" id="rememberme" [checked]="isRememberedIdExist()" (change)="onRemembermeChanged($event)" style="font-size: 14px;">Remember me</mat-checkbox>
                 <!-- <div class="checkbox">
@@ -24,6 +24,9 @@
                 <div class="error active" *ngIf="invalidPasswordCountOver">
                     Bad passwords count is over than 5, Your account lockout.
                 </div> -->
+                <div class="error active" [hidden]="!signInFailed">
+                    Invalid username or password.
+                </div>
                 <button type="submit" mat-flat-button >SIGN IN</button>
                 <!-- <button type="submit" class="btn btn-primary">SIGN IN</button> -->
             </div>
@@ -66,7 +69,8 @@
                         </span>
                         <mat-spinner *ngIf="isSystemIntegrityChecking" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
                         <!-- <mat-icon *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="check-for-integrity-spinner-custom">check_circle_outline</mat-icon> -->
-                        <mat-icon  *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="check-for-integrity-spinner-custom">check_circle</mat-icon>
+                        <!-- <mat-icon  *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="check-for-integrity-spinner-custom">check_circle</mat-icon> -->
+                        <span *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="material-icons check-for-integrity-spinner-custom">check_circle_outline</span>
                         <!-- <clr-spinner *ngIf="isSystemIntegrityChecking" clrInline class="check-for-integrity-spinner-custom"></clr-spinner>
                         <clr-icon *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" shape="success-standard" aria-label="Completed" class="check-for-integrity-spinner-custom"></clr-icon>
                         <clr-icon *ngIf="!isSystemIntegrityChecking && !isSystemIntegrityCheckingSuccess" shape="error-standard" aria-label="Error" class="check-for-integrity-spinner-custom-error"></clr-icon> -->
@@ -77,7 +81,8 @@
                         <span (click)="showAboutDialog()" class="check-for-integrity-spinner-inline-underline">
                             About
                         </span>
-                        <mat-icon class="check-for-integrity-spinner-custom">info</mat-icon>
+                        <span class="material-icons check-for-integrity-spinner-custom">error_outline</span>
+                        <!-- <mat-icon class="check-for-integrity-spinner-custom">info</mat-icon> -->
                     <!-- <clr-icon shape="info-standard" class="check-for-integrity-spinner-custom"></clr-icon> -->
                     </div>
                 </div>

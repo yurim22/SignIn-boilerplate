@@ -45,7 +45,7 @@
     font-size: 0.83rem;
     color: #9a9a9a;
     transition: border-bottom 0.2s ease;
-    margin-bottom: 28px;
+    margin: 28px;
 }
 
 .settings .input-group .pacs:focus {

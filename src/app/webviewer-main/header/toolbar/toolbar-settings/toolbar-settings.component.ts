@@ -7,7 +7,6 @@ import { SettingsDialogComponent } from './settings-dialog/settings-dialog.compo
 export interface SettingsData{
     description: string;
     category: string;
-
 }
 @Component({
     selector: 'toolbar-settings',
@@ -25,8 +24,8 @@ export class ToolbarSettingsComponent implements OnInit {
     openUserSettingModal() {
         console.log('settings')
         const dialogRef = this.dialog.open(SettingsDialogComponent, {
-            width: '570px',
-            height: '430px',
+            width: '31vw',
+            height: '53vh',
             autoFocus: false
         })
 

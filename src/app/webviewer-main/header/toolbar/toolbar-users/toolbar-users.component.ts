@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { UsersDialogComponent } from './users-dialog/users-dialog.component';
 
 @Component({
     selector: 'toolbar-users',
     template: `
-    <div id="icon_study_download down" class="flex-item-row top-menu-tools-container">
+    <div id="icon_study_download down" class="flex-item-row top-menu-tools-container" (click)="openUsersModal()">
         <div title="Pacs" class="flex-top-menu-tools-icon-item-row">
             <img class="top-menu-tools-icon-button" src="assets/icons/customer.svg">
         </div>
@@ -38,9 +40,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarUsersComponent implements OnInit {
 
-    constructor() { }
+    constructor(private dialog: MatDialog) { }
 
     ngOnInit(): void {
+    }
+
+    openUsersModal() {
+        console.log('settings')
+        const dialogRef = this.dialog.open(UsersDialogComponent, {
+            autoFocus: false,
+            width: '40vw',
+            height: '45vh'
+        })
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('the dialog was closed');
+        })
     }
 
 }

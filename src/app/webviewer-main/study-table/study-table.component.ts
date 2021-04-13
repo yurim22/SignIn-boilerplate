@@ -15,7 +15,8 @@ import { MatSort, Sort } from '@angular/material/sort';
 @Component({
     selector: 'app-study-table',
     templateUrl: './study-table.component.html',
-    styleUrls: ['./study-table.component.css']
+    styleUrls: ['./study-table.component.css'],
+    
 })
 export class StudyTableComponent implements OnInit, OnChanges {
 

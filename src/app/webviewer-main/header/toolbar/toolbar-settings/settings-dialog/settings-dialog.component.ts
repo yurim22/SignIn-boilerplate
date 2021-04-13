@@ -25,7 +25,7 @@ export class SettingsDialogComponent {
     cnt: number = 0;
     // isFail: boolean;
     constructor(
-        public dialogRef: MatDialogRef<SettingsDialogComponent>,
+        private dialogRef: MatDialogRef<SettingsDialogComponent>,
         private fb: FormBuilder,
     ){
         this.receiveForm = fb.group({

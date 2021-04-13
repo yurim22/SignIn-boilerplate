@@ -47,7 +47,6 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-
 const modules = [
     A11yModule,
     ClipboardModule,
@@ -104,7 +103,8 @@ const modules = [
         ...modules
     ],
     providers: [     
-    ]
+    ],
+    declarations: []
 })
 export class AngularMaterialsModule {
     // constructor(public matIconRegistry: MatIconRegistry) {
