@@ -15,6 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsDialogComponent } from './toolbar/toolbar-settings/settings-dialog/settings-dialog.component';
+import { UsersDialogComponent } from './toolbar/toolbar-users/users-dialog/users-dialog.component';
+import { CreateNewUserDialogComponent } from './toolbar/toolbar-users/users-dialog/new-user-dialog.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +25,7 @@ import { SettingsDialogComponent } from './toolbar/toolbar-settings/settings-dia
         ToolbarUsersComponent, 
         ToolbarSettingsComponent, 
         ToolbarAboutComponent, 
-        ToolbarLogoutComponent, SettingsDialogComponent
+        ToolbarLogoutComponent, SettingsDialogComponent, UsersDialogComponent, CreateNewUserDialogComponent
     ],
     imports: [
         CommonModule,

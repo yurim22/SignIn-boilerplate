@@ -5,37 +5,19 @@ import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserInfoService } from '../user-info.service';
-import { Apollo, gql } from 'apollo-angular';
-import { Subscription } from 'rxjs';
-
-// query to graphql 
-const LOGIN_INFO = gql`
-    mutation UserLogin ($data: any) {
-        login(data: $data){
-            accessToken,
-            refreshToken
-        }
-    }
-`
-const USER_LIST = gql`
-    query GetAllUsers{
-        getAllUsers{
-            seq
-            id
-            name
-            password
-            permission
-            creation_timestamp
-        }
-    }
-`
+import { Apollo, gql, Query } from 'apollo-angular';
+import { async, Subscription } from 'rxjs';
+import { AuthService, LoginUserInfo } from './auth.service';
+import { User } from '../components/user.component';
+import { FIND_USER } from 'src/app/common/graphql/gql';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({ 
     selector: 'app-signin',
     templateUrl: './signin.component.html',
     styleUrls: ['./signin.component.css']
 })
-export class SigninComponent implements OnInit, OnDestroy {
+export class SigninComponent implements OnInit {
 
     checked = false;
 
@@ -60,16 +42,23 @@ export class SigninComponent implements OnInit, OnDestroy {
     isSystemIntegrityChecking = true;
     isSystemIntegrityCheckingSuccess = true;
 
-    private querySubscription: Subscription;
+    accessToken: string;
+    refreshToken: string;
     
+    isSigninFailed: boolean;
+
     constructor(private formBuilder: FormBuilder,
                 private router: Router,
                 private dialog: MatDialog,
                 private snackbar: MatSnackBar,
                 private userInfoService: UserInfoService,
-                private apollo: Apollo) {
+                private apollo: Apollo,
+                private authService: AuthService,
+                private cookieService: CookieService) {
+        
+        this.rememberedId = this.cookieService.get('rememberedId')
 
-        this.signInForm = formBuilder.group({
+        this.signInForm = this.formBuilder.group({
             id: [this.rememberedId, Validators.required],
             password: ['', Validators.required]
         })
@@ -78,52 +67,41 @@ export class SigninComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         console.log('[yurim] signin ngOnInit');
+        this.userInfoService.clear();
         setTimeout(() => {
             this.isSystemIntegrityChecking = false;
             this.isSystemIntegrityCheckingSuccess = true;
         }, 2000)
-
-        this.querySubscription = this.apollo.watchQuery({
-            query: USER_LIST
-        }).valueChanges.subscribe(
-            ({data}) => {
-                console.log(data)
-            }, (error) => console.log(error)
-        )
+        
     }
 
     getMyClass() {
-        /* if (this.selectedServiceModeOption === 'basic') { */
-            return 'login-wrapper non-banner-image';
-        /* } else {
-            return 'login-wrapper main-banner-image';
-        } */
+        return 'login-wrapper non-banner-image';
     }
 
     onSubmit(){
         console.log('submit');
-        //this.router.navigate(['/webviewer'])
-        console.log('loginid:',this.signInForm.value);
-        this.userInfoService.userId = this.signInForm.value.id
-        console.log(this.userInfoService.userId)
-        console.log(this.signInForm.value.password)
+
+        this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password)
+        //promise 결과가 찍힌다.
+        //console.log(tokens)
+        console.log(LoginUserInfo());
+        this.userInfoService.setUserInfo();
+        if(this.rememberMeCheckboxChecked){
+            this.cookieService.set('rememberedId', this.signInForm.value.id)
+        } else{
+            this.cookieService.set('rememberedId', '')
+        }
+
         
-        // this.apollo.mutate({
-        //     mutation: LOGIN_INFO,
-        //     variables: {
-        //         data:{
-        //             id: this.signInForm.value.id,
-        //             password: this.signInForm.value.password
-        //         }
-        //     }
-        // }).subscribe(
-        //     ({data}) => console.log('result of login ', data),
-        //     (error) => console.log('there was an error sending the query', error)
-        // )
     }
 
     isRememberedIdExist():boolean {
-        return false;
+        if (this.rememberedId === '' || this.rememberedId === undefined || this.rememberedId === null) {
+            return false;
+        } else {
+            return true;
+        }
     }
     onRemembermeChanged(e) {
         console.log(e);
@@ -132,14 +110,6 @@ export class SigninComponent implements OnInit, OnDestroy {
 
     showAboutDialog(){
         console.log('show about dialog')
-    }
-
-    // set userName(id: string){
-    //     this.userInfoService.userId = id;
-    // }
-
-    ngOnDestroy() {
-        this.querySubscription.unsubscribe();
     }
 
 }

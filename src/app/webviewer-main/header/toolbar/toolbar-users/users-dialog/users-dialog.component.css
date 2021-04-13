@@ -4,17 +4,23 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: rgb(245, 245, 245)
+}
+
+.CRUser {
+    display: flex;
+    justify-content: flex-end;
+    color: rgb(189, 188, 188)
+}
 td.mat-cell:first-of-type,
 td.mat-footer-cell:first-of-type,
 th.mat-header-cell:first-of-type {
     padding-left: 8px;
-}
-.worklist-study-list{
-    position: relative;
-    /* top: -10px; */
-    max-height: 83vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 
@@ -50,7 +56,6 @@ th.mat-header-cell:first-of-type {
 .mat-row {
     padding-left:5px;
     height: 20px;
-    cursor: pointer;
 }
 tr{
     background: #212121;
@@ -58,18 +63,10 @@ tr{
 tr.study-element-row {
     height: 0;
 }
-/* tr.study-element-row :hover {
-    background-color: #d33939;;
-} */
-.mat-row:hover{
-    background-color: #3d3d3d;
-}
+
 .selectedRow{
     background-color: #6d4c41;
 }
-/* tr.study-element-row:active {
-    background: seagreen;
-} */
 
 table.mat-table {
     padding: 0px;
@@ -79,11 +76,11 @@ table.mat-table {
     flex: 0 0 7.5% !important;
     width: 7.5% !important;
 }
-.mat-column-patient_id {
+.mat-column-id {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 13% !important;
-    width: 13% !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
     overflow: hidden;
@@ -96,11 +93,11 @@ table.mat-table {
     hyphens: auto;
 }
 
-.mat-column-patient_name {
+.mat-column-name {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 20% !important;
-    width: 20% !important;
+    flex: 0 0 15% !important;
+    width: 15% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
     overflow: hidden;
@@ -113,27 +110,27 @@ table.mat-table {
     hyphens: auto;
 }
 
-.mat-column-sex {
+.mat-column-permission {
     flex: 0 0 6% !important;
     width: 6% !important;
 }
 
-.mat-column-results, .mat-column-volumes {
+.mat-column-creation_timestamp {
     flex: 0 0 6.5% !important;
     width: 6.5% !important;
 }
 
-.mat-column-age {
+.mat-column-institution {
     flex: 0 0 6% !important;
     width: 6% !important;
 }
-.mat-column-study_date, .mat-column-analysis_date {
-    flex: 0 0 15% !important;
-    width: 15% !important;
+.mat-column-edit {
+    flex: 0 0 5% !important;
+    width: 5% !important;
 }
   
 
-::ng-deep .mat-paginator-container {
+/* ::ng-deep .mat-paginator-container {
     position: relative;
     bottom: 0px;
     display: flex;
@@ -150,7 +147,7 @@ table.mat-table {
 ::ng-deep .mat-paginator-range-label {
     font-size:13px ;
     margin: 0px !important;
-}
+} */
 
 /* .mat-paginator{
     color: whitesmoke;
@@ -160,15 +157,15 @@ table.mat-table {
     color: whitesmoke;
     background-color:transparent;
 } */
-::ng-deep .mat-paginator-icon{
+/* ::ng-deep .mat-paginator-icon{
     width: 22px !important;
     fill: lightgray !important; 
     padding-left: 10px;
-}
+} */
 
-.mat-column-status .reviewedStatus{
+/* .mat-column-status .reviewedStatus{
     color: cornflowerblue;
-}
+} */
 
 th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
     padding-right: 0;

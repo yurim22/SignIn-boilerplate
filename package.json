@@ -22,8 +22,11 @@
     "@angular/platform-browser-dynamic": "~11.0.6",
     "@angular/router": "~11.0.6",
     "@apollo/client": "^3.0.0",
+    "@auth0/angular-jwt": "^5.0.2",
+    "@ngxs/store": "^3.7.1",
     "apollo-angular": "^2.4.0",
     "graphql": "^15.0.0",
+    "ngx-cookie-service": "^11.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

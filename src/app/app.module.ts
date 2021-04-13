@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { SigninComponent } from './signin/signin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialsModule } from './common/shared/angular-materials.module';
 
@@ -15,14 +16,22 @@ import { AngularMaterialsModule } from './common/shared/angular-materials.module
 import { WebviewerMainModule } from './webviewer-main/webviewer-main.module';
 import { GraphQLModule } from './graphql.module';
 
-import {APOLLO_OPTIONS} from 'apollo-angular';
-import {HttpLink} from 'apollo-angular/http';
-import {InMemoryCache} from '@apollo/client/core';
+import { NgxsModule } from '@ngxs/store';
+import { environment } from 'src/environments/environment';
+
+import { CommonDialogComponent } from './common/dialog/common-dialog.component';
+
+import { CookieService } from 'ngx-cookie-service';
+
+export function tokenGetter(){
+    return localStorage.getItem('token')
+}
 
 @NgModule({
     declarations: [
         AppComponent,
-        SigninComponent
+        SigninComponent,
+        CommonDialogComponent
     ],
     imports: [
         GraphQLModule,
@@ -34,24 +43,22 @@ import {InMemoryCache} from '@apollo/client/core';
         ReactiveFormsModule,
         HttpClientModule,
         WebviewerMainModule,
-    ],
-    providers: [
-        // {
-        //     provide: APOLLO_OPTIONS,
-        //     useFactory: (httpLink: HttpLink) => {
-        //       return {
-        //         cache: new InMemoryCache(),
-        //         link: httpLink.create({
-        //           uri: 'http://localhost:3000/graphql',
-        //         }),
-        //       };
-        //     },
-        //     deps: [HttpLink],
-        // }
+        JwtModule.forRoot({
+            config:{
+                tokenGetter: tokenGetter,
+                allowedDomains: ['localhost:3000', 'localhost:3000/grpahql'],
+                disallowedRoutes: []
+            }
+        }),
+        NgxsModule.forRoot([], {
+            developmentMode: !environment.production
+        })
+      
     ],
     bootstrap: [AppComponent],
     exports: [
         SigninComponent
-    ]
+    ],
+    providers:[CookieService]
 })
-export class AppModule { }
+export class AppModule {}
