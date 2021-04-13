@@ -12,21 +12,14 @@
                 <input class="username" type="text" id="login_username" placeholder="UserID" formControlName="id">
                 <input class="password" type="password" id="login_password" placeholder="Password" formControlName="password">
                 <mat-checkbox class="checkbox" color="primary" id="rememberme" [checked]="isRememberedIdExist()" (change)="onRemembermeChanged($event)" style="font-size: 14px;">Remember me</mat-checkbox>
-                <!-- <div class="checkbox">
-                    <input type="checkbox" id="rememberme" [checked]="isRememberedIdExist()" (change)="onRemembermeChanged($event)">
-                    <label for="rememberme">
-                        Remember me
-                    </label>
-                </div> -->
+
                 <!-- <div class="error active" [hidden]="signInFailed==0">
                     Invalid username or password.
                 </div>
                 <div class="error active" *ngIf="invalidPasswordCountOver">
                     Bad passwords count is over than 5, Your account lockout.
                 </div> -->
-                <div class="error active" [hidden]="!signInFailed">
-                    Invalid username or password.
-                </div>
+
                 <button type="submit" mat-flat-button >SIGN IN</button>
                 <!-- <button type="submit" class="btn btn-primary">SIGN IN</button> -->
             </div>
@@ -86,7 +79,13 @@
                     <!-- <clr-icon shape="info-standard" class="check-for-integrity-spinner-custom"></clr-icon> -->
                     </div>
                 </div>
+
             </form>
+            <!-- 로그인 실패 시 error mgs -->
+            <div class="error" [class.active]="isSigninFailed">
+                <span class="material-icons">warning_amber</span>
+                Invalid username or password.
+            </div>
         </div>
     </div>
   </div>

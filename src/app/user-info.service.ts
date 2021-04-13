@@ -98,6 +98,8 @@ export class UserInfoService {
         localStorage.removeItem('name');
         localStorage.removeItem('permission');
         localStorage.removeItem('institution');
+
+        LoginUserInfo({})
     }
     
     getCurrentUser(){
