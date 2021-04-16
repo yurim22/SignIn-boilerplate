@@ -1,6 +1,6 @@
 <div class="flex-container">
     <section class="header">
-        <h2>Edit User</h2>
+        <h2>{{dialogName}}</h2>
         <button mat-icon-button class="close-button" [mat-dialog-close]="true">
             <mat-icon class="close-icon">close</mat-icon>
         </button>
@@ -19,13 +19,17 @@
                 </div>
                 <!-- userid field -->
                 <h5>User ID</h5>
-                <input class="userinfo" type="text" formControlName="id" placeholder="id" [class.error]="id.errors?.required && (id.dirty || id.touched)"/>
+                <input class="userinfo" type="text" formControlName="id" placeholder="id" [class.error]="id.errors?.required && (id.dirty || id.touched) || duplicatedId"/>
                 <div *ngIf="id.errors?.required && (id.dirty || id.touched)" class="form-error-msg">
                     <div *ngIf="id.errors.required">
                         <!-- <span class="material-icons">warning_amber</span> -->
                         <span class="material-icons">priority_high</span>
                         ID is required.
                     </div>
+                </div>
+                <div *ngIf="duplicatedId" class="form-error-msg">
+                    <span class="material-icons">priority_high</span>
+                    Already existed ID
                 </div>
                 <!-- userpassword field -->
                 <h5>User Password</h5>
@@ -63,7 +67,7 @@
             </div>
             
             <div mat-dialog-actions class="create-user-btn">
-                <button mat-button type="submit" [disabled]="!createUserForm.valid">Register</button>
+                <button mat-button type="submit" [disabled]="!createUserForm.valid || duplicatedId">Register</button>
                 <button mat-button mat-dialog-close>Close</button>
             </div>
         </form>
