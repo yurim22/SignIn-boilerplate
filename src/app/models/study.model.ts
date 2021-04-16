@@ -1,4 +1,4 @@
-import { StudyRow } from './studyrow.component';
+import { StudyRow } from './studyrow.model';
 
 export class Study extends StudyRow {
     onAnalysing = false;

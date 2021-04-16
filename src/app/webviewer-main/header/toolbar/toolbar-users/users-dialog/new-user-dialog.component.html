@@ -1,6 +1,6 @@
 <div class="flex-container">
     <section class="header">
-        <h2>Create User</h2>
+        <h2>Edit User</h2>
         <button mat-icon-button class="close-button" [mat-dialog-close]="true">
             <mat-icon class="close-icon">close</mat-icon>
         </button>
@@ -10,28 +10,46 @@
             <div class="mat-dialog-content flex-container input-user-info">
                 <!-- username field -->
                 <h5>User Name</h5>
-                <input class="userinfo" type="text" formControlName="name" placeholder="name" />
+                <input class="userinfo" type="text" formControlName="name" placeholder="name" [class.error]="name.errors?.required && (name.dirty || name.touched)"/>
                 <div *ngIf="name.errors?.required && (name.dirty || name.touched)" class="form-error-msg">
                     <div *ngIf="name.errors.required">
-                        <span class="material-icons">warning_amber</span>
+                        <span class="material-icons">priority_high</span>
                         Name is required.
                     </div>
                 </div>
                 <!-- userid field -->
                 <h5>User ID</h5>
-                <input class="userinfo" type="text" formControlName="id" placeholder="id" />
+                <input class="userinfo" type="text" formControlName="id" placeholder="id" [class.error]="id.errors?.required && (id.dirty || id.touched)"/>
                 <div *ngIf="id.errors?.required && (id.dirty || id.touched)" class="form-error-msg">
                     <div *ngIf="id.errors.required">
-                        <span class="material-icons">warning_amber</span>
+                        <!-- <span class="material-icons">warning_amber</span> -->
+                        <span class="material-icons">priority_high</span>
                         ID is required.
                     </div>
                 </div>
                 <!-- userpassword field -->
                 <h5>User Password</h5>
-                <input class="userinfo" id="pwdInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="password">
+                <input class="userinfo" id="pwdInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="At least 8 characters" [class.error]="(password.dirty || password.touched) && (password.errors?.required || password.errors?.minlength || password.errors?.pattern)" />
                 <button mat-icon-button matSuffix (click)="togglePwdHide()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldTextType" [style.color]="'#0094d2'">
                     <mat-icon>{{fieldTextType ? 'visibility' : 'visibility_off'}}</mat-icon>
                 </button>
+                <div *ngIf="password.errors?.required && (password.dirty || password.touched)" class="form-error-msg">
+                    <div *ngIf="password.errors.required">
+                        <!-- <span class="material-icons">warning_amber</span> -->
+                        <span class="material-icons">priority_high</span>
+                        Password is required.
+                    </div>
+                </div>
+                <div *ngIf="password.errors?.minlength || password.errors?.pattern && (password.dirty || password.touched)" class="form-error-msg">
+                    <div *ngIf="password.errors.minlength">
+                        <span class="material-icons">priority_high</span>
+                        Password must be at least 8 characters
+                    </div>
+                    <div *ngIf="password.errors.pattern">
+                        <span class="material-icons">priority_high</span>
+                        Password is a combination of uppercase, lowercase, numeric and non-alphanumeric characters
+                    </div>
+                </div>
 
                 <h5>User Permission</h5>
                 <!-- <input class="userinfo" type="text" formControlName="permission" /> -->
@@ -42,85 +60,9 @@
                 </select>
                 <h5>User Institution</h5>
                 <input class="userinfo" type="text" formControlName="institution" placeholder="ex.monitor"/>
-                <!-- <mat-form-field class="add-user-full-width">
-                    <mat-label>ID</mat-label>
-                    <input matInput type="text"  formControlName="id" />
-                    <mat-error *ngIf="createUserForm.controls['id'].hasError('required')">
-                        ID is <strong>required</strong>
-                    </mat-error>
-                </mat-form-field> -->
-
-                <!-- <div class="user-info">
-                    <h5>User ID</h5>
-                    <mat-form-field class="add-user-full-width">
-                        <mat-label>ID</mat-label>
-                        <input matInput type="text"  formControlName="id" />
-                        <mat-error *ngIf="createUserForm.controls['id'].hasError('required')">
-                            ID is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div> -->
-
-                <!-- <div class="user-info">
-                    <h5>User Name</h5>
-                    <mat-form-field class="add-user-full-width">
-                        <mat-label>Name</mat-label>
-                        <input matInput type="text" formControlName="name" />
-                        <mat-error *ngIf="createUserForm.controls['name'].hasError('required')">
-                            name is <strong>required</strong>
-                        </mat-error>
-                    </mat-form-field>
-                </div> -->
-
-                <!-- <div class="user-info">
-                    <h5>User Password</h5>
-                    <div #passwordForm>
-                        <mat-form-field class="add-user-full-width">
-                            <mat-label>Password</mat-label>
-                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" />
-                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" [style.color]="'#0094d2'">
-                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                            </button>
-                            <mat-error *ngIf="createUserForm.controls['password'].hasError('required')">
-                                password is <strong>required</strong>
-                            </mat-error>
-                            <mat-error *ngIf="isPasswordError()">
-                                Password must contain a minimum of 8 characters.<br/>
-                                Password must contain at least one lowercase character.<br/>
-                                Password must contain at least one uppercase character.<br/>
-                                Password must contain at least one numeric character.<br/>
-                                Password must contain at least one non-alphanumeric character.<br/>
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div> -->
-                <!-- <h5>Permission</h5>
-                <mat-form-field class="add-user-full-width">
-                    <mat-label style="color:#cecece;">Permission</mat-label>
-                    <select matNativeControl (change)="onSelectedPemissionTypeChanged($event)" style="background:#3d3d3d;color:#d3d3d3;">
-                        <option *ngFor="let permission of selectedPemissionTypeList" [value]="permission.value"
-                                [selected]="defaultPermission.value === permission.value">{{ permission.text }}</option>
-                    </select>
-                </mat-form-field> -->
-
-                <!-- <div class="user-info">
-                    <h5>User Permission</h5>
-                    <mat-form-field class="add-user-full-width">
-                        <mat-label>Permission</mat-label>
-                        <input matInput type="text" placeholder="permission" formControlName="permission" />
-                    </mat-form-field>
-                </div>
-
-                <div class="user-info">
-                    <h5>User Institution</h5>
-                    <mat-form-field class="add-user-full-width">
-                        <mat-label>Institution</mat-label>
-                        <input matInput type="text" placeholder="Ex. monitor" formControlName="institution" />
-                    </mat-form-field>
-                </div> -->
             </div>
             
-            <div mat-dialog-actions class="create-user-btn" align="end">
+            <div mat-dialog-actions class="create-user-btn">
                 <button mat-button type="submit" [disabled]="!createUserForm.valid">Register</button>
                 <button mat-button mat-dialog-close>Close</button>
             </div>

@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Apollo, gql } from 'apollo-angular';
-import { User } from 'src/app/components/user.component';
+import { map } from 'rxjs/operators';
+// import { Apollo, gql } from 'apollo-angular';
+import { User } from 'src/app/models/user.model';
+import { UserService } from '../users.service';
 import { CreateNewUserDialogComponent } from './new-user-dialog.component';
-import { USER_LIST, DELETE_USER} from 'src/app/common/graphql/gql';
+// import { USER_LIST, DELETE_USER} from 'src/app/common/graphql/gql';
 
 type PartialUser = Partial<User>
 const USER_DATA: PartialUser[] = [
@@ -19,31 +22,48 @@ const USER_DATA: PartialUser[] = [
 
 export class UsersDialogComponent implements OnInit {
 
+    displayedColumns: string[] = ['id', 'name', 'permission','creation_timestamp','institution', 'edit'];
+    displayedTitle = ['ID', 'Name', 'Permission', 'Creation Date', 'Institution']
+    columnsFromDB: string[] = ['id', 'name', 'permission','creation_timestamp','institution'];
+
+    dataSource = new MatTableDataSource<User>();
+    
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+
     constructor(
-        private apollo: Apollo,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private userService: UserService
     ) { }
 
     ngOnInit(): void {
         this.getUserList();
     }
-    displayedColumns: string[] = ['id', 'name', 'permission','creation_timestamp','institution', 'edit'];
-    displayedTitle = ['ID', 'Name', 'Permission', 'Creation Date', 'Institution']
-    columnsFromDB: string[] = ['id', 'name', 'permission','creation_timestamp','institution'];
-    dataSource = new MatTableDataSource<User>();
 
-    // dataSource = new MatTableDataSource<User>();
-    // dataSource = USER_DATA
+    ngAfterViewInit(): void {
+        console.log('[userlist table.ngAfterViewInit]');
+    
+        this.dataSource.paginator = this.paginator;
+    }
 
     getUserList() {
-        this.apollo.watchQuery<any>({
-            query: USER_LIST
-        }).valueChanges.subscribe(
-            ({data}) => {
-                console.log('this is datasource', this.dataSource)
-                this.dataSource.data = data.getAllUsers
+        this.userService.getUserList().subscribe(
+            (result) => {
+                console.log('this is datasource', this.dataSource);
+                this.dataSource.data = result;
                 console.log(this.dataSource.data)
-            }
+            },
+            (error) => console.log(error)
+        )
+    }
+
+    deleteUser(row) {
+        this.userService.deleteUser(row.id).subscribe(
+            (result)=> {
+                console.log(result)
+                console.log('delete success');
+                this.getUserList()
+            },
+            (error) => console.log(error)
         )
     }
 
@@ -53,41 +73,47 @@ export class UsersDialogComponent implements OnInit {
         const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
             autoFocus: false,
             width: '18vw',
-            height: '70vh'
+            height: '70vh',
+            data: {userInfo: undefined, mode: 'createMode'},
+            hasBackdrop: false,
         })
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('the dialog was closed');
+        dialogRef.afterClosed().subscribe(_ => {
+            console.log('the create dialog was closed');
             this.dialog.open(UsersDialogComponent, {
                 autoFocus: false,
-                width: '40vw',
-                height: '45vh'
+                width: '50vw',
+                height: '55vh'
             })
         })
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('the dialogRef was closed');
-        })
-
-        // parDialogRef.afterClosed().subscribe(result => {
+        // dialogRef.afterClosed().subscribe(result => {
         //     console.log('the dialogRef was closed');
         // })
 
+
     }
 
-    deleteUser(row: Partial<User>){
-        console.log(row.seq)
-        this.apollo.mutate({
-            mutation: DELETE_USER,
-            variables: {
-                seq: row.seq
-            }
-        }).subscribe(
-            ({data}) => {
-                console.log(data)
-                console.log('delete success')
-            },
-            (error) => console.log(error)
-        )
+    openEditUserDialog(row: Partial<User>) {
+        console.log(row)
+        console.log('edit');
+        this.dialog.closeAll();
+        const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
+            autoFocus: false,
+            width: '18vw',
+            height:'70vh',
+            data: {userInfo: row, mode: 'editMode'},
+            hasBackdrop: false,
+        })
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('the edit dialog was closed');
+            this.dialog.open(UsersDialogComponent, {
+                autoFocus: false,
+                width: '50vw',
+                height: '55vh'
+            })
+        })
     }
+
 }

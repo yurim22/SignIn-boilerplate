@@ -49,8 +49,8 @@ export class ToolbarUsersComponent implements OnInit {
         console.log('settings')
         const dialogRef = this.dialog.open(UsersDialogComponent, {
             autoFocus: false,
-            width: '40vw',
-            height: '45vh'
+            width: '50vw',
+            height: '55vh'
         })
 
         dialogRef.afterClosed().subscribe(result => {

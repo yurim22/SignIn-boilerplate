@@ -24,7 +24,7 @@
             <th mat-header-cell *matHeaderCellDef>Edit</th>
             <td mat-cell *matCellDef = "let row">
                 <div class="edit-buttons" style="display: flex;">
-                    <button mat-icon-button>
+                    <button mat-icon-button (click)="openEditUserDialog(row)">
                         <span class="material-icons">create</span>
                     </button>
                     <button mat-icon-button (click)="deleteUser(row)">
@@ -38,3 +38,4 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </section>
+<mat-paginator [pageSize]="15" [hidePageSize]="true"></mat-paginator>

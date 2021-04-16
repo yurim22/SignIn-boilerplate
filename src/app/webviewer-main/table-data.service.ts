@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StudyRow } from '../components/studyrow.component';
+import { StudyRow } from '../models/studyrow.model';
 import { HttpClient } from '@angular/common/http';
  
 @Injectable({
