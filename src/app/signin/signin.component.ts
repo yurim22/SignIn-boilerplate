@@ -1,16 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Route, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserInfoService } from '../user-info.service';
-import { Apollo, gql, Query } from 'apollo-angular';
+import { UserInfoService } from '../services/user-info.service';
+// import { Apollo, gql, Query } from 'apollo-angular';
 import { async, Subscription } from 'rxjs';
-import { AuthService, LoginUserInfo } from './auth.service';
-import { User } from '../components/user.component';
-import { FIND_USER } from 'src/app/common/graphql/gql';
+import { AuthService } from './auth.service';
+import { User } from '../models/user.model';
+// import { FIND_USER } from 'src/app/common/graphql/gql';
 import { CookieService } from 'ngx-cookie-service';
+import { tap } from 'rxjs/operators';
 
 @Component({ 
     selector: 'app-signin',
@@ -45,16 +44,13 @@ export class SigninComponent implements OnInit {
     accessToken: string;
     refreshToken: string;
     
-    isSigninFailed: boolean = false;
+    isSigninFailed: boolean;
 
     constructor(private formBuilder: FormBuilder,
-                private router: Router,
-                private dialog: MatDialog,
-                private snackbar: MatSnackBar,
                 private userInfoService: UserInfoService,
-                private apollo: Apollo,
+                private cookieService: CookieService,
                 private authService: AuthService,
-                private cookieService: CookieService) {
+                private router: Router) {
         
         this.rememberedId = this.cookieService.get('rememberedId')
 
@@ -62,6 +58,8 @@ export class SigninComponent implements OnInit {
             id: [this.rememberedId, Validators.required],
             password: ['', Validators.required]
         })
+
+        this.isSigninFailed = false;
     }
 
 
@@ -80,16 +78,17 @@ export class SigninComponent implements OnInit {
     }
 
     onSubmit(){
-        this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password)
-
-        if(Object.keys(LoginUserInfo()).length === 0) {
-            this.isSigninFailed = true
-            console.log(this.isSigninFailed)
-            setTimeout(()=> this.isSigninFailed = false, 3000)
-        }else{
-            this.isSigninFailed = false
-            this.userInfoService.setUserInfo();
-        }
+        this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password).subscribe(
+            () => {
+                this.isSigninFailed = false;
+                this.router.navigate(['/webviewer'])
+            },
+            (error)=> {
+                this.isSigninFailed = true;
+                console.log(error);
+                setTimeout(() => this.isSigninFailed = false, 3000)
+            }
+        )
 
         //rememberme checkbox 
         if(this.rememberMeCheckboxChecked){

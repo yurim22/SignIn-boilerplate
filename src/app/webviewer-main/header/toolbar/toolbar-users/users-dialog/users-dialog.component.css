@@ -23,12 +23,15 @@ th.mat-header-cell:first-of-type {
     padding-left: 8px;
 }
 
-
+.user-table{
+    margin-bottom : 0.5rem;
+    
+}
 .mat-header-cell {
     font-size: 0.7vw;
     padding-left: 5px;
     border: 1px solid darkgray;
-    text-align: left;
+    text-align: center;
     background: #3d3d3d;
     color: whitesmoke;
     line-height: fit-content;
@@ -44,7 +47,7 @@ th.mat-header-cell:first-of-type {
     text-align: left;
     /* background: #212121; */
     width: 100%;
-    padding-left: 4px;
+    padding-left: 0.5rem;
     text-overflow: ellipsis;
     overflow: hidden;
 }
@@ -79,8 +82,8 @@ table.mat-table {
 .mat-column-id {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 10% !important;
-    width: 10% !important;
+    flex: 0 0 15% !important;
+    width: 15% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
     overflow: hidden;
@@ -111,8 +114,8 @@ table.mat-table {
 }
 
 .mat-column-permission {
-    flex: 0 0 6% !important;
-    width: 6% !important;
+    flex: 0 0 8% !important;
+    width: 8% !important;
 }
 
 .mat-column-creation_timestamp {
@@ -121,12 +124,12 @@ table.mat-table {
 }
 
 .mat-column-institution {
-    flex: 0 0 6% !important;
-    width: 6% !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
 }
 .mat-column-edit {
-    flex: 0 0 5% !important;
-    width: 5% !important;
+    flex: 0 0 1% !important;
+    width: 1% !important;
 }
   
 

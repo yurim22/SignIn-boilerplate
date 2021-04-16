@@ -1,27 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppComponent } from './app.component';
 import { SigninComponent } from './signin/signin.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonDialogComponent } from './common/dialog/common-dialog.component';
+import { WebviewerMainModule } from './webviewer-main/webviewer-main.module';
 
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialsModule } from './common/shared/angular-materials.module';
-
-// import { StudyTableComponent } from './webviewer-main/study-table/study-table.component';
-import { WebviewerMainModule } from './webviewer-main/webviewer-main.module';
-import { GraphQLModule } from './graphql.module';
-
 import { NgxsModule } from '@ngxs/store';
-import { environment } from 'src/environments/environment';
-
-import { CommonDialogComponent } from './common/dialog/common-dialog.component';
-
 import { CookieService } from 'ngx-cookie-service';
+// import { GraphQLModule } from './graphql.module';
+
+import { environment } from 'src/environments/environment';
 
 export function tokenGetter(){
     return localStorage.getItem('token')
@@ -34,7 +29,7 @@ export function tokenGetter(){
         CommonDialogComponent
     ],
     imports: [
-        GraphQLModule,
+        //GraphQLModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -46,7 +41,7 @@ export function tokenGetter(){
         JwtModule.forRoot({
             config:{
                 tokenGetter: tokenGetter,
-                allowedDomains: ['localhost:3000', 'localhost:3000/grpahql'],
+                allowedDomains: ['localhost:3000', 'localhost:3000/api'],
                 disallowedRoutes: []
             }
         }),

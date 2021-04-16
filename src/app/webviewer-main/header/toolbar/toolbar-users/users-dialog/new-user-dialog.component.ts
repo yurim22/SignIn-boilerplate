@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Apollo, gql } from 'apollo-angular';
-import { CREATE_USER } from 'src/app/common/graphql/gql'; 
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+// import { CREATE_USER, UPDATE_USER } from 'src/app/common/graphql/gql'; 
+import { User } from 'src/app/models/user.model';
+import { UserService } from '../users.service';
 
+interface DialogData {
+    userInfo: Partial<User>;
+    mode: string;
+}
 @Component({
     selector: 'app-createUser-dialog',
     templateUrl: './new-user-dialog.component.html',
@@ -12,12 +18,12 @@ import { CREATE_USER } from 'src/app/common/graphql/gql';
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 5vh;
+            margin-bottom: 2vh;
             color: rgb(245, 245, 245);
         }
         .flex-container h5{
             margin: 0;
-            margin-top: 1.8rem;
+            margin-top: 1.5rem;
             color: rgb(189, 188, 188);
         }
 
@@ -62,42 +68,48 @@ import { CREATE_USER } from 'src/app/common/graphql/gql';
         .flex-container .input-user-info .mat-icon{
             font-size: 20px;
         }
+
+        .create-user-btn {
+            margin-top: 1.8rem
+        }
         .create-user-btn .mat-button {
             background-color: #9A9A9A;
+        }
+
+        .flex-container .userinfo.error{
+            border-bottom: 1.5px solid #FF6347;
         }
     `]
 })
 export class CreateNewUserDialogComponent {
 
     createUserForm: FormGroup;
-    
-    // id: string;
-    // name: string;
-    // password: string;
-    // permission: string;
-    // institution: string;
-    
+    regexPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,}';
+
     fieldTextType:boolean = false;
     selectedPemissionTypeList:object[] = [
-        // {name: 'selected permission', value:''},
         {name: 'Administrator', value:'ADMINISTRATOR'},
         {name:'Physician', value: 'PHYSICIAN'},
-        {name: 'Resctricted Physician', value: 'RESTRICTED_PHYSICIAN'},
         {name: 'Developer', value:'DEVELOPER'}
     ]
     
+    userIdInput$ = new Subject<string>();
     
     constructor(
         public dialogRef: MatDialogRef<CreateNewUserDialogComponent>,
         private fb: FormBuilder,
-        private apollo: Apollo
-    ){
+        @Inject(MAT_DIALOG_DATA) public data: DialogData,
+        private userService: UserService
+    ){ 
+        // if(this.data.userInfo === null){
+
+        // }
         this.createUserForm = this.fb.group({
-            id:['', Validators.required],
-            name:['',Validators.required],
-            password:['',Validators.required],
-            permission: ['', Validators.required],
-            institution: ['']
+            id:[this.data.mode == 'createMode' ? '' : this.data.userInfo.id, Validators.required],
+            name:[this.data.mode == 'createMode' ? '' : this.data.userInfo.name,Validators.required],
+            password:['',[Validators.required,, Validators.minLength(8), Validators.pattern(this.regexPassword)]],
+            permission: [this.data.mode == 'createMode' ? '' : this.data.userInfo.permission, Validators.required],
+            institution: [this.data.mode == 'createMode' ? '' : this.data.userInfo.institution]
         });
     }
 
@@ -114,26 +126,38 @@ export class CreateNewUserDialogComponent {
         console.log('create user')
         //console.log(this.id);
         console.log(form.value);
-        this.apollo.mutate({
-            mutation: CREATE_USER,
-            variables:{
-                data: {
-                    id: form.value.id,
-                    password: form.value.password,
-                    name: form.value.name,
-                    institution: form.value.institution,
-                    permission: form.value.permission,
-                }
-            }
-        }).subscribe(
-            ({data}) => {
-                console.log('got data', data)
-                this.close();
-                console.log('create user successfully')
-            },
-            (error) => console.log(error)
-            
+
+        if(this.data.mode === 'createMode'){
+            this.userService.createNewUser({
+                id: form.value.id,
+                password: form.value.password,
+                name: form.value.name,
+                institution: form.value.institution,
+                permission: form.value.permission,
+            }).subscribe(
+                ()=> {
+                    this.close();
+                    console.log('create user')},
+                (error) => console.log(error)
             )
+        } else if(this.data.mode === 'editMode'){
+            const userSeq = String(this.data.userInfo.seq)
+            this.userService.updateUser({
+                id: form.value.id,
+                password: form.value.password,
+                name: form.value.name,
+                institution: form.value.institution,
+                permission: form.value.permission,
+            }, userSeq).subscribe(
+                (result) => {
+                    console.log(result)
+                    this.close();
+                    console.log('update success')
+                },
+                (error) => console.log(error)
+            )
+        }
+
     }
 
     get name() {
@@ -142,5 +166,9 @@ export class CreateNewUserDialogComponent {
 
     get id() {
         return this.createUserForm.get('id')
+    }
+
+    get password() {
+        return this.createUserForm.get('password')
     }
 }

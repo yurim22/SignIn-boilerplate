@@ -2,8 +2,8 @@ import { Component, Input, OnChanges, OnInit, Output, ViewChild, ElementRef } fr
 import { HttpClient } from '@angular/common/http';
 import {map, takeUntil, tap} from 'rxjs/operators';
 
-import { Study } from '../../components/study.component';
-import { StudyRow} from '../../components/studyrow.component';
+import { Study } from '../../models/study.model';
+import { StudyRow} from '../../models/studyrow.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Observable } from 'rxjs/internal/Observable';
