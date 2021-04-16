@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AuthService } from 'src/app/signin/auth.service';
+import { AuthService } from 'src/app/signin/auth/auth.service';
 //import { CommonService } from 'src/app/common/services/common.services';
 
 @Component({

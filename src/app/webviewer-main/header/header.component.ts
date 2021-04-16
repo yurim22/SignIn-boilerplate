@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 // import { Apollo, gql } from 'apollo-angular';
-import { AuthService } from 'src/app/signin/auth.service';
+import { AuthService } from 'src/app/signin/auth/auth.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { CommonDialogComponent } from '../../common/dialog/common-dialog.component';
 

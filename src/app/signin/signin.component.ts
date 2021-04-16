@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserInfoService } from '../services/user-info.service';
 // import { Apollo, gql, Query } from 'apollo-angular';
 import { async, Subscription } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth/auth.service';
 import { User } from '../models/user.model';
 // import { FIND_USER } from 'src/app/common/graphql/gql';
 import { CookieService } from 'ngx-cookie-service';

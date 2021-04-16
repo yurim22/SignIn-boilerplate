@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Token } from '../models/token.model';
+import { Token } from '../../models/token.model';
 // import {LOGIN_INFO} from 'src/app/common/graphql/gql';
 
 @Injectable({
