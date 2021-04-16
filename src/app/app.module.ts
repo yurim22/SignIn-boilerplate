@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +18,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { environment } from 'src/environments/environment';
 import { AuthInterceptor } from './signin/auth/auth-interceptor.service';
+import { GlobalErrorHandlerService } from './common/error/global-error-handler.service';
 
 export function tokenGetter(){
     return localStorage.getItem('token')
@@ -55,10 +56,13 @@ export function tokenGetter(){
     exports: [
         SigninComponent
     ],
-    providers:[CookieService, {
-        provide: HTTP_INTERCEPTORS,
-        useClass: AuthInterceptor,
-        multi: true
-    }]
+    providers:[CookieService, 
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }, GlobalErrorHandlerService,
+        {provide: ErrorHandler, useClass: GlobalErrorHandlerService},
+    ]
 })
 export class AppModule {}
