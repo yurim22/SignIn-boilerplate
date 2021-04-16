@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { AuthService } from "src/app/signin/auth.service";
+import { AuthService } from "src/app/signin/auth/auth.service";
 import { environment } from "src/environments/environment";
 import { Observable, Subscription } from 'rxjs';
 import { User } from "src/app/models/user.model";
@@ -19,23 +19,22 @@ export class UserService{
     ){}
 
     getUserList(): Observable<User[]>{
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.authService.getToken()}`)
-        return this.httpClient.get<User[]>(`${this.appUrl}/users`,{headers}).pipe()
+        return this.httpClient.get<User[]>(`${this.appUrl}/users`).pipe()
     }
 
     createNewUser(createUserData: Partial<User>) {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.authService.getToken()}`)
-        return this.httpClient.post(`${this.appUrl}/users`, createUserData, {headers})
+    
+        return this.httpClient.post(`${this.appUrl}/users`, createUserData)
     }
 
     updateUser(updateUserData: Partial<User>, userSeq:string) {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.authService.getToken()}`)
-        return this.httpClient.patch(`${this.appUrl}/users/${userSeq}`, updateUserData, {headers})
+    
+        return this.httpClient.patch(`${this.appUrl}/users/${userSeq}`, updateUserData)
     }
 
     deleteUser(userId: string){
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.authService.getToken()}`)
-        return this.httpClient.delete(`${this.appUrl}/users/${userId}`, {headers})
+    
+        return this.httpClient.delete(`${this.appUrl}/users/${userId}`)
     }
 
     searchDuplicateId(userInput: string) {

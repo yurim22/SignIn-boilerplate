@@ -10,13 +10,14 @@ import { CommonDialogComponent } from './common/dialog/common-dialog.component';
 import { WebviewerMainModule } from './webviewer-main/webviewer-main.module';
 
 import { JwtModule } from '@auth0/angular-jwt';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularMaterialsModule } from './common/shared/angular-materials.module';
 import { NgxsModule } from '@ngxs/store';
 import { CookieService } from 'ngx-cookie-service';
 // import { GraphQLModule } from './graphql.module';
 
 import { environment } from 'src/environments/environment';
+import { AuthInterceptor } from './signin/auth/auth-interceptor.service';
 
 export function tokenGetter(){
     return localStorage.getItem('token')
@@ -54,6 +55,10 @@ export function tokenGetter(){
     exports: [
         SigninComponent
     ],
-    providers:[CookieService]
+    providers:[CookieService, {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+    }]
 })
 export class AppModule {}

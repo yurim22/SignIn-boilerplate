@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
-import { AuthService } from '../signin/auth.service';
+import { AuthService } from '../signin/auth/auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -56,8 +56,7 @@ export class UserInfoService {
     
     getCurrentUser(): Observable<User>{
         this.userid = this.authService.getUserid();
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${this.authService.getToken()}`)
-        
-        return this.httpClient.get<User>(`${this.appUrl}/users/${this.userid}`,{headers}).pipe(shareReplay())
+         
+        return this.httpClient.get<User>(`${this.appUrl}/users/${this.userid}`).pipe(shareReplay())
     }
 }

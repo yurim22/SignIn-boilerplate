@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SigninComponent } from './signin/signin.component';
 import { WebviewerMainComponent } from './webviewer-main/webviewer-main.component';
 import { AngularMaterialsModule } from './common/shared/angular-materials.module';
-import { AuthGuard } from './signin/auth.guard';
+import { AuthGuard } from './signin/auth/auth.guard';
 
 const routes: Routes = [
     {
