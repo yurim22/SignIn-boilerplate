@@ -37,8 +37,9 @@ export class UserService{
         return this.httpClient.delete(`${this.appUrl}/users/${userId}`)
     }
 
-    searchDuplicateId(userInput: string) {
-        
+    findDuplicateUser(userId: string): Observable<Boolean>{
+        return this.httpClient.get<Boolean>(`${this.appUrl}/users/checkId/${userId}`)
+
     }
 
 }

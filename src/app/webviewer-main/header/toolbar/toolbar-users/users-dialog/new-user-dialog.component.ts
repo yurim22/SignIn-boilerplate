@@ -2,8 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 // import { CREATE_USER, UPDATE_USER } from 'src/app/common/graphql/gql'; 
 import { User } from 'src/app/models/user.model';
+import Observable from 'zen-observable';
 import { UserService } from '../users.service';
 
 interface DialogData {
@@ -93,8 +95,9 @@ export class CreateNewUserDialogComponent {
         {name: 'Developer', value:'DEVELOPER'}
     ]
     
-    userIdInput$ = new Subject<string>();
-    
+    duplicatedId: boolean = false;
+    dialogName: string;
+
     constructor(
         public dialogRef: MatDialogRef<CreateNewUserDialogComponent>,
         private fb: FormBuilder,
@@ -113,6 +116,29 @@ export class CreateNewUserDialogComponent {
         });
     }
 
+    ngOnInit() {
+        if(this.data.mode === 'createMode'){
+            this.dialogName = "Create User"
+        }else if(this.data.mode === 'editMode'){
+            this.dialogName = "Edit User"
+        }
+        const checkUserId$ = this.createUserForm.get('id').valueChanges.pipe(
+            debounceTime(500),
+            distinctUntilChanged(),
+            switchMap((userId: string) => this.userService.findDuplicateUser(userId))
+        )
+        
+        checkUserId$.subscribe(
+            (res) => {
+                if(res){
+                    this.duplicatedId = true
+                } else{
+                    this.duplicatedId = false
+                }
+            },
+            (error) => console.log(error),
+        )
+    }
     togglePwdHide() {
         this.fieldTextType = !this.fieldTextType;
     }
