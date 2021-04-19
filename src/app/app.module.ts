@@ -40,6 +40,7 @@ export function tokenGetter(){
         ReactiveFormsModule,
         HttpClientModule,
         WebviewerMainModule,
+        // Any requests sent using Angular's HttpClient will automatically have a token attached as an Authorization header. => tokengetter
         JwtModule.forRoot({
             config:{
                 tokenGetter: tokenGetter,
