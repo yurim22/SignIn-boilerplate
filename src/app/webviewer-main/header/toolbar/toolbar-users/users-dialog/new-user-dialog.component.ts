@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject,merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, mapTo, switchMap, tap } from 'rxjs/operators';
-// import { CREATE_USER, UPDATE_USER } from 'src/app/common/graphql/gql'; 
-import { User } from 'src/app/models/user.model';
+// import { CREATE_USER, UPDATE_USER } from 'src/app/common/graphql/gql';
+import { User } from 'src/app/signin/models/user.model';
 import Observable from 'zen-observable';
 import { UserService } from '../users.service';
 
@@ -31,11 +31,11 @@ interface DialogData {
 
         .flex-container .userinfo {
             background: transparent;
-            
+
             border: none;
             border-radius: 0;
             box-shadow: none;
-            
+
             min-width: 13rem;
             height: 1.5rem;
             display: inline-block;
@@ -58,13 +58,13 @@ interface DialogData {
             background-color: #3d3d3d;
             border-radius: 0.2rem;
         }
-        
+
         .flex-container .input-user-info .form-error-msg, .flex-container .input-user-info .form-error-msg .material-icons{
             font-size: 0.7rem;
             color: #FF6347;
         }
 
-        .flex-container .mat-form-field-label{ 
+        .flex-container .mat-form-field-label{
             font-size: 0.85rem;
         }
         .flex-container .input-user-info .mat-icon{
@@ -94,7 +94,7 @@ export class CreateNewUserDialogComponent {
         {name:'Physician', value: 'PHYSICIAN'},
         {name: 'Developer', value:'DEVELOPER'}
     ]
-    
+
     duplicatedId: boolean = false;
     dialogName: string;
     originId: string;
@@ -104,7 +104,7 @@ export class CreateNewUserDialogComponent {
         private fb: FormBuilder,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
         private userService: UserService
-    ){ 
+    ){
         // if(this.data.userInfo === null){
 
         // }
@@ -118,7 +118,7 @@ export class CreateNewUserDialogComponent {
     }
 
     ngOnInit() {
-        
+
         if(this.data.mode === 'createMode'){
             this.dialogName = "Create User";
             this.originId = ''
@@ -138,7 +138,7 @@ export class CreateNewUserDialogComponent {
             filter(res => res === ''),
             mapTo(false)
         )
-        
+
         merge(checkUserId$,emptyId$).subscribe(
             (res) => {
                 if(res){

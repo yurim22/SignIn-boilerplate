@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { map } from 'rxjs/operators';
 // import { Apollo, gql } from 'apollo-angular';
-import { User } from 'src/app/models/user.model';
+import { User } from 'src/app/signin/models/user.model';
 import { UserService } from '../users.service';
 import { CreateNewUserDialogComponent } from './new-user-dialog.component';
 // import { USER_LIST, DELETE_USER} from 'src/app/common/graphql/gql';
@@ -27,7 +27,7 @@ export class UsersDialogComponent implements OnInit {
     columnsFromDB: string[] = ['id', 'name', 'permission','creation_timestamp','institution'];
 
     dataSource = new MatTableDataSource<User>();
-    
+
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
@@ -41,7 +41,7 @@ export class UsersDialogComponent implements OnInit {
 
     ngAfterViewInit(): void {
         console.log('[userlist table.ngAfterViewInit]');
-    
+
         this.dataSource.paginator = this.paginator;
     }
 

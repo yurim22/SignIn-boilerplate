@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 // import { Apollo, gql } from 'apollo-angular';
 import { AuthService } from 'src/app/signin/auth/auth.service';
-import { UserInfoService } from 'src/app/services/user-info.service';
+// import { UserInfoService } from 'src/app/services/user-info.service';
 import { CommonDialogComponent } from '../../common/dialog/common-dialog.component';
+import {UserInfoService} from "../../signin/services/user-info.service";
 
 @Component({
     selector: 'app-header',
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit {
     diskTotalSpace= 256;
 
     constructor(
-        public dialog: MatDialog, 
+        public dialog: MatDialog,
         private userInfoService: UserInfoService) { }
 
     ngOnInit(): void {
@@ -47,10 +48,10 @@ export class HeaderComponent implements OnInit {
             isConfirm: true,
             actionButtonText: 'OK',
         };
-    
+
         this.dialog.open(CommonDialogComponent, dialogConfig);
     }
-    
+
 
     get userId(): string {
         return localStorage.getItem('id')

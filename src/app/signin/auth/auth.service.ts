@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Token } from '../../models/token.model';
+import {Token} from "../models/token.model";
 // import {LOGIN_INFO} from 'src/app/common/graphql/gql';
 
 @Injectable({
@@ -23,21 +23,21 @@ export class AuthService implements OnInit, OnDestroy{
     refreshToken: string;
 
     private querySubscription: Subscription;
-    
+
     constructor(
         private httpClient: HttpClient,
         private jwtHelper: JwtHelperService,
         private router: Router,
         private cookieService: CookieService
     ) { }
-    
+
     ngOnInit() {
         console.log('auth service ngonInit')
     }
 
     //accesstoken은 localstorage에 저장
     //refreshtoken은 cookie에 저장.... 일단은..
-    signIn(userId: string, userPwd: string): Observable<Token>{ 
+    signIn(userId: string, userPwd: string): Observable<Token>{
         console.log('http request signin')
         return this.httpClient.post<Token>(`${this.appUrl}/auth/signin`, {id: userId, password: userPwd})
         .pipe(
@@ -60,7 +60,7 @@ export class AuthService implements OnInit, OnDestroy{
     getToken():string {
         return localStorage.getItem('token')
     }
-    
+
     removeToken() {
         localStorage.removeItem('token')
     }
@@ -83,5 +83,5 @@ export class AuthService implements OnInit, OnDestroy{
 
     ngOnDestroy() {
         this.querySubscription.unsubscribe();
-    }   
-} 
+    }
+}

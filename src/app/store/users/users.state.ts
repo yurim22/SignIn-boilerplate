@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Action, State, StateContext } from "@ngxs/store";
-import { UserInfoService } from "src/app/services/user-info.service";
+import { UserInfoService } from "src/app/signin/services/user-info.service";
 import { GetCurrentUser } from './users.actions';
 
 export interface CurrentUser{
