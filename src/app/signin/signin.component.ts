@@ -19,32 +19,23 @@ import { tap } from 'rxjs/operators';
 export class SigninComponent implements OnInit {
 
     checked = false;
-
     passwordExpired = false;
     signInForm: FormGroup;
-
     rememberedId = '';
-
+    regexPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,}';
+    rememberMeCheckboxChecked = false;
+    isAboutModalOpened = false;
+    isSystemIntegrityChecking = true;
+    isSystemIntegrityCheckingSuccess = true;
+    accessToken: string;
+    refreshToken: string;
+    isSigninFailed: boolean;
+    invalidPasswordCountOver = false;
     id = '';
     password = '';
     // oldPassword = '';
     // newPassword = '';
     // newPasswordRepeat = '';
-
-    invalidPasswordCountOver = false;
-
-    regexPassword = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,}';
-
-    rememberMeCheckboxChecked = false;
-    isAboutModalOpened = false;
-
-    isSystemIntegrityChecking = true;
-    isSystemIntegrityCheckingSuccess = true;
-
-    accessToken: string;
-    refreshToken: string;
-    
-    isSigninFailed: boolean;
 
     constructor(private formBuilder: FormBuilder,
                 private userInfoService: UserInfoService,
@@ -78,6 +69,7 @@ export class SigninComponent implements OnInit {
     }
 
     onSubmit(){
+        console.log('onsubmit button')
         this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password).subscribe(
             () => {
                 this.isSigninFailed = false;

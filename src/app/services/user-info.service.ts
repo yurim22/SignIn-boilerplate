@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user.model';
@@ -20,12 +20,16 @@ export class UserInfoService {
     institution: string;
     private seq: number;
 
-    //private users: User[] = []
+    private currentUserIdSubject: BehaviorSubject<String>;
+    public currentUserId: Observable<String>;
 
     constructor(
         private authService: AuthService,
         private httpClient: HttpClient
-    ) {}
+    ) {
+        this.currentUserIdSubject = new BehaviorSubject<String>(localStorage.getItem('id'))
+        this.currentUserId = this.currentUserIdSubject.asObservable();
+    }
 
     ngOnInit(){
         //if localStorage안의 token값이 [undefined, "", 0]이 아닐때, 즉 token값이 있을 때
@@ -58,5 +62,9 @@ export class UserInfoService {
         this.userid = this.authService.getUserid();
          
         return this.httpClient.get<User>(`${this.appUrl}/users/${this.userid}`).pipe(shareReplay())
+    }
+
+    public get currentUserValue(): String {
+        return this.currentUserIdSubject.value;
     }
 }

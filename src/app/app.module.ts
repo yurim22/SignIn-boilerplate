@@ -57,11 +57,12 @@ export function tokenGetter(){
         SigninComponent
     ],
     providers:[CookieService, 
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true
-        }, GlobalErrorHandlerService,
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: AuthInterceptor,
+        //     multi: true
+        // }, 
+        GlobalErrorHandlerService,
         {provide: ErrorHandler, useClass: GlobalErrorHandlerService},
     ]
 })
