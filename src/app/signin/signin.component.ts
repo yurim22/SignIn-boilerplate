@@ -2,16 +2,17 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { UserInfoService } from '../services/user-info.service';
+// import { UserInfoService } from '../services/user-info.service';
 // import { Apollo, gql, Query } from 'apollo-angular';
 import { async, Subscription } from 'rxjs';
 import { AuthService } from './auth/auth.service';
-import { User } from '../models/user.model';
+//import { User } from '../models/user.model';
 // import { FIND_USER } from 'src/app/common/graphql/gql';
 import { CookieService } from 'ngx-cookie-service';
 import { tap } from 'rxjs/operators';
+import {UserInfoService} from "./services/user-info.service";
 
-@Component({ 
+@Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
     styleUrls: ['./signin.component.css']
@@ -42,7 +43,7 @@ export class SigninComponent implements OnInit {
                 private cookieService: CookieService,
                 private authService: AuthService,
                 private router: Router) {
-        
+
         this.rememberedId = this.cookieService.get('rememberedId')
 
         this.signInForm = this.formBuilder.group({
@@ -82,13 +83,13 @@ export class SigninComponent implements OnInit {
             }
         )
 
-        //rememberme checkbox 
+        //rememberme checkbox
         if(this.rememberMeCheckboxChecked){
             this.cookieService.set('rememberedId', this.signInForm.value.id)
         } else{
             this.cookieService.set('rememberedId', '')
         }
-        
+
     }
 
     isRememberedIdExist():boolean {
@@ -101,7 +102,7 @@ export class SigninComponent implements OnInit {
     onRemembermeChanged(e) {
         console.log(e);
         this.rememberMeCheckboxChecked = e.checked
-    } 
+    }
 
     showAboutDialog(){
         console.log('show about dialog')

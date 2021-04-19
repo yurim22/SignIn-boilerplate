@@ -20,8 +20,8 @@ import { environment } from 'src/environments/environment';
 import { AuthInterceptor } from './signin/auth/auth-interceptor.service';
 import { GlobalErrorHandlerService } from './common/error/global-error-handler.service';
 
-export function tokenGetter(){
-    return localStorage.getItem('token')
+export function tokenGetter(): string {
+    return localStorage.getItem('token');
 }
 
 @NgModule({
@@ -31,7 +31,7 @@ export function tokenGetter(){
         CommonDialogComponent
     ],
     imports: [
-        //GraphQLModule,
+        // GraphQLModule,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -42,8 +42,7 @@ export function tokenGetter(){
         WebviewerMainModule,
         // Any requests sent using Angular's HttpClient will automatically have a token attached as an Authorization header. => tokengetter
         JwtModule.forRoot({
-            config:{
-                tokenGetter: tokenGetter,
+            config: { tokenGetter,
                 allowedDomains: ['localhost:3000', 'localhost:3000/api'],
                 disallowedRoutes: []
             }
@@ -51,19 +50,20 @@ export function tokenGetter(){
         NgxsModule.forRoot([], {
             developmentMode: !environment.production
         })
-      
     ],
     bootstrap: [AppComponent],
     exports: [
         SigninComponent
     ],
-    providers:[CookieService, 
+    providers:
+      [
+        CookieService,
         // {
         //     provide: HTTP_INTERCEPTORS,
         //     useClass: AuthInterceptor,
         //     multi: true
-        // }, 
-        GlobalErrorHandlerService,
+        // },
+      GlobalErrorHandlerService,
         {provide: ErrorHandler, useClass: GlobalErrorHandlerService},
     ]
 })
