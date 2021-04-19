@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Subject } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
+import { StudyTableService } from './study-table.service';
 
 
 @Component({
@@ -29,10 +30,10 @@ export class StudyTableComponent implements OnInit, OnChanges {
     @Output() clickRow = new EventEmitter<StudyRow>();
     unsubscribe$ = new Subject<any>();
     
-    displayedColumns = ['status', 'patient_id', 'patient_name', 'sex', 'age', 'study_date', 'analysis_date', 'results', 'volumes']
+    displayedColumns = ['status', 'patient_id', 'patient.patient_name', 'sex', 'age', 'study_date', 'analysis_date', 'result', 'volumes']
     displayedTitle = ['Status', 'Patient ID', 'Patient Name', 'Sex', 'Age','Study Date', 'Analysis Date', 'Results', 'Volumes']
     
-    dataSource = new MatTableDataSource<Study>();
+    dataSource = new MatTableDataSource<StudyRow>();
 
     isGetStudies: boolean = false;
     isAnalyzed: boolean = false;
@@ -43,9 +44,9 @@ export class StudyTableComponent implements OnInit, OnChanges {
     @ViewChild('sort') sort: MatSort;
     
 
-    constructor(private http: HttpClient, private el: ElementRef) {
+    constructor(private studyTableService: StudyTableService) {
         console.log('constructor');
-        this.getPatientList();
+        this.getStudyList();
         // console.log(this.row)
     }
 
@@ -72,17 +73,38 @@ export class StudyTableComponent implements OnInit, OnChanges {
         }
         console.log(this.isSelected);
     }
-    getPatientList() {
-        console.log('getPatientList function')
-        return this.http.get('assets/result_json_test_210216.json').pipe(
-            map(val => val['data']),
-        ).subscribe(arrs => {
-            console.log(arrs);
-            // this.sortedData = arrs.slice()
-            this.dataSource.data = arrs;  
-            this.sortedData = this.dataSource.data.slice()
-        })
+    // getPatientList() {
+    //     console.log('getPatientList function')
+    //     return this.http.get('assets/result_json_test_210216.json').pipe(
+    //         map(val => val['data']),
+    //     ).subscribe(arrs => {
+    //         console.log(arrs);
+    //         // this.sortedData = arrs.slice()
+    //         this.dataSource.data = arrs;  
+    //         this.sortedData = this.dataSource.data.slice()
+    //     })
+    // }
+
+    getStudyList() {
+        this.studyTableService.getStudyList().subscribe(
+            (result)=> {
+                console.log('result', result),
+                this.dataSource.data = result
+                console.log(this.dataSource.data);
+            }
+        )
     }
+    // getUserList() {
+    //     this.userService.getUserList().subscribe(
+    //         (result) => {
+    //             console.log('this is datasource', this.dataSource);
+    //             this.dataSource.data = result;
+    //             console.log(this.dataSource.data)
+    //         },
+    //         (error) => console.log(error)
+    //     )
+    // }
+
     // onSortRequest(sort: Sort) {
     //     console.log(sort);
     //     const data = this.dataSource.data.slice();
@@ -104,6 +126,7 @@ export class StudyTableComponent implements OnInit, OnChanges {
     //     console.log(this.sortedData)
     //     console.log(this.dataSource.data);
     // }
+
     getBackground(row){
         if(this.confirmedStudy === row.id){
             return {'selectedRow': true}
@@ -111,7 +134,4 @@ export class StudyTableComponent implements OnInit, OnChanges {
             return {'selectedRow': false}
         }
     }
-}
-function compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1)
 }

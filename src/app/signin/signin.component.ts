@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -15,7 +15,8 @@ import {UserInfoService} from "./services/user-info.service";
 @Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
-    styleUrls: ['./signin.component.css']
+    styleUrls: ['./signin.component.css'],
+    //encapsulation: ViewEncapsulation.ShadowDom
 })
 export class SigninComponent implements OnInit {
 
