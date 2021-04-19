@@ -38,6 +38,7 @@ export class AuthService implements OnInit, OnDestroy{
     //accesstoken은 localstorage에 저장
     //refreshtoken은 cookie에 저장.... 일단은..
     signIn(userId: string, userPwd: string): Observable<Token>{ 
+        console.log('http request signin')
         return this.httpClient.post<Token>(`${this.appUrl}/auth/signin`, {id: userId, password: userPwd})
         .pipe(
             tap(res => this.setToken(res.accessToken)),

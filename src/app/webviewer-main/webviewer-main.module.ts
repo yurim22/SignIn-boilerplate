@@ -9,23 +9,32 @@ import { ReportImageListComponent } from './report-image-list/report-image-list.
 import { HeaderModule } from './header/header.module';
 import { StudyTableComponent } from './study-table/study-table.component';
 import { MousewheelEventDirective } from './mousewheel-event.directive';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from '../signin/auth/auth-interceptor.service';
 
 
 @NgModule({
-  declarations: [WebviewerMainComponent, ReportImageListComponent, StudyTableComponent, MousewheelEventDirective],
-  imports: [
-    CommonModule,
-    AngularMaterialsModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HeaderModule
-  ],
-  bootstrap: [WebviewerMainComponent],
-  exports: [
-    ReportImageListComponent,
-    StudyTableComponent,
-    MousewheelEventDirective,
-    AngularMaterialsModule
-  ]
+    declarations: [WebviewerMainComponent, ReportImageListComponent, StudyTableComponent, MousewheelEventDirective],
+    imports: [
+        CommonModule,
+        AngularMaterialsModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HeaderModule
+    ],
+    bootstrap: [WebviewerMainComponent],
+    exports: [
+        ReportImageListComponent,
+        StudyTableComponent,
+        MousewheelEventDirective,
+        AngularMaterialsModule
+    ],
+    // providers:[
+    //     {
+    //         provide: HTTP_INTERCEPTORS,
+    //         useClass: AuthInterceptor,
+    //         multi: true
+    //     }, 
+    // ]
 })
 export class WebviewerMainModule { }

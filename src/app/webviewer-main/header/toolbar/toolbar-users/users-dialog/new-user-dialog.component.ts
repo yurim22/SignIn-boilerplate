@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
+import { Subject,merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, mapTo, switchMap, tap } from 'rxjs/operators';
 // import { CREATE_USER, UPDATE_USER } from 'src/app/common/graphql/gql'; 
 import { User } from 'src/app/models/user.model';
 import Observable from 'zen-observable';
@@ -97,6 +97,7 @@ export class CreateNewUserDialogComponent {
     
     duplicatedId: boolean = false;
     dialogName: string;
+    originId: string;
 
     constructor(
         public dialogRef: MatDialogRef<CreateNewUserDialogComponent>,
@@ -117,18 +118,28 @@ export class CreateNewUserDialogComponent {
     }
 
     ngOnInit() {
+        
         if(this.data.mode === 'createMode'){
-            this.dialogName = "Create User"
+            this.dialogName = "Create User";
+            this.originId = ''
         }else if(this.data.mode === 'editMode'){
-            this.dialogName = "Edit User"
+            this.dialogName = "Edit User";
+            this.originId = this.data.userInfo.id
         }
+
         const checkUserId$ = this.createUserForm.get('id').valueChanges.pipe(
             debounceTime(500),
             distinctUntilChanged(),
+            filter(res => res !== ''),
+            filter(res => res !== this.originId),
             switchMap((userId: string) => this.userService.findDuplicateUser(userId))
         )
+        const emptyId$ = this.createUserForm.get('id').valueChanges.pipe(
+            filter(res => res === ''),
+            mapTo(false)
+        )
         
-        checkUserId$.subscribe(
+        merge(checkUserId$,emptyId$).subscribe(
             (res) => {
                 if(res){
                     this.duplicatedId = true
@@ -139,6 +150,7 @@ export class CreateNewUserDialogComponent {
             (error) => console.log(error),
         )
     }
+
     togglePwdHide() {
         this.fieldTextType = !this.fieldTextType;
     }
