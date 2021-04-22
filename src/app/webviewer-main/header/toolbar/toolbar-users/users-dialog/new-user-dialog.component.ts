@@ -13,7 +13,7 @@ interface DialogData {
     mode: string;
 }
 @Component({
-    selector: 'app-createUser-dialog',
+    selector: 'app-createuser-dialog',
     templateUrl: './new-user-dialog.component.html',
     styles:[`
         .flex-container .header {

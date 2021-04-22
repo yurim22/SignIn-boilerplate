@@ -4,8 +4,8 @@ export class User {
     permission: string;
     institution: string;
     seq: number;
-    creation_timeStamp: String;
-    update_timeStamp: Date;
+    creation_timestamp: string;
+    update_timestamp: Date;
     invalid_password_count: number;
     last_password_timestamp: number;
     password: string;

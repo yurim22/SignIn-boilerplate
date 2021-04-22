@@ -1,7 +1,5 @@
-<ng-template [ngIf]="isReceived" class="img-btn-container">
-    <!-- <div class="block"></div> -->
+<!-- <ng-template [ngIf]="isReceived" class="img-btn-container">
     <div class="error-image">
-        <!-- <img src="assets/report_test_210216/1.jpg"> -->
         <img src="{{error_report_img}}">
     </div>
 </ng-template>
@@ -14,8 +12,20 @@
             </button>
         </div>
         <div class="report_image2">
-            <!-- <img src="assets/report_test_210216/1.jpg"> -->
-            <img src="{{report_img}}">
+            <img src="{{setImgPath()}}">
         </div>
     </div>
-</ng-template>
+</ng-template> -->
+
+<ng-container>
+    <div class="img-btn-container">
+        <div class="btn-container2" *ngIf="isAnalyzed">
+            <button class="custom-btn" (click)="confirm()">
+                <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>&nbsp;Confirm
+            </button>
+        </div>
+        <div class="report_image2">
+            <img src="{{report_img | async}}" />
+        </div>
+    </div>
+</ng-container>

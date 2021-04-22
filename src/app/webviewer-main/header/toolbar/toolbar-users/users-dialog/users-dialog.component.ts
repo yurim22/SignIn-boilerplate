@@ -1,18 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { map } from 'rxjs/operators';
+import { from, zip } from 'rxjs';
+import { map, tap, toArray } from 'rxjs/operators';
+import { CommonDialogComponent } from 'src/app/common/dialog/common-dialog.component';
 // import { Apollo, gql } from 'apollo-angular';
 import { User } from 'src/app/signin/models/user.model';
 import { UserService } from '../users.service';
 import { CreateNewUserDialogComponent } from './new-user-dialog.component';
 // import { USER_LIST, DELETE_USER} from 'src/app/common/graphql/gql';
 
-type PartialUser = Partial<User>
-const USER_DATA: PartialUser[] = [
-    {id: 'bombom', name: 'bom', permission: 'admin', institution: 'yurim', creation_timeStamp: '21-01-03'}
-]
 
 @Component({
     selector: 'app-users-dialog',
@@ -32,7 +30,8 @@ export class UsersDialogComponent implements OnInit {
 
     constructor(
         private dialog: MatDialog,
-        private userService: UserService
+        private userService: UserService,
+        
     ) { }
 
     ngOnInit(): void {
@@ -46,23 +45,36 @@ export class UsersDialogComponent implements OnInit {
     }
 
     getUserList() {
-        this.userService.getUserList().subscribe(
+        this.userService.getUserList()
+        .subscribe(
             (result) => {
-                console.log('this is datasource', this.dataSource);
+                from(result).pipe(
+                    map(val=> val.creation_timestamp = val.creation_timestamp.slice(0,10))
+                ).subscribe()
                 this.dataSource.data = result;
-                console.log(this.dataSource.data)
             },
             (error) => console.log(error)
         )
     }
 
     deleteUser(row) {
-        this.userService.deleteUser(row.id).subscribe(
-            (result)=> {
-                console.log(result)
-                console.log('delete success');
-                this.getUserList()
-            },
+        const dialogConfig = new MatDialogConfig;
+        dialogConfig.hasBackdrop = true;
+        dialogConfig.autoFocus = false;
+        dialogConfig.panelClass = 'common-dialog';
+        dialogConfig.data = {
+            name: 'Delete',
+            title: 'Delete',
+            description: 'Do you really want to delete user?',
+            isConfirm: true,
+            actionButtonText: 'OK',
+            deleteUserId: row.id
+        };
+
+        const dialogRef = this.dialog.open(CommonDialogComponent, dialogConfig);
+        
+        dialogRef.afterClosed().subscribe(
+            (_res) => this.getUserList(),
             (error) => console.log(error)
         )
     }
@@ -116,4 +128,14 @@ export class UsersDialogComponent implements OnInit {
         })
     }
 
+}
+
+//yyyy-MM-dd formating
+export function getFormatDate(date){
+    var year = date.getFullYear();
+    var month = (1 + date.getMonth());
+    month = month >= 10 ? month : '0' + month;
+    var day = date.getDate();
+    day = day >= 10 ? day : '0' + day;
+    return `${year}-${month}-${day}`;
 }

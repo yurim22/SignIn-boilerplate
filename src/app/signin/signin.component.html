@@ -84,8 +84,10 @@
             <!-- 로그인 실패 시 error mgs -->
             <div class="error" [class.active]="isSigninFailed">
                 <span class="material-icons">warning_amber</span>
-                Invalid username or password.
+                {{signInFailed_msg}}
             </div>
         </div>
     </div>
-  </div>
+</div>
+
+  <!-- Invalid username or password. -->

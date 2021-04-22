@@ -75,11 +75,11 @@ table.mat-table {
     padding: 0px;
 }
 
-.mat-column-status {
+.mat-cell.mat-column-status {
     flex: 0 0 7.5% !important;
     width: 7.5% !important;
 }
-.mat-column-patient_id {
+.mat-cell.mat-column-patient_id {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 13% !important;
@@ -96,7 +96,7 @@ table.mat-table {
     hyphens: auto;
 }
 
-.mat-column-patient_name {
+.mat-cell.mat-column-patient_name {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 20% !important;
@@ -113,23 +113,23 @@ table.mat-table {
     hyphens: auto;
 }
 
-.mat-column-sex {
+.mat-cell.mat-column-sex {
     flex: 0 0 6% !important;
     width: 6% !important;
 }
 
-.mat-column-results, .mat-column-volumes {
+.mat-cell.mat-column-results, .mat-cell.mat-column-volumes {
     flex: 0 0 6.5% !important;
     width: 6.5% !important;
 }
 
-.mat-column-age {
+.mat-cell.mat-column-age {
     flex: 0 0 6% !important;
     width: 6% !important;
 }
-.mat-column-study_date, .mat-column-analysis_date {
+.mat-cell.mat-column-study_date, .mat-cell.mat-column-analysis_date {
     flex: 0 0 15% !important;
-    width: 15% !important;
+    width: 20% !important;
 }
   
 

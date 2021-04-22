@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/signin/auth/auth.service';
+import { UserService } from 'src/app/webviewer-main/header/toolbar/toolbar-users/users.service';
 //import { CommonService } from 'src/app/common/services/common.services';
 
 @Component({
@@ -74,7 +75,8 @@ import { AuthService } from 'src/app/signin/auth/auth.service';
 export class CommonDialogComponent {
     constructor(@Inject(MAT_DIALOG_DATA) public modalData: any,
                 public dialogRef: MatDialogRef<CommonDialogComponent>,
-                private authService: AuthService
+                private authService: AuthService,
+                private userService: UserService
                 ) {}
 
     doAction() {
@@ -83,6 +85,11 @@ export class CommonDialogComponent {
                 this.authService.logout();
                 break;
             case 'Delete':
+                this.userService.deleteUser(this.modalData.deleteUserId).subscribe(
+                    () => console.log('delete user')
+                )
+                this.modalData.response = true;
+                console.log(this.modalData)
                 break;
             case 'removeNodule':
                 this.modalData.response = true;
@@ -106,6 +113,7 @@ export class CommonDialogComponent {
                 break;
         }
         this.dialogRef.close(this.modalData);
+        
     }
 
     close() {

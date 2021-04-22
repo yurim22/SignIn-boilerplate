@@ -49,7 +49,8 @@ export class HeaderComponent implements OnInit {
             actionButtonText: 'OK',
         };
 
-        this.dialog.open(CommonDialogComponent, dialogConfig);
+        const dialogRef = this.dialog.open(CommonDialogComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(() => this.dialog.closeAll())
     }
 
 

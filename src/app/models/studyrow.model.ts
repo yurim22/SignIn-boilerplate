@@ -5,5 +5,6 @@ export class StudyRow{
     study_date: string;
     results: number;
     analysis_date: string;
-    patient: Patient
+    patient: Patient;
+    seq: number;
 }

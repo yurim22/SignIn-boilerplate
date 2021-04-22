@@ -16,7 +16,7 @@ import {UserInfoService} from "./services/user-info.service";
     selector: 'app-signin',
     templateUrl: './signin.component.html',
     styleUrls: ['./signin.component.css'],
-    //encapsulation: ViewEncapsulation.ShadowDom
+    // encapsulation: ViewEncapsulation.
 })
 export class SigninComponent implements OnInit {
 
@@ -33,6 +33,7 @@ export class SigninComponent implements OnInit {
     refreshToken: string;
     isSigninFailed: boolean;
     invalidPasswordCountOver = false;
+    signInFailed_msg: string;
     id = '';
     password = '';
     // oldPassword = '';
@@ -79,7 +80,15 @@ export class SigninComponent implements OnInit {
             },
             (error)=> {
                 this.isSigninFailed = true;
-                console.log(error);
+    
+                console.log(error.error.message);
+                if(error.error.message == "Wrong password more than 5 times"){
+                    console.log('너 이제 락걸렸어')
+                    this.signInFailed_msg = 'Your account is locked'
+                }else{
+                    console.log('비밀번호 틀렸어')
+                    this.signInFailed_msg = 'Invalid username or password.'
+                }
                 setTimeout(() => this.isSigninFailed = false, 3000)
             }
         )

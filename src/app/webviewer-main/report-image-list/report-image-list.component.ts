@@ -1,15 +1,21 @@
-import { Component, HostListener, Input, OnInit, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, Input, OnInit, Output, EventEmitter, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { ignoreElements } from 'rxjs/operators';
+import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { distinctUntilChanged, skip } from 'rxjs/operators';
+import { StudyState } from 'src/app/store/study/study.state';
 
 @Component({
     selector: 'app-report-image-list',
     templateUrl: './report-image-list.component.html',
     styleUrls: ['./report-image-list.component.css'],
-    //encapsulation: ViewEncapsulation.None
+    //encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportImageListComponent implements OnInit {
 
+    @Select(StudyState.getSeriesUrl) imgUrl$: Observable<string>
     @Input() isAnalyzed;
     @Input() isReceived;
     
@@ -24,37 +30,56 @@ export class ReportImageListComponent implements OnInit {
 
     snack_message: string;
 
-    constructor(private _snackBar: MatSnackBar) { }
+    constructor(private _snackBar: MatSnackBar, private store: Store,
+        private readonly changeDetectionRef: ChangeDetectorRef) { }
 
-    ngOnInit(): void {
-        this.report_img = 'assets/report_test_210216/1.jpg';
-        this.error_report_img = 'assets/report_test_210216/summary_test_error_1.jpg'
+    ngOnInit() {
+        this.imgUrl$.pipe(
+            skip(1)
+        ).subscribe(
+            (res) => {
+                this.report_img = `${res}`;
+                console.log(this.report_img)
+            }
+        )
     }
 
     @HostListener('mousewheel', ['$event']) 
     onMousewheel(event) {
-        const step = 1;
-        if (event.wheelDelta > 0 && this.idx !== 1) {
-            console.log('wheel up')
-            this.idx = (this.idx - step) < 0 ? 0 : this.idx - step;
-        } else if(event.wheelDelta < 0 && this.idx !== 13){
-            this.idx = this.idx + step;
-        } else if(this.idx === 1){
-            this.snack_message = "This is the first page of the report"
-            this.openSnackBar();
-        } else if(this.idx === 13) {
-            this.snack_message = "This is the last page of the report"
-            this.openSnackBar();
-        }
+        // const step = 1;
+        // if (event.wheelDelta > 0 && this.idx !== 1) {
+        //     console.log('wheel up')
+        //     this.idx = (this.idx - step) < 0 ? 0 : this.idx - step;
+        // } else if(event.wheelDelta < 0 && this.idx !== 13){
+        //     this.idx = this.idx + step;
+        // } else if(this.idx === 1){
+        //     this.snack_message = "This is the first page of the report"
+        //     this.openSnackBar();
+        // } else if(this.idx === 13) {
+        //     this.snack_message = "This is the last page of the report"
+        //     this.openSnackBar();
+        // }
 
-        this.report_img = this.setImgPath(this.idx);
+        // this.report_img = this.setImgPath(this.idx);
+        console.log('mousewheel event')
         
     }
 
-    setImgPath(idx) {
-        // console.log('setImgPath function');
-        return `assets/report_test_210216/${idx}.jpg`
-    }
+    // setImgPath() {
+    //     console.log('setImgPath function');
+    //     // return `assets/report_test_210216/${idx}.jpg`
+    //     console.log('imgUrl$', this.imgUrl$)
+    //     this.imgUrl$.pipe(
+
+    //     )
+    //     .subscribe(
+    //         (res) => {
+    //             console.log(res)
+    //             //this.changeDetectionRef.detectChanges()
+    //             return `./src/${res}`
+    //         }
+    //     )
+    // }
 
     confirm() {
         console.log('confirm');
