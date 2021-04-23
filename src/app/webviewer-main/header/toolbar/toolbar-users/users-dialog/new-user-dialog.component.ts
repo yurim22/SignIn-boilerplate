@@ -81,6 +81,9 @@ interface DialogData {
         .flex-container .userinfo.error{
             border-bottom: 1.5px solid #FF6347;
         }
+        ::ng-deep .mat-dialog-container{
+            background: #2B2B2B;
+        }
     `]
 })
 export class CreateNewUserDialogComponent {

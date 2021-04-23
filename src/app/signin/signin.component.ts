@@ -76,6 +76,7 @@ export class SigninComponent implements OnInit {
         this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password).subscribe(
             () => {
                 this.isSigninFailed = false;
+                
                 this.router.navigate(['/webviewer'])
             },
             (error)=> {

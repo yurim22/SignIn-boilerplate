@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { from, zip } from 'rxjs';
-import { map, tap, toArray } from 'rxjs/operators';
+import { map, mapTo, tap, toArray } from 'rxjs/operators';
 import { CommonDialogComponent } from 'src/app/common/dialog/common-dialog.component';
 // import { Apollo, gql } from 'apollo-angular';
 import { User } from 'src/app/signin/models/user.model';
@@ -15,13 +15,14 @@ import { CreateNewUserDialogComponent } from './new-user-dialog.component';
 @Component({
     selector: 'app-users-dialog',
     templateUrl: './users-dialog.component.html',
-    styleUrls: ['./users-dialog.component.css']
+    styleUrls: ['./users-dialog.component.css'],
+    encapsulation: ViewEncapsulation.Emulated
 })
 
 export class UsersDialogComponent implements OnInit {
 
-    displayedColumns: string[] = ['id', 'name', 'permission','creation_timestamp','institution', 'edit'];
-    displayedTitle = ['ID', 'Name', 'Permission', 'Creation Date', 'Institution']
+    displayedColumns: string[] = ['id', 'name', 'permission','creation_timestamp','institution', 'edit', 'invalid_password_count'];
+    displayedTitle = ['ID', 'Name', 'Permission', 'Creation Date', 'Institution', 'Lockout Status']
     columnsFromDB: string[] = ['id', 'name', 'permission','creation_timestamp','institution'];
 
     dataSource = new MatTableDataSource<User>();
@@ -48,10 +49,12 @@ export class UsersDialogComponent implements OnInit {
         this.userService.getUserList()
         .subscribe(
             (result) => {
+                console.log(result)
                 from(result).pipe(
-                    map(val=> val.creation_timestamp = val.creation_timestamp.slice(0,10))
+                    map(val=> val.creation_timestamp = val.creation_timestamp.slice(0,10)),
                 ).subscribe()
                 this.dataSource.data = result;
+                console.log('this.dataSource.data',this.dataSource.data)
             },
             (error) => console.log(error)
         )
@@ -126,6 +129,29 @@ export class UsersDialogComponent implements OnInit {
                 height: '55vh'
             })
         })
+    }
+
+    unlockSelectedUsers(row: Partial<User>) {
+        console.log(row);
+        const dialogConfig = new MatDialogConfig;
+        dialogConfig.hasBackdrop = true;
+        dialogConfig.autoFocus = false;
+        dialogConfig.panelClass = 'common-dialog';
+        dialogConfig.data = {
+            name: 'Unlock',
+            title: 'Unlock User',
+            description: 'Do you really want to unlock this user?',
+            isConfirm: true,
+            actionButtonText: 'OK',
+            unlockUserId: row.id
+        };
+
+        const dialogRef = this.dialog.open(CommonDialogComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(
+            (_res) => this.getUserList(),
+            (error) => console.log(error)
+        )
     }
 
 }

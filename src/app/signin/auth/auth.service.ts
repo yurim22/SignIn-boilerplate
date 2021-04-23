@@ -49,8 +49,11 @@ export class AuthService implements OnInit, OnDestroy{
 
     logout():void {
         console.log('logout')
+        const signout_time = new Date()
+        console.log(signout_time);
         this.removeToken()
         this.router.navigate(['/signin'])
+        // this.httpClient.patch(`${this.appUrl}/auth/signout`, {sign_out_timestamp: signout_time, history_seq: })
     }
 
     setToken(token: string): void {

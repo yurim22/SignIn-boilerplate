@@ -39,7 +39,9 @@ export class UserService{
 
     findDuplicateUser(userId: string): Observable<Boolean>{
         return this.httpClient.get<Boolean>(`${this.appUrl}/users/checkId/${userId}`)
-
     }
 
+    unlockUser(userId: string){
+        return this.httpClient.patch(`${this.appUrl}/users/unlock/${userId}`, {invalid_password_count: 0})
+    }
 }

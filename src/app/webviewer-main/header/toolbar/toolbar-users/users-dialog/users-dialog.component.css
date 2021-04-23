@@ -29,7 +29,7 @@ th.mat-header-cell:first-of-type {
 }
 .mat-header-cell {
     font-size: 0.7vw;
-    padding-left: 5px;
+    /* padding-left: 5px; */
     border: 1px solid darkgray;
     text-align: center;
     background: #3d3d3d;
@@ -131,8 +131,19 @@ table.mat-table {
     flex: 0 0 1% !important;
     width: 1% !important;
 }
-  
+.mat-column-invalid_password_count {
+    flex: 0 0 1.5% !important;
+    width: 1.5% !important;
+}
 
+.mat-cell.mat-column-invalid_password_count, .mat-cell.mat-column-edit{
+    padding-left: 0;
+}
+.mat-cell .locked_account{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 /* ::ng-deep .mat-paginator-container {
     position: relative;
     bottom: 0px;
@@ -172,4 +183,23 @@ table.mat-table {
 
 th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
     padding-right: 0;
+}
+
+::ng-deep .mat-dialog-container{
+    background: #2B2B2B;
+}
+
+.mat-paginator-container.user_table_pagination {
+    position: relative;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: fit-content !important;
+    max-height: 30px !important;
+    padding: 0 0px !important;
+    flex-wrap: wrap-reverse;
+    width: 100%;
+    background: #2b2b2b;
+    color: lightgray;
 }

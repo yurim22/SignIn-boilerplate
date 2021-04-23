@@ -109,6 +109,12 @@ export class CommonDialogComponent {
             case 'Link':
                 this.modalData.response = true;
                 break;
+            case 'Unlock':
+                console.log(this.modalData.unlockUserId)
+                this.userService.unlockUser(this.modalData.unlockUserId).subscribe(
+                    () => console.log('unlock user'),
+                    (error) => console.log(error)
+                )
             default:
                 break;
         }

@@ -55,6 +55,12 @@
                     </div>
                 </div>
 
+                <!-- <h5>Repeat Password</h5>
+                <input class="userinfo" id="pwdInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="At least 8 characters" [class.error]="(password.dirty || password.touched) && (password.errors?.required || password.errors?.minlength || password.errors?.pattern)" />
+                <button mat-icon-button matSuffix (click)="togglePwdHide()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldTextType" [style.color]="'#0094d2'">
+                    <mat-icon>{{fieldTextType ? 'visibility' : 'visibility_off'}}</mat-icon>
+                </button> -->
+
                 <h5>User Permission</h5>
                 <!-- <input class="userinfo" type="text" formControlName="permission" /> -->
                 <select id="permission" class="userinfo selectbox" formControlName="permission">

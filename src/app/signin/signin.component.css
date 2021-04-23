@@ -81,11 +81,9 @@
 .login .login-group .checkbox{
     margin-bottom: 1.5rem;
 }
-/* ::ng-deep .mat-checkbox-inner-container{
-    margin-right: 0;
-} */
+
 ::ng-deep .mat-checkbox .mat-checkbox-frame {
-    border: 1.5px solid #9a9da0;
+    border: 1.8px solid #9a9da0;
     width: 14px;
     height: 14px;
 }

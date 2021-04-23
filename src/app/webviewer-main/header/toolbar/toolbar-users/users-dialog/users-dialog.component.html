@@ -34,8 +34,19 @@
             </td>
         </ng-container>
 
+        <ng-container matColumnDef="invalid_password_count">
+            <th mat-header-cell *matHeaderCellDef>Lockout</th>
+            <td mat-cell *matCellDef = "let row">
+                <ng-container *ngIf="row.invalid_password_count === 5">
+                    <div title="Unlock Account" style="cursor:pointer" class="locked_account" (click)="unlockSelectedUsers(row)">
+                        <i class="fa fa-lock icon-color" aria-hidden="true"></i>
+                    </div>
+                    <!-- <div style="padding-right:5px;"></div> -->
+                </ng-container>
+            </td>
+        </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </section>
-<mat-paginator [pageSize]="15" [hidePageSize]="true"></mat-paginator>
+<mat-paginator [pageSize]="15" [hidePageSize]="true" class="user_table_pagination"></mat-paginator>
