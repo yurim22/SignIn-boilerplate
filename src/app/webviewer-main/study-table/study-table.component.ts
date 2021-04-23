@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {catchError, map, startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
 
@@ -19,7 +19,7 @@ import { Store } from '@ngxs/store';
     selector: 'app-study-table',
     templateUrl: './study-table.component.html',
     styleUrls: ['./study-table.component.css'],
-    
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class StudyTableComponent implements OnInit, OnChanges {
 
