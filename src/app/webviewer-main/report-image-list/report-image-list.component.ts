@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit, Output, EventEmitter, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, HostListener, Input, OnInit, Output, EventEmitter, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select, Store } from '@ngxs/store';
@@ -10,7 +10,7 @@ import { StudyState } from 'src/app/store/study/study.state';
     selector: 'app-report-image-list',
     templateUrl: './report-image-list.component.html',
     styleUrls: ['./report-image-list.component.css'],
-    //encapsulation: ViewEncapsulation.None,
+    // encapsulation: ViewEncapsulation.ShadowDom,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportImageListComponent implements OnInit {

@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/signin/auth/auth.service';
 import { UserService } from 'src/app/webviewer-main/header/toolbar/toolbar-users/users.service';
 //import { CommonService } from 'src/app/common/services/common.services';
@@ -57,18 +58,24 @@ import { UserService } from 'src/app/webviewer-main/header/toolbar/toolbar-users
             border-radius: 0.125rem;
             border: 1px solid #2d2d2d;
             min-width: 3rem;
+            min-height: 1rem
             max-width: 15rem;
-            max-height: 1rem;
+            max-height: 1.3rem;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
             text-align: center;
             vertical-align: middle;
             letter-spacing: 0.12em;
-            font-size: 0.5rem;
+            font-size: 0.65rem;
             font-weight: 500;
             height: 1.5rem;
             margin: 3px;
+        }
+
+        ::ng-deep .mat-simple-snackbar{
+            font-size: 0.8vw;
+            padding-left: 3.6vw
         }
     `]
 })
@@ -76,7 +83,8 @@ export class CommonDialogComponent {
     constructor(@Inject(MAT_DIALOG_DATA) public modalData: any,
                 public dialogRef: MatDialogRef<CommonDialogComponent>,
                 private authService: AuthService,
-                private userService: UserService
+                private userService: UserService,
+                private snackBar: MatSnackBar
                 ) {}
 
     doAction() {
@@ -86,7 +94,7 @@ export class CommonDialogComponent {
                 break;
             case 'Delete':
                 this.userService.deleteUser(this.modalData.deleteUserId).subscribe(
-                    () => console.log('delete user')
+                    () => {console.log('delete user'),this.showSnackbar('Delete user successfully', '')}
                 )
                 this.modalData.response = true;
                 console.log(this.modalData)
@@ -112,7 +120,10 @@ export class CommonDialogComponent {
             case 'Unlock':
                 console.log(this.modalData.unlockUserId)
                 this.userService.unlockUser(this.modalData.unlockUserId).subscribe(
-                    () => console.log('unlock user'),
+                    () => {
+                        console.log('unlock user')
+                        this.showSnackbar('Unlock user successfully', '')
+                    },
                     (error) => console.log(error)
                 )
             default:
@@ -132,5 +143,14 @@ export class CommonDialogComponent {
                 this.dialogRef.close();
                 break;
         }
+    }
+
+    
+    showSnackbar(content:string, action:string) {
+        this.snackBar.open(content, action, {
+            duration: 2000,
+            verticalPosition: 'bottom',
+            panelClass: ["custom-snackbar-style"]
+        });
     }
 }

@@ -24,7 +24,7 @@
     line-height: 0.6rem;
 }
 
-.mat-dialog-container{
+::ng-deep .mat-dialog-container{
     background: #2B2B2B;
     padding: 0;
 }

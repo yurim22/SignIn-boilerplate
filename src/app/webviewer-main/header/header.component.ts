@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
         console.log('this is header component ngoninit');
         this.userInfoService.getCurrentUser().subscribe(
             (res) => {
+                console.log(res);
                 this.userInfoService.setUserInfo(res);
             },
             (error) => console.log(error)

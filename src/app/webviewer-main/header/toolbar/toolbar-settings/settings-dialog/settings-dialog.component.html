@@ -5,7 +5,7 @@
             <mat-icon class="close-icon">close</mat-icon>
         </button>
     </section>
-    <section class="settings">
+    <section class="settings" [ngIf]="userPermission === 'ADMINISTRATOR' || userPermission === 'DEVELOPER'">
         <form [formGroup]="receiveForm" (ngSubmit)="onSubmit_Re('receiveForm')">
             <div class="receive-group">
                 <h3 class="title">Receive</h3>
@@ -50,4 +50,9 @@
             </div> 
         </form>
     </section>
+
+    <section class="udpate_userinfo" [ngIf]="userPermission === 'PHYSICIAN'">
+        <div>hello</div>
+    </section>
 </div>
+

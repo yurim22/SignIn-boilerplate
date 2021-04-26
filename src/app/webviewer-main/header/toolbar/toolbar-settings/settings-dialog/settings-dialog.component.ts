@@ -23,7 +23,9 @@ export class SettingsDialogComponent {
     isSuccess_re: boolean = false;
     isSuccess_se: boolean = false;
     cnt: number = 0;
+    userPermission: string;
     // isFail: boolean;
+
     constructor(
         private dialogRef: MatDialogRef<SettingsDialogComponent>,
         private fb: FormBuilder,
@@ -39,6 +41,8 @@ export class SettingsDialogComponent {
             ip:[this.ip,Validators.required],
             port:[this.port,Validators.required]
         })
+
+        this.userPermission = localStorage.getItem('permission')
     }
 
     save() {

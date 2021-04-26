@@ -17,15 +17,24 @@
                             </span>
                         </ng-container> -->
                         <!-- <span *ngIf="syncFailedStudyExist()">&nbsp;&nbsp;&nbsp;</span> -->
-                        <ng-container *ngIf="permission == '' || permission == 'ADMINISTRATOR'">
+                        <ng-container *ngIf="permission == 'DEVELOPER' || permission == 'ADMINISTRATOR'">
                             <span style="cursor: default;">Server Storage ({{diskTotalUsage}}GB/{{diskTotalSpace}}GB)</span>
                         </ng-container>
                     </div>
-                    <toolbar-pacs class="top-menu-tools-container"></toolbar-pacs>
-                    <toolbar-users class="top-menu-tools-container"></toolbar-users>
-                    <toolbar-settings class="top-menu-tools-container"></toolbar-settings>
-                    <toolbar-about class="top-menu-tools-container"></toolbar-about>
-                    <toolbar-logout class="top-menu-tools-container" (click)="showLogoutModal()"></toolbar-logout>
+                    <ng-container *ngIf="permission === 'ADMINISTRATOR' || permission === 'DEVELOPER'">
+                        <toolbar-pacs class="top-menu-tools-container"></toolbar-pacs>
+                        <toolbar-users class="top-menu-tools-container"></toolbar-users>
+                        <toolbar-settings class="top-menu-tools-container"></toolbar-settings>
+                        <toolbar-about class="top-menu-tools-container"></toolbar-about>
+                        <toolbar-logout class="top-menu-tools-container" (click)="showLogoutModal()"></toolbar-logout>
+                    </ng-container>
+                    <ng-container *ngIf="permission === 'PHYSICIAN'">
+                        <!-- <toolbar-pacs class="top-menu-tools-container"></toolbar-pacs>
+                        <toolbar-users class="top-menu-tools-container"></toolbar-users> -->
+                        <toolbar-settings class="top-menu-tools-container"></toolbar-settings>
+                        <toolbar-about class="top-menu-tools-container"></toolbar-about>
+                        <toolbar-logout class="top-menu-tools-container" (click)="showLogoutModal()"></toolbar-logout>
+                    </ng-container>
                 </div>
             </div>
         </div>

@@ -5,8 +5,8 @@
             <mat-icon class="close-icon">close</mat-icon>
         </button>
     </section>
-    <section class="create-newUser">
-        <form [formGroup]="createUserForm" (ngSubmit)="onSubmit(createUserForm)">
+    <section class="create-newUser" *ngIf="userPermission === 'ADMINISTRATOR' || userPermission === 'DEVELOPER'">
+        <form [formGroup]="createUserForm" (ngSubmit)="onSubmit(createUserForm)" (keydown.enter)="enterToSubmit($event)">
             <div class="mat-dialog-content flex-container input-user-info">
                 <!-- username field -->
                 <h5>User Name</h5>
@@ -34,7 +34,7 @@
                 <!-- userpassword field -->
                 <h5>User Password</h5>
                 <input class="userinfo" id="pwdInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="At least 8 characters" [class.error]="(password.dirty || password.touched) && (password.errors?.required || password.errors?.minlength || password.errors?.pattern)" />
-                <button mat-icon-button matSuffix (click)="togglePwdHide()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldTextType" [style.color]="'#0094d2'">
+                <button matSuffix (click)="togglePwdHide()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldTextType" [style.color]="'#0094d2'" [style.background]="'#2B2B2B'" [style.border]="'none'" type="button">
                     <mat-icon>{{fieldTextType ? 'visibility' : 'visibility_off'}}</mat-icon>
                 </button>
                 <div *ngIf="password.errors?.required && (password.dirty || password.touched)" class="form-error-msg">
@@ -74,6 +74,54 @@
             
             <div mat-dialog-actions class="create-user-btn">
                 <button mat-button type="submit" [disabled]="!createUserForm.valid || duplicatedId">Register</button>
+                <button mat-button mat-dialog-close>Close</button>
+            </div>
+        </form>
+    </section>
+    <section class="update_personal" *ngIf="userPermission === 'PHYSICIAN'">
+        <form [formGroup]="updatePersonalForm" (ngSubmit)="onSubmit(updatePersonalForm)" (keydown.enter)="enterToSubmit($event)">
+            <div class="mat-dialog-content flex-container input-user-info">
+                <!-- userid field -->
+                <h5>User ID</h5>
+                <div class="personal-userId">{{data.userInfo.id}}</div>
+
+                <!-- username field -->
+                <h5>User Name</h5>
+                <input class="userinfo" type="text" formControlName="name" placeholder="name" [class.error]="name.errors?.required && (name.dirty || name.touched)"/>
+                <div *ngIf="name.errors?.required && (name.dirty || name.touched)" class="form-error-msg">
+                    <div *ngIf="name.errors.required">
+                        <span class="material-icons">priority_high</span>
+                        Name is required.
+                    </div>
+                </div>
+                
+                <!-- userpassword field -->
+                <h5>User Password</h5>
+                <input class="userinfo" id="pwdInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="At least 8 characters" [class.error]="(password.dirty || password.touched) && (password.errors?.required || password.errors?.minlength || password.errors?.pattern)" />
+                <button type="button" mat-icon-button matSuffix (click)="togglePwdHide()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldTextType" [style.color]="'#0094d2'" [style.background]="'#2B2B2B'" [style.border]="'none'">
+                    <mat-icon>{{fieldTextType ? 'visibility' : 'visibility_off'}}</mat-icon>
+                </button>
+                <div *ngIf="password.errors?.required && (password.dirty || password.touched)" class="form-error-msg">
+                    <div *ngIf="password.errors.required">
+                        <!-- <span class="material-icons">warning_amber</span> -->
+                        <span class="material-icons">priority_high</span>
+                        Password is required.
+                    </div>
+                </div>
+                <div *ngIf="password.errors?.minlength || password.errors?.pattern && (password.dirty || password.touched)" class="form-error-msg">
+                    <div *ngIf="password.errors.minlength">
+                        <span class="material-icons">priority_high</span>
+                        Password must be at least 8 characters
+                    </div>
+                    <div *ngIf="password.errors.pattern">
+                        <span class="material-icons">priority_high</span>
+                        Password is a combination of uppercase, lowercase, numeric and non-alphanumeric characters
+                    </div>
+                </div>
+            </div>
+            
+            <div mat-dialog-actions class="create-user-btn">
+                <button mat-button type="submit" [disabled]="!updatePersonalForm.valid">Register</button>
                 <button mat-button mat-dialog-close>Close</button>
             </div>
         </form>

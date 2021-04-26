@@ -34,6 +34,7 @@ export class UserInfoService {
     ngOnInit(){
         //if localStorage안의 token값이 [undefined, "", 0]이 아닐때, 즉 token값이 있을 때
         if(!!localStorage.getItem('token')){
+            this.seq = parseInt(localStorage.getItem('seq'))
             this.id = localStorage.getItem('id');
             this.name = localStorage.getItem('name');
             this.permission = localStorage.getItem('permission');
@@ -49,9 +50,11 @@ export class UserInfoService {
         localStorage.setItem('name', user.name)
         localStorage.setItem('permission', user.permission)
         localStorage.setItem('institution', user.institution)
+        localStorage.setItem('seq', user.seq)
     }
 
     clear() {
+        localStorage.removeItem('seq')
         localStorage.removeItem('id');
         localStorage.removeItem('name');
         localStorage.removeItem('permission');

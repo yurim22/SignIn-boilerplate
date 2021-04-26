@@ -86,12 +86,9 @@ img{
 ::ng-deep snack-bar-container.custom-snackbar{
     display: flex;
     justify-content: center;
-    /* margin: 15px; */
     position: absolute;
     right: 12%;
     bottom: 0.1%;
-    /* max-width: fix-content;
-    padding: 14px 0.5vw; */
     align-items: center;
 }
 
