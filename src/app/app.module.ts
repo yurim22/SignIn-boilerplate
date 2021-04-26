@@ -23,6 +23,7 @@ import { GlobalErrorHandlerService } from './common/error/global-error-handler.s
 import { StudyState } from './store/study/study.state';
 
 export function tokenGetter(): string {
+    console.log(localStorage.getItem('token'))
     return localStorage.getItem('token');
 }
 
@@ -48,7 +49,7 @@ export function tokenGetter(): string {
                 tokenGetter: tokenGetter,
                 allowedDomains: ['localhost:3000', 'localhost:3000/api'],
                 disallowedRoutes: [],
-                skipWhenExpired: true
+                skipWhenExpired: true,
             }
         }),
         NgxsModule.forRoot([

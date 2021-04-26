@@ -47,6 +47,18 @@ export class AuthService implements OnInit, OnDestroy{
         )
     }
 
+    silentRefresh() {
+        this.refreshToken = this.cookieService.get('refreshToken')
+        console.log('this.refreshToken',this.refreshToken)
+        return this.httpClient.post<Token>(`${this.appUrl}/auth/silent-refresh`, {refreshToken : this.refreshToken})
+        .pipe(
+            tap(res => {this.setToken(res.accessToken), console.log(res.accessToken)}),
+            tap(res => this.cookieService.set('refreshToken', res.refreshToken)),
+
+            shareReplay()
+        )
+    }
+
     logout():void {
         console.log('logout')
         const signout_time = new Date()

@@ -63,7 +63,7 @@ export class UserInfoService {
 
     getCurrentUser(): Observable<User>{
         this.userid = this.authService.getUserid();
-
+        console.log('this.userid', this.userid);
         return this.httpClient.get<User>(`${this.appUrl}/users/${this.userid}`).pipe(shareReplay())
     }
 

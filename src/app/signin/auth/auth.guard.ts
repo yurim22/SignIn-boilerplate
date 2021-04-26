@@ -19,8 +19,20 @@ export class AuthGuard implements CanActivate {
         
         if(!this.auth.isAuthenticated()) {
             console.log('invalid token');
-            this.router.navigate(['/signin'])
-            return false;
+            // //토큰이 만료되었을 때, refresh token 활용해서 새로운 토큰을 다시 받아온다
+            this.auth.silentRefresh().subscribe(
+                (res) => {
+                    console.log(res)
+                    return true
+                },
+                (error) => {
+                    console.log(error)
+                    this.router.navigate(['/signin'])
+                    return false;
+                }
+            )
+            // this.router.navigate(['/signin'])
+            // return false;
         }
         return true;
     }
