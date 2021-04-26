@@ -3,8 +3,10 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { distinctUntilChanged, skip } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, mapTo, skip, tap } from 'rxjs/operators';
+import { SetSeriesInfo } from 'src/app/store/study/study.actions';
 import { StudyState } from 'src/app/store/study/study.state';
+import { StudyTableService } from '../study-table/study-table.service';
 
 @Component({
     selector: 'app-report-image-list',
@@ -15,31 +17,48 @@ import { StudyState } from 'src/app/store/study/study.state';
 })
 export class ReportImageListComponent implements OnInit {
 
-    @Select(StudyState.getSeriesUrl) imgUrl$: Observable<string>
-    @Input() isAnalyzed;
-    @Input() isReceived;
+    @Select(StudyState.getSeriesUrl) imgUrl$: Observable<string>;
+    @Select(StudyState.getStudySeq) currentStudySeq$: Observable<number>;
+    @Select(StudyState.selectedStudyStatus) studyStatus$: Observable<string>;
+    // @Input() isAnalyzed;
+    // @Input() isReceived;
     
-    @Output() confirmed = new EventEmitter<any>();
+    // @Output() confirmed = new EventEmitter<any>();
 
     isLastIndex: boolean = false;
     idx = 1
     report_img: string;
     error_report_img: string;
-
+    hasReport: boolean = false;
     isConfirmed: boolean;
 
     snack_message: string;
+    // currentStudySeq: number;
 
     constructor(private _snackBar: MatSnackBar, private store: Store,
-        private readonly changeDetectionRef: ChangeDetectorRef) { }
+        private readonly changeDetectionRef: ChangeDetectorRef,
+        private studyService: StudyTableService) { }
 
     ngOnInit() {
-        this.imgUrl$.pipe(
-            skip(1)
+        this.imgUrl$.pipe(skip(1))
+        this.currentStudySeq$.pipe(skip(1)).subscribe()
+        //     .subscribe(
+        //     (res) => {
+        //         this.report_img = `${res}`;
+        //         console.log(this.report_img)
+        //         if(!!this.report_img){
+        //             console.log('trye')
+        //         }
+        //     }
+        // )
+     
+        this.studyStatus$.pipe(
+            map(val => val === 'REVIEWED' || val === 'ANALYZED'? true : false),
+            tap((res) => console.log(res))
         ).subscribe(
-            (res) => {
-                this.report_img = `${res}`;
-                console.log(this.report_img)
+            (res) =>{
+                this.hasReport = res;
+                // this.currentStudySeq = res.study_seq
             }
         )
     }
@@ -83,8 +102,13 @@ export class ReportImageListComponent implements OnInit {
 
     confirm() {
         console.log('confirm');
-        this.isConfirmed = true;
-        this.confirmed.emit(this.isConfirmed);
+        // this.isConfirmed = true;
+        // this.confirmed.emit(this.isConfirmed);
+        this.studyService.updateStudyStatus({status: 'REVIEWED'}, 6).subscribe(
+            (res) => {
+                this.store.dispatch(new SetSeriesInfo(6, 'REVIEWED'))
+            }
+        )
     }
 
     openSnackBar() {

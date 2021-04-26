@@ -26,9 +26,9 @@ export class StudyTableComponent implements OnInit, OnChanges {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    @Input() isConfirmed: boolean;
+    // @Input() isConfirmed: boolean;
     @Input() confirmedStudy: number;
-    @Input() isSelected: boolean;
+    // @Input() isSelected: boolean;
 
     // @Output() clickRow = new EventEmitter<StudyRow>();
     unsubscribe$ = new Subject<any>();
@@ -97,11 +97,12 @@ export class StudyTableComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges():void {
-        if(this.isConfirmed) {
-            console.log(this.dataSource.data[this.confirmedStudy-1])
-            this.dataSource.data[this.confirmedStudy-1].status = "REVIEWED"
-        }
-        console.log('this.isSelected',this.isSelected);
+        // if(this.isConfirmed) {
+        //     console.log(this.dataSource.data[this.confirmedStudy-1])
+        //     this.dataSource.data[this.confirmedStudy-1].status = "REVIEWED"
+        // }
+        // console.log('this.isSelected',this.isSelected);
+        this.getStudyList()
     }
 
     getStudyList() {
@@ -109,8 +110,7 @@ export class StudyTableComponent implements OnInit, OnChanges {
             (result)=> {
                 console.log('result', result),
                 this.dataSource.data = result
-                console.log(this.dataSource.data);
-                console.log(this.dataSource.data[0].patient.patient_age)
+                console.log('getstudy list',this.dataSource.data);
             }
         )
     }
@@ -126,11 +126,13 @@ export class StudyTableComponent implements OnInit, OnChanges {
         }
     }
 
+    //더블클릭하면, action파일의 SetSeriesInfo가 호출된다.
     onDblclick(row: StudyRow): void{
-        this.isConfirmed = false;
-        // this.clickedStudy = row.seq;
+        // this.isConfirmed = false;
+        this.confirmedStudy = row.seq;
         console.log('this.onDblclick')
-        this.store.dispatch(new SetSeriesInfo(row.seq))
+        this.store.dispatch(new SetSeriesInfo(row.seq, row.status))
+        console.log(row.status);
 
     }
 }

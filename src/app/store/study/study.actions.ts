@@ -10,9 +10,14 @@ export class GetSeriesImg {
 
 export class SetSeriesInfo {
     static readonly type = '[Series] Set Image Url';
-    constructor(public studySeq: number) {}
+    constructor(public studySeq: number, public studyStatus:string) {}
 }
 
 export class isStudySelected {
     static readonly type = '[Study] isSelected';
+}
+
+export class UpdateStudyData {
+    static readonly type = '[Study] Set Study Data';
+    constructor(public studySeq: number) {}
 }

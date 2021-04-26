@@ -4,16 +4,15 @@
         <ng-container #iconMenu>
             <div class="section-title" style="margin-top: 0.4em;"><i [ngClass]="['fa fa-bars fa-sx']"></i>&nbsp;Study List</div>
         </ng-container>
-        <app-study-table [isConfirmed]="isConfirmed" [confirmedStudy]="clickedStudy" [isSelected]="isSelected"></app-study-table>
+        <app-study-table></app-study-table>
     </div>
 
     <div class="report-container">
         <ng-container>
-            <div class="section-title" style="margin-top: 0.4em;"><i [ngClass]="['fa fa-bars fa-sx']"></i>&nbsp;BEAT Report</div>
+            <div class="section-title" style="margin-top: 0.4em;"><i [ngClass]="['fa fa-bars fa-sx']"></i>&nbsp;JUNO Report</div>
         </ng-container>
         <div class="report-image">
-            <app-report-image-list [isAnalyzed]="isAnalyzed" [isReceived]="isReceived" (confirmed)="confirmReport($event)"></app-report-image-list>
+            <app-report-image-list></app-report-image-list>
         </div>
-
     </div>
 </div>
