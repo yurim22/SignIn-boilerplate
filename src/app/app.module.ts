@@ -21,6 +21,7 @@ import { environment } from 'src/environments/environment';
 import { AuthInterceptor } from './signin/auth/auth-interceptor.service';
 import { GlobalErrorHandlerService } from './common/error/global-error-handler.service';
 import { StudyState } from './store/study/study.state';
+import { HttpInterceptorService } from './common/http/http.interceptor.service';
 
 export function tokenGetter(): string {
     console.log(localStorage.getItem('token'))
@@ -49,7 +50,7 @@ export function tokenGetter(): string {
                 tokenGetter: tokenGetter,
                 allowedDomains: ['localhost:3000', 'localhost:3000/api'],
                 disallowedRoutes: [],
-                skipWhenExpired: true,
+                skipWhenExpired: true
             }
         }),
         NgxsModule.forRoot([
@@ -64,12 +65,17 @@ export function tokenGetter(): string {
     providers:
       [
         CookieService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        },
         // {
         //     provide: HTTP_INTERCEPTORS,
-        //     useClass: AuthInterceptor,
+        //     useClass: HttpInterceptorService,
         //     multi: true
         // },
-      GlobalErrorHandlerService,
+        GlobalErrorHandlerService,
         {provide: ErrorHandler, useClass: GlobalErrorHandlerService},
     ]
 })

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { from, zip } from 'rxjs';
 import { map, mapTo, tap, toArray } from 'rxjs/operators';
 import { CommonDialogComponent } from 'src/app/common/dialog/common-dialog.component';
@@ -32,6 +33,7 @@ export class UsersDialogComponent implements OnInit {
     constructor(
         private dialog: MatDialog,
         private userService: UserService,
+        private router: Router
         
     ) { }
 
@@ -56,7 +58,13 @@ export class UsersDialogComponent implements OnInit {
                 this.dataSource.data = result;
                 console.log('this.dataSource.data',this.dataSource.data)
             },
-            (error) => console.log(error)
+            (error) => {
+                console.log(error)
+                if(error.error.message === 'Unauthorized'){
+                    this.router.navigate(['/signin'])
+                    localStorage.clear()
+                }
+            }
         )
     }
 

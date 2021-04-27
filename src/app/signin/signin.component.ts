@@ -76,7 +76,8 @@ export class SigninComponent implements OnInit {
         this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password).subscribe(
             () => {
                 this.isSigninFailed = false;
-                
+                console.log(this.authService.tokenExpirationDate(this.cookieService.get('refreshToken')))
+                console.log('token decode: ', this.authService.decodeToken(this.cookieService.get('refreshToken')))
                 this.router.navigate(['/webviewer'])
             },
             (error)=> {

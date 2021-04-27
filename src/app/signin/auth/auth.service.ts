@@ -54,7 +54,6 @@ export class AuthService implements OnInit, OnDestroy{
         .pipe(
             tap(res => {this.setToken(res.accessToken), console.log(res.accessToken)}),
             tap(res => this.cookieService.set('refreshToken', res.refreshToken)),
-
             shareReplay()
         )
     }
@@ -94,6 +93,14 @@ export class AuthService implements OnInit, OnDestroy{
     isAuthenticated():boolean {
         const token = this.getToken();
         return token ? !this.isTokenExpired(token) : false;
+    }
+
+    tokenExpirationDate(token: string): Date {
+        return this.jwtHelper.getTokenExpirationDate(token)
+    } 
+
+    decodeToken(token: string) {
+        return this.jwtHelper.decodeToken(token)
     }
 
     ngOnDestroy() {

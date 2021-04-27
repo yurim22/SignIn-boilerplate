@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
+import { CookieService } from 'ngx-cookie-service';
 import { filter, map } from 'rxjs/operators';
-import { StudyRow } from '../models/studyrow.model';
-import { AddSeriesImg, GetSeriesImg, SetSeriesInfo } from '../store/study/study.actions';
-import { StudyTableService } from './study-table/study-table.service';
-
+import { AuthService } from '../signin/auth/auth.service';
 @Component({
     selector: 'app-webviewer-main',
     templateUrl: './webviewer-main.component.html',
@@ -12,8 +10,28 @@ import { StudyTableService } from './study-table/study-table.service';
 })
 export class WebviewerMainComponent implements OnInit {
 
-    constructor() { }
+    tokenExpireDate: Date;
+    refreshToken: string;
+    decodeToken: any;
+    timeToExpired: number;
 
-    ngOnInit(): void {}   
+    constructor(private authService: AuthService,
+        private cookieService: CookieService) { }
+
+    ngOnInit() {
+        this.refreshToken = this.cookieService.get('refreshToken')
+        this.tokenExpireDate = this.authService.tokenExpirationDate(this.cookieService.get('refreshToken'))
+        console.log('------------tokenExpireDate', this.tokenExpireDate)
+        this.decodeToken = this.authService.decodeToken(this.refreshToken);
+        console.log(this.decodeToken)
+
+        this.timeToExpired = this.decodeToken.exp - this.decodeToken.iat
+        console.log(this.timeToExpired);
+        setTimeout(() => {console.log('refresh token was expired')}, this.timeToExpired*1000)
+    }  
+
+    expiredRefreshToken() {
+        
+    }
 
 }

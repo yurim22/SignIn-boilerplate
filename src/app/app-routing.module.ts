@@ -27,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [BrowserModule, FormsModule,AngularMaterialsModule, RouterModule.forRoot(routes, {useHash: true})],
+    imports: [BrowserModule, FormsModule, AngularMaterialsModule, RouterModule.forRoot(routes, {useHash: true})],
     exports: [RouterModule],
     // declarations:[
     //     SigninComponent,
