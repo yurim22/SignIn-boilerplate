@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CookieService } from 'ngx-cookie-service';
 import { UsersDialogComponent } from './users-dialog/users-dialog.component';
 
 @Component({
@@ -40,7 +41,7 @@ import { UsersDialogComponent } from './users-dialog/users-dialog.component';
 })
 export class ToolbarUsersComponent implements OnInit {
 
-    constructor(private dialog: MatDialog) { }
+    constructor(private dialog: MatDialog, private cookieService: CookieService) { }
 
     ngOnInit(): void {
     }

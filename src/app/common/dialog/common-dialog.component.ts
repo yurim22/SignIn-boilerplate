@@ -72,7 +72,7 @@ import { UserService } from 'src/app/webviewer-main/header/toolbar/toolbar-users
             height: 1.5rem;
             margin: 3px;
         }
-
+        .mat-dialog-container
         ::ng-deep .mat-simple-snackbar{
             font-size: 0.8vw;
             padding-left: 3.6vw

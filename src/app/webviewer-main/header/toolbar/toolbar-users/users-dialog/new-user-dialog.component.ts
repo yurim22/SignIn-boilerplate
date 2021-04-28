@@ -1,9 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject,merge } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, mapTo, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, mapTo, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { User } from 'src/app/signin/models/user.model';
 import { UserInfoService } from 'src/app/signin/services/user-info.service';
 import { UserService } from '../users.service';
@@ -102,7 +102,7 @@ interface DialogData {
         }
     `]
 })
-export class CreateNewUserDialogComponent {
+export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
 
     createUserForm: FormGroup;
     updatePersonalForm: FormGroup;
@@ -120,6 +120,9 @@ export class CreateNewUserDialogComponent {
     originId: string;
 
     userPermission: string;
+
+    unsubscribe$ = new Subject();
+
     constructor(
         public dialogRef: MatDialogRef<CreateNewUserDialogComponent>,
         private fb: FormBuilder,
@@ -182,7 +185,9 @@ export class CreateNewUserDialogComponent {
             mapTo(false)
         )
 
-        merge(checkUserId$,emptyId$).subscribe(
+        merge(checkUserId$,emptyId$).pipe(
+            takeUntil(this.unsubscribe$)
+        ).subscribe(
             (res) => {
                 if(res){
                     this.duplicatedId = true
@@ -216,7 +221,9 @@ export class CreateNewUserDialogComponent {
                 name: form.value.name,
                 institution: form.value.institution,
                 permission: form.value.permission,
-            }).subscribe(
+            }).pipe(
+                takeUntil(this.unsubscribe$)
+            ).subscribe(
                 ()=> {
                     this.close();
                     console.log('create user')
@@ -233,7 +240,9 @@ export class CreateNewUserDialogComponent {
                 name: form.value.name,
                 institution: form.value.institution,
                 permission: form.value.permission,
-            }, userSeq).subscribe(
+            }, userSeq).pipe(
+                takeUntil(this.unsubscribe$)
+            ).subscribe(
                 (result) => {
                     console.log(result)
                     this.close();
@@ -247,7 +256,9 @@ export class CreateNewUserDialogComponent {
             this.userService.updateUser({
                 name: form.value.name,
                 password: form.value.password
-            }, userSeq).subscribe(
+            }, userSeq).pipe(
+                takeUntil(this.unsubscribe$)
+            ).subscribe(
                 (result) => {
                     console.log('resuilt',result)
                     this.userInfoService.setUserInfo(result)
@@ -280,6 +291,11 @@ export class CreateNewUserDialogComponent {
             $event.preventDefault()
             console.log('cant submit;')
         }
+    }
+
+    ngOnDestroy() {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 
     get name() {

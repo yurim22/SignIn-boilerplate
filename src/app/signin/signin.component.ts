@@ -4,12 +4,12 @@ import { Route, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 // import { UserInfoService } from '../services/user-info.service';
 // import { Apollo, gql, Query } from 'apollo-angular';
-import { async, Subscription } from 'rxjs';
+import { async, Subject, Subscription } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 //import { User } from '../models/user.model';
 // import { FIND_USER } from 'src/app/common/graphql/gql';
 import { CookieService } from 'ngx-cookie-service';
-import { tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import {UserInfoService} from "./services/user-info.service";
 
 @Component({
@@ -18,7 +18,7 @@ import {UserInfoService} from "./services/user-info.service";
     styleUrls: ['./signin.component.css'],
     // encapsulation: ViewEncapsulation.
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnInit, OnDestroy {
 
     checked = false;
     passwordExpired = false;
@@ -39,6 +39,8 @@ export class SigninComponent implements OnInit {
     // oldPassword = '';
     // newPassword = '';
     // newPasswordRepeat = '';
+
+    unsubscribe$ : Subject<any>
 
     constructor(private formBuilder: FormBuilder,
                 private userInfoService: UserInfoService,
@@ -73,7 +75,9 @@ export class SigninComponent implements OnInit {
 
     onSubmit(){
         console.log('onsubmit button')
-        this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password).subscribe(
+        this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password).pipe(
+            takeUntil(this.unsubscribe$)
+        ).subscribe(
             () => {
                 this.isSigninFailed = false;
                 console.log(this.authService.tokenExpirationDate(this.cookieService.get('refreshToken')))
@@ -118,6 +122,12 @@ export class SigninComponent implements OnInit {
 
     showAboutDialog(){
         console.log('show about dialog')
+    }
+
+    
+    ngOnDestroy() {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 
 }

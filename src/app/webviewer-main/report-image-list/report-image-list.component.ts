@@ -1,9 +1,9 @@
-import { Component, HostListener, Input, OnInit, Output, EventEmitter, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, Input, OnInit, Output, EventEmitter, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef, ViewEncapsulation, OnDestroy } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, mapTo, skip, tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { distinctUntilChanged, filter, map, mapTo, skip, takeUntil, tap } from 'rxjs/operators';
 import { SetSeriesInfo } from 'src/app/store/study/study.actions';
 import { StudyState } from 'src/app/store/study/study.state';
 import { StudyTableService } from '../study-table/study-table.service';
@@ -15,7 +15,7 @@ import { StudyTableService } from '../study-table/study-table.service';
     // encapsulation: ViewEncapsulation.ShadowDom,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReportImageListComponent implements OnInit {
+export class ReportImageListComponent implements OnInit, OnDestroy {
 
     @Select(StudyState.getSeriesUrl) imgUrl$: Observable<string>;
     @Select(StudyState.getStudySeq) currentStudySeq$: Observable<number>;
@@ -34,14 +34,16 @@ export class ReportImageListComponent implements OnInit {
 
     snack_message: string;
     // currentStudySeq: number;
+    unsubscribe$ = new Subject();
 
     constructor(private _snackBar: MatSnackBar, private store: Store,
         private readonly changeDetectionRef: ChangeDetectorRef,
         private studyService: StudyTableService) { }
 
     ngOnInit() {
-        this.imgUrl$.pipe(skip(1))
-        this.currentStudySeq$.pipe(skip(1)).subscribe()
+        this.imgUrl$.pipe(skip(1), takeUntil(this.unsubscribe$))
+
+        this.currentStudySeq$.pipe(skip(1), takeUntil(this.unsubscribe$)).subscribe()
         //     .subscribe(
         //     (res) => {
         //         this.report_img = `${res}`;
@@ -106,16 +108,22 @@ export class ReportImageListComponent implements OnInit {
         // this.confirmed.emit(this.isConfirmed);
         this.studyService.updateStudyStatus({status: 'REVIEWED'}, 6).subscribe(
             (res) => {
-                this.store.dispatch(new SetSeriesInfo(6, 'REVIEWED'))
+                this.store.dispatch(new SetSeriesInfo(6, 'REVIEWED')),
+                this.openSnackBar("Confirm Report")
             }
         )
     }
 
-    openSnackBar() {
-        this._snackBar.open( this.snack_message, '', {
+    openSnackBar(msg: string) {
+        this._snackBar.open(msg, '', {
             duration: 1500,
             panelClass:'custom-snackbar',
             //horizontalPosition: 'right'
         }) 
+    }
+
+    ngOnDestroy() {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 }

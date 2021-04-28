@@ -1,7 +1,10 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { CookieService } from "ngx-cookie-service";
 import { BehaviorSubject, Observable, throwError } from "rxjs";
-import { catchError, filter, switchMap, take } from "rxjs/operators";
+import { catchError, filter, switchMap, take, tap } from "rxjs/operators";
+import { CommonDialogComponent } from "src/app/common/dialog/common-dialog.component";
 import { AuthService } from "./auth.service";
 
 @Injectable()
@@ -9,8 +12,10 @@ export class AuthInterceptor implements HttpInterceptor{
 
     private isRefreshing = false;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-
-    constructor(private authService: AuthService){ }    
+    
+    refreshToken : string;
+    constructor(private authService: AuthService, private cookieService: CookieService,
+        private dialog: MatDialog){ }    
     
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         var authToken = this.authService.getToken();
@@ -27,6 +32,7 @@ export class AuthInterceptor implements HttpInterceptor{
             return next.handle(clonedRequest).pipe(catchError(
                 error => {
                     if(error instanceof HttpErrorResponse && error.status === 401) {
+                        console.log(error)
                         return this.handle401Error(clonedRequest, next);
                     }else{
                         return throwError(error);
@@ -43,6 +49,8 @@ export class AuthInterceptor implements HttpInterceptor{
     //clonedrequest가 아닌 새로운 request를 생성해야함
     private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
         console.log(this.isRefreshing)
+        this.refreshToken = this.cookieService.get('refreshToken')
+        console.log(this.authService.isTokenExpired(this.refreshToken))
         if(!this.isRefreshing) {
             this.isRefreshing = true;
             this.refreshTokenSubject.next(null);
@@ -51,19 +59,32 @@ export class AuthInterceptor implements HttpInterceptor{
                 switchMap((token: any) => {
                     console.log(token)
                     this.isRefreshing = false;
-                    this.refreshTokenSubject.next(token)
+                    console.log('this.isRefreshing2 ------',this.isRefreshing)
+                    this.refreshTokenSubject.next(token.refreshToken)
                     console.log(request)
-
                     return next.handle(this.addToken(request, token.accessToken))
+                }),
+                catchError((error) => {
+                    this.authService.logout()
+                    return throwError(error)
                 })
             )
-        }else{
-            return this.refreshTokenSubject.pipe(
-                filter(token => token != null),
-                take(1),
-                switchMap(jwt => {return next.handle(this.addToken(request, jwt))})
+        }
+        // else if(this.isRefreshing && !this.authService.isTokenExpired(this.refreshToken)) {
+        //     console.log('refresgTijeb',this.refreshToken)
+        //     return next.handle(request)
+        // }
+        else{
+            console.log('refresgTijeb',this.refreshToken)
+            return next.handle(request).pipe(
+                catchError((error) => {
+                    this.showExpiredTokenModal()
+                    return throwError(error)
+
+                })
             )
         }
+
     }
 
     //request header에 새로운 token 붙여서 전달
@@ -75,5 +96,22 @@ export class AuthInterceptor implements HttpInterceptor{
         });
         console.log(newReq)
         return newReq
+    }
+
+    showExpiredTokenModal() {
+        const dialogConfig = new MatDialogConfig;
+        dialogConfig.hasBackdrop = true;
+        dialogConfig.autoFocus = false;
+        dialogConfig.panelClass = 'common-dialog';
+        dialogConfig.data = {
+            name: 'Logout',
+            title: 'Token Expired',
+            description: 'Token was expired. Please signin again',
+            isConfirm: true,
+            actionButtonText: 'OK',
+        };
+
+        const dialogRef = this.dialog.open(CommonDialogComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(() => this.dialog.closeAll())
     }
 }

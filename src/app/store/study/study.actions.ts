@@ -21,3 +21,7 @@ export class UpdateStudyData {
     static readonly type = '[Study] Set Study Data';
     constructor(public studySeq: number) {}
 }
+
+export class getStudyList {
+    static readonly type = '[Study] Get Study Data';
+}

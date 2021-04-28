@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 // import { Apollo, gql } from 'apollo-angular';
 import { AuthService } from 'src/app/signin/auth/auth.service';
 // import { UserInfoService } from 'src/app/services/user-info.service';
@@ -11,12 +13,14 @@ import {UserInfoService} from "../../signin/services/user-info.service";
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
     isToolbarReady: boolean = true;
 
     diskTotalUsage= 3;
     diskTotalSpace= 256;
+    
+    unsubscribe$ = new Subject();
 
     constructor(
         public dialog: MatDialog,
@@ -24,7 +28,9 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         console.log('this is header component ngoninit');
-        this.userInfoService.getCurrentUser().subscribe(
+        this.userInfoService.getCurrentUser().pipe(
+            takeUntil(this.unsubscribe$)
+        ).subscribe(
             (res) => {
                 console.log(res);
                 this.userInfoService.setUserInfo(res);
@@ -54,7 +60,11 @@ export class HeaderComponent implements OnInit {
         dialogRef.afterClosed().subscribe(() => this.dialog.closeAll())
     }
 
-
+    ngOnDestroy() {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+    }
+    
     get userId(): string {
         return localStorage.getItem('id')
     }

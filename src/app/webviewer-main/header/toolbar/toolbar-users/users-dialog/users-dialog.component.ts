@@ -3,8 +3,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { from, zip } from 'rxjs';
-import { map, mapTo, tap, toArray } from 'rxjs/operators';
+import { from, Subject, zip } from 'rxjs';
+import { map, mapTo, takeUntil, tap, toArray } from 'rxjs/operators';
 import { CommonDialogComponent } from 'src/app/common/dialog/common-dialog.component';
 // import { Apollo, gql } from 'apollo-angular';
 import { User } from 'src/app/signin/models/user.model';
@@ -27,7 +27,7 @@ export class UsersDialogComponent implements OnInit {
     columnsFromDB: string[] = ['id', 'name', 'permission','creation_timestamp','institution'];
 
     dataSource = new MatTableDataSource<User>();
-
+    unsubscribe$ = new Subject();
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
@@ -48,7 +48,9 @@ export class UsersDialogComponent implements OnInit {
     }
 
     getUserList() {
-        this.userService.getUserList()
+        this.userService.getUserList().pipe(
+            takeUntil(this.unsubscribe$)
+        )
         .subscribe(
             (result) => {
                 console.log(result)
@@ -162,6 +164,10 @@ export class UsersDialogComponent implements OnInit {
         )
     }
 
+    ngOnDestroy() {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+    }
 }
 
 //yyyy-MM-dd formating

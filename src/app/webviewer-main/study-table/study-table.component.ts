@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, Output, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, ViewChild, ElementRef, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {catchError, map, startWith, switchMap, takeUntil, tap} from 'rxjs/operators';
 
@@ -21,7 +21,7 @@ import { Store } from '@ngxs/store';
     styleUrls: ['./study-table.component.css'],
     encapsulation: ViewEncapsulation.Emulated
 })
-export class StudyTableComponent implements OnInit, OnChanges {
+export class StudyTableComponent implements OnInit, OnChanges, OnDestroy {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -134,5 +134,11 @@ export class StudyTableComponent implements OnInit, OnChanges {
         this.store.dispatch(new SetSeriesInfo(row.seq, row.status))
         console.log(row.status);
 
+    }
+
+    
+    ngOnDestroy() {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 }

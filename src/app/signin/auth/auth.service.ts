@@ -49,13 +49,19 @@ export class AuthService implements OnInit, OnDestroy{
 
     silentRefresh() {
         this.refreshToken = this.cookieService.get('refreshToken')
-        console.log('this.refreshToken',this.refreshToken)
+        // console.log('this.refreshToken',this.refreshToken)
+        // if(!this.isTokenExpired(this.refreshToken)){
         return this.httpClient.post<Token>(`${this.appUrl}/auth/silent-refresh`, {refreshToken : this.refreshToken})
         .pipe(
-            tap(res => {this.setToken(res.accessToken), console.log(res.accessToken)}),
-            tap(res => this.cookieService.set('refreshToken', res.refreshToken)),
+            tap(res => {
+                this.setToken(res.accessToken), 
+                console.log(res.accessToken),
+                this.cookieService.set('refreshToken', res.refreshToken)
+            }),
             shareReplay()
         )
+    // }
+        
     }
 
     logout():void {
@@ -63,7 +69,8 @@ export class AuthService implements OnInit, OnDestroy{
         const signout_time = new Date()
         console.log(signout_time);
         this.removeToken()
-        this.router.navigate(['/signin'])
+        this.cookieService.deleteAll()
+        this.router.navigate([''])
         // this.httpClient.patch(`${this.appUrl}/auth/signout`, {sign_out_timestamp: signout_time, history_seq: })
     }
 
