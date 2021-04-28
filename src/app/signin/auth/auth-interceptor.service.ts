@@ -10,7 +10,7 @@ import { AuthService } from "./auth.service";
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor{
 
-    private isRefreshing = false;
+    private isRefreshing:boolean = false;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     
     refreshToken : string;
@@ -23,7 +23,7 @@ export class AuthInterceptor implements HttpInterceptor{
         //헤더에 인증 토큰을 추가한 새로운 httpRequest 객체를 생성(클론)한다.
 
         console.log('there is a token: ', authToken)
-
+        console.log('isRefreshing 왜 안돼', this.isRefreshing)
         const clonedRequest: HttpRequest<any> = req.clone()
         console.log('clonedRequest', clonedRequest)
         //원본 HttpRequest 객체 대신 클론한 httpRequest 객체를 다음 미들웨어 체인으로 전달한다. 
@@ -65,7 +65,8 @@ export class AuthInterceptor implements HttpInterceptor{
                     return next.handle(this.addToken(request, token.accessToken))
                 }),
                 catchError((error) => {
-                    this.authService.logout()
+                    // this.authService.logout()
+                    console.log('silentRefresh error', error)
                     return throwError(error)
                 })
             )
@@ -76,11 +77,12 @@ export class AuthInterceptor implements HttpInterceptor{
         // }
         else{
             console.log('refresgTijeb',this.refreshToken)
-            return next.handle(request).pipe(
+            return next.handle(request)
+            .pipe(
                 catchError((error) => {
                     this.showExpiredTokenModal()
+                    console.log('error in else partS')
                     return throwError(error)
-
                 })
             )
         }

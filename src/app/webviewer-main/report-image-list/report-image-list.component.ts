@@ -3,7 +3,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, filter, map, mapTo, skip, takeUntil, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, mapTo, skip, take, takeUntil, tap } from 'rxjs/operators';
 import { SetSeriesInfo } from 'src/app/store/study/study.actions';
 import { StudyState } from 'src/app/store/study/study.state';
 import { StudyTableService } from '../study-table/study-table.service';
@@ -32,6 +32,8 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
     hasReport: boolean = false;
     isConfirmed: boolean;
 
+    isSelected: boolean;
+
     snack_message: string;
     // currentStudySeq: number;
     unsubscribe$ = new Subject();
@@ -41,9 +43,14 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
         private studyService: StudyTableService) { }
 
     ngOnInit() {
-        this.imgUrl$.pipe(skip(1), takeUntil(this.unsubscribe$))
+        this.imgUrl$.pipe(
+            skip(1),
+            takeUntil(this.unsubscribe$) 
+        ).subscribe()
 
-        this.currentStudySeq$.pipe(skip(1), takeUntil(this.unsubscribe$)).subscribe()
+        console.log(this.imgUrl$)
+
+        this.currentStudySeq$.pipe(skip(1))
         //     .subscribe(
         //     (res) => {
         //         this.report_img = `${res}`;

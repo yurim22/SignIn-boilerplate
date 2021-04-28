@@ -28,9 +28,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         console.log('this is header component ngoninit');
-        this.userInfoService.getCurrentUser().pipe(
-            takeUntil(this.unsubscribe$)
-        ).subscribe(
+        this.userInfoService.getCurrentUser().subscribe(
             (res) => {
                 console.log(res);
                 this.userInfoService.setUserInfo(res);

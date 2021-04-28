@@ -76,8 +76,8 @@ table.mat-table {
 }
 
 .mat-cell.mat-column-status {
-    flex: 0 0 7.5% !important;
-    width: 7.5% !important;
+    flex: 0 0 9% !important;
+    width: 9% !important;
 }
 .mat-cell.mat-column-patient_id {
     word-wrap: break-word !important;

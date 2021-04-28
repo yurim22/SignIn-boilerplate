@@ -18,7 +18,7 @@ import {UserInfoService} from "./services/user-info.service";
     styleUrls: ['./signin.component.css'],
     // encapsulation: ViewEncapsulation.
 })
-export class SigninComponent implements OnInit, OnDestroy {
+export class SigninComponent implements OnInit {
 
     checked = false;
     passwordExpired = false;
@@ -75,9 +75,7 @@ export class SigninComponent implements OnInit, OnDestroy {
 
     onSubmit(){
         console.log('onsubmit button')
-        this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password).pipe(
-            takeUntil(this.unsubscribe$)
-        ).subscribe(
+        this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password).subscribe(
             () => {
                 this.isSigninFailed = false;
                 console.log(this.authService.tokenExpirationDate(this.cookieService.get('refreshToken')))
@@ -125,9 +123,9 @@ export class SigninComponent implements OnInit, OnDestroy {
     }
 
     
-    ngOnDestroy() {
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
-    }
+    // ngOnDestroy() {
+    //     this.unsubscribe$.next();
+    //     this.unsubscribe$.complete();
+    // }
 
 }

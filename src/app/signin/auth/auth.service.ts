@@ -4,10 +4,12 @@ import { Router } from '@angular/router';
 import { makeVar } from '@apollo/client/cache/inmemory/reactiveVars';
 // import { makeVar } from '@apollo/client';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { Store } from '@ngxs/store';
 import { CookieService } from 'ngx-cookie-service';
 // import { Apollo, gql, Query } from 'apollo-angular';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
+import { StudyState } from 'src/app/store/study/study.state';
 import { environment } from 'src/environments/environment';
 import {Token} from "../models/token.model";
 // import {LOGIN_INFO} from 'src/app/common/graphql/gql';
@@ -28,7 +30,8 @@ export class AuthService implements OnInit, OnDestroy{
         private httpClient: HttpClient,
         private jwtHelper: JwtHelperService,
         private router: Router,
-        private cookieService: CookieService
+        private cookieService: CookieService,
+        private store: Store
     ) { }
 
     ngOnInit() {
@@ -69,8 +72,9 @@ export class AuthService implements OnInit, OnDestroy{
         const signout_time = new Date()
         console.log(signout_time);
         this.removeToken()
-        this.cookieService.deleteAll()
+        this.cookieService.delete('refreshToken')
         this.router.navigate([''])
+        this.store.reset(StudyState)
         // this.httpClient.patch(`${this.appUrl}/auth/signout`, {sign_out_timestamp: signout_time, history_seq: })
     }
 
