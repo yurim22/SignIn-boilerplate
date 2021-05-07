@@ -63,6 +63,9 @@ export class UserInfoService {
         return this.httpClient.get<User>(`${this.appUrl}/users/${this.userid}`).pipe(shareReplay());
     }
 
+    getVersionInfo(): Observable<any> {
+        return this.httpClient.get(`${this.appUrl}/environment`);
+    }
     public get currentUserValue(): string {
         return this.currentUserIdSubject.value;
     }

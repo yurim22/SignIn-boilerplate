@@ -147,25 +147,21 @@
 }
 
 .check-for-integrity-child {
-    /* float: right; */
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
 .check-for-integrity-spinner-custom {
-    /* min-height: 0.6rem;
-    min-width: 0.6rem; */
     height: 13px;
     width: 13px;
     font-size: 0.85rem
 }
 
 .check-for-integrity-spinner-custom-error {
-    min-height: 0.55rem;
-    min-width: 0.55rem;
-    height: 0.55rem;
-    width: 0.55rem;
+    height: 13px;
+    width: 13px;
+    font-size: 0.85rem;
     color: #d9401e;
 }
 
@@ -180,8 +176,11 @@
 
 .check-for-integrity-spinner-inline-text-error {
     padding: 0 0.3rem 0 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
     line-height: 1rem;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
+    word-spacing: 1.5px;
     color: #d9401e;
 }
 

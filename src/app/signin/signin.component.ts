@@ -57,10 +57,20 @@ export class SigninComponent implements OnInit {
     ngOnInit(): void {
         console.log('[yurim] signin ngOnInit');
         this.userInfoService.clear();
-        setTimeout(() => {
-            this.isSystemIntegrityChecking = false;
-            this.isSystemIntegrityCheckingSuccess = true;
-        }, 2000);
+
+        this.userInfoService.getVersionInfo().subscribe(
+            (result: any) => {
+                console.log(result)
+                setTimeout(() => {
+                    this.isSystemIntegrityChecking = false;
+                    this.isSystemIntegrityCheckingSuccess = true;
+                }, 1500);
+            },
+            (error) => {
+                this.isSystemIntegrityChecking = false;
+                this.isSystemIntegrityCheckingSuccess = false;
+            }
+        );
     }
 
     getMyClass(): string {
@@ -72,24 +82,47 @@ export class SigninComponent implements OnInit {
         const id = this.signInForm.value.id;
         const password = this.signInForm.value.password;
 
-        this.authService.signIn(id, password).subscribe(
-            () => {
-                this.isSigninFailed = false;
-                this.router.navigate(['/webviewer']);
-            },
-            (error) => {
-                this.isSigninFailed = true;
-                console.log(error.error.message);
-                if (error.error.message === 'Wrong password more than 5 times'){
-                    console.log('너 이제 락걸렸어');
-                    this.signInFailedMsg = 'Your account is locked';
-                }else{
-                    console.log('비밀번호 틀렸어');
-                    this.signInFailedMsg = 'Invalid username or password.';
+        if (!this.isSystemIntegrityChecking && !this.isSystemIntegrityCheckingSuccess){
+            this.isSigninFailed = true;
+            this.signInFailedMsg = 'Server connection error';
+        } else {
+            this.authService.signIn(id, password).subscribe(
+                () => {
+                    this.isSigninFailed = false;
+                    this.router.navigate(['/webviewer']);
+                },
+                (error) => {
+                    this.isSigninFailed = true;
+                    console.log(error.error.message);
+                    if (error.error.message === 'Wrong password more than 5 times'){
+                        console.log('너 이제 락걸렸어');
+                        this.signInFailedMsg = 'Your account is locked';
+                    }else{
+                        console.log('비밀번호 틀렸어');
+                        this.signInFailedMsg = 'Invalid username or password.';
+                    }
                 }
-                setTimeout(() => this.isSigninFailed = false, 3000);
-            }
-        );
+            );
+        }
+        setTimeout(() => this.isSigninFailed = false, 3000);
+        // this.authService.signIn(id, password).subscribe(
+        //     () => {
+        //         this.isSigninFailed = false;
+        //         this.router.navigate(['/webviewer']);
+        //     },
+        //     (error) => {
+        //         this.isSigninFailed = true;
+        //         console.log(error.error.message);
+        //         if (error.error.message === 'Wrong password more than 5 times'){
+        //             console.log('너 이제 락걸렸어');
+        //             this.signInFailedMsg = 'Your account is locked';
+        //         }else{
+        //             console.log('비밀번호 틀렸어');
+        //             this.signInFailedMsg = 'Invalid username or password.';
+        //         }
+        //         setTimeout(() => this.isSigninFailed = false, 3000);
+        //     }
+        // );
 
         // rememberme checkbox
         if (this.rememberMeCheckboxChecked){

@@ -54,6 +54,7 @@
                         </span>
                         <mat-spinner *ngIf="isSystemIntegrityChecking" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
                         <span *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="material-icons check-for-integrity-spinner-custom">check_circle_outline</span>
+                        <span *ngIf="!isSystemIntegrityChecking && !isSystemIntegrityCheckingSuccess" class="material-icons check-for-integrity-spinner-custom-error">warning_amber</span>
                     </div>
                 </div>
                 <div class="check-for-integrity-about">
