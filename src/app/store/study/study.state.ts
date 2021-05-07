@@ -1,15 +1,16 @@
-import { state } from "@angular/animations";
-import { Injectable } from "@angular/core";
-import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { map, tap } from "rxjs/operators";
-import { Series } from "src/app/models/series.model";
-import { StudyTableService } from "src/app/webviewer-main/study-table/study-table.service";
-import { GetSeriesImg, SetSeriesInfo, UpdateStudyData } from "./study.actions";
+import { Injectable } from '@angular/core';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { tap } from 'rxjs/operators';
+import { Series } from 'src/app/models/series.model';
+import { StudyRow } from 'src/app/models/studyrow.model';
+import { StudyTableService } from 'src/app/webviewer-main/study-table/study-table.service';
+import { GetStudyList, SetSeriesInfo, UpdateStudyStatus } from './study.actions';
 
 export interface StudyStateModel {
     selectedSeries: Series;
     hasSelectedStudy: boolean;
     selectedStudyStatus: string;
+    allStudies: StudyRow[];
 }
 
 @State<StudyStateModel>({
@@ -17,7 +18,8 @@ export interface StudyStateModel {
     defaults: {
         selectedSeries: null,
         hasSelectedStudy: false,
-        selectedStudyStatus: undefined
+        selectedStudyStatus: undefined,
+        allStudies: [],
     }
 })
 
@@ -27,45 +29,78 @@ export class StudyState {
     }
 
     @Selector()
-    static getSeriesUrl(state: StudyStateModel) {
-        return state.selectedSeries.image_url
+    static getSeriesUrl(state: StudyStateModel): string {
+        return state.selectedSeries.image_url;
     }
 
     @Selector()
-    static getStudySeq(state: StudyStateModel) {
-        return state.selectedSeries.study_seq
+    static getStudySeq(state: StudyStateModel): number {
+        return state.selectedSeries.study_seq;
     }
-    
+
     @Selector()
-    static selectedStudyStatus(state: StudyStateModel) {
-        return state.selectedStudyStatus
+    static selectedStudyStatus(state: StudyStateModel): string {
+        return state.selectedStudyStatus;
+    }
+
+    @Selector()
+    static getStudyList(state: StudyStateModel): StudyRow[] {
+        return state.allStudies;
     }
 
     @Action(SetSeriesInfo)
+    // tslint:disable-next-line: typedef
     setSeriesInfo({getState, setState}: StateContext<StudyStateModel>, {studySeq, studyStatus}: SetSeriesInfo){
-        console.log('studySeq',studySeq)
-        console.log('studyStatus', studyStatus)
-        //series 정보 전체가 저장된다.
+        console.log('studySeq', studySeq);
+        console.log('studyStatus', studyStatus);
+        // series 정보 전체가 저장된다.
         // setState(state => {
         //     state.hasSelectedStudy = true
         // })
         return this.studyTableService.getSeriesItem(studySeq).pipe(
-            tap((res) => {                                    
+            tap((res) => {
                 const state = getState();
                 setState({
                     ...state,
                     selectedSeries: res,
                     selectedStudyStatus: studyStatus
-                })
+                });
                 // console.log(state);
             })
-        )
+        );
     }
 
-    @Action(UpdateStudyData)
-    udpateStudyData({getState, setState}: StateContext<StudyStateModel>, {studySeq}: UpdateStudyData) {
-
+    @Action(UpdateStudyStatus)
+    // tslint:disable-next-line: typedef
+    udpateStudyData({getState, setState}: StateContext<StudyStateModel>, {studySeq}: UpdateStudyStatus) {
+        return this.studyTableService.updateStudyStatus({status: 'REVIEWED'}, studySeq).pipe(
+            tap((result) => {
+                const state = getState();
+                console.log(state);
+                const studyList = [...state.allStudies];
+                const studyIndex = studyList.findIndex(item => item.seq === studySeq);
+                studyList[studyIndex] = result;
+                setState({
+                    ...state,
+                    allStudies: studyList
+                });
+                console.log(result);
+            })
+        );
     }
 
-
+    @Action(GetStudyList)
+    // tslint:disable-next-line: typedef
+    getStudyList({getState, setState}: StateContext<StudyStateModel>){
+        return this.studyTableService.getStudyList().pipe(
+            tap((res) => {
+                console.log('res in action', res);
+                const state = getState();
+                setState({
+                    ...state,
+                    allStudies: res
+                });
+            })
+        );
+    }
 }

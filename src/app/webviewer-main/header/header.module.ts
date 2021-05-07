@@ -20,11 +20,11 @@ import { CreateNewUserDialogComponent } from './toolbar/toolbar-users/users-dial
 
 @NgModule({
     declarations: [
-        HeaderComponent, 
-        ToolbarPacsComponent, 
-        ToolbarUsersComponent, 
-        ToolbarSettingsComponent, 
-        ToolbarAboutComponent, 
+        HeaderComponent,
+        ToolbarPacsComponent,
+        ToolbarUsersComponent,
+        ToolbarSettingsComponent,
+        ToolbarAboutComponent,
         ToolbarLogoutComponent, SettingsDialogComponent, UsersDialogComponent, CreateNewUserDialogComponent
     ],
     imports: [
@@ -35,6 +35,6 @@ import { CreateNewUserDialogComponent } from './toolbar/toolbar-users/users-dial
         MatFormFieldModule,
         BrowserAnimationsModule,
     ],
-    exports:[HeaderComponent, FormsModule, ReactiveFormsModule]
+    exports: [HeaderComponent, FormsModule, ReactiveFormsModule]
 })
 export class HeaderModule { }

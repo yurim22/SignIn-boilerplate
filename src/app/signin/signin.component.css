@@ -8,31 +8,28 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* padding: 1rem 2.5rem; */
     min-height: 100vh;
     width: 23rem;
 }
+
 .login .title {
     color: white;
     font-weight: 100;
     font-size: 1.333333rem;
     letter-spacing: normal;
-
-    /* line-height: 1.5rem;  */
 }
+
 .login .title .welcome{
     font-weight: lighter;
-    /* font-size: 1.4rem; */
     line-height: 1.6rem;
     margin: 0;
-    /* font-family: 'Poppins', sans-serif; */
-    /* letter-spacing: 1px; */
-    /* font-size: 1.5rem; */
 }
+
 .login .title .prd-name{
     font-size: xx-large;
     padding: 18px 0 20px 0; 
 }
+
 .login .title .hint {
     color: white;
     margin-top: 1.25rem;
@@ -45,14 +42,11 @@
     display: flex;
     flex-direction: column;
     padding: 1.7rem 0 0 0;
-    /* font-family: 'Montserrat', sans-serif; */
 }
+
 .login .login-group .username,
 .login .login-group .password{
     background: transparent;
-    /* background: linear-gradient(to bottom, transparent 95%, #0094d2 95%) no-repeat;
-    background-size: 0% 100%;
-    transition: background-size 1s ease; */
     border: none;
     border-radius: 0;
     box-shadow: none;
@@ -67,10 +61,12 @@
     font-size: 0.83rem;
     transition: border 0.2s ease;
 }
+
 .login .login-group .username:focus,
 .login .login-group .password:focus {
     border-bottom: 1.5px solid #0094d2;
 }
+
 .login .login-group .username,
 .login .login-group .password,
 .login .login-group .checkbox{
@@ -88,11 +84,6 @@
     height: 14px;
 }
 
-/* .checkbox.btn label,
-.checkbox-inline.btn label {
-  width: 100%; 
-} */
-
 .mat-flat-button{
     border: 1px solid #525252;
     background-color: #212121;
@@ -104,6 +95,7 @@
 .mat-flat-button:hover{
     color: #959BA4;
 }
+
 .change-password-group {
     display: flex;
     flex-direction: column;
@@ -118,14 +110,6 @@
     font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
     margin-top: 0 !important;
 }
-
-/* .main-banner-image {
-    width: 990px;margin:0 auto; background-image: url('../../assets/dicom-main.jpg');background-size: cover; background-repeat: no-repeat;background-position: center center;
-}
-
-.non-banner-image {
-    width: 500px;margin:0 auto; background-image: url('../../assets/black-pixel.png');background-size: cover; background-repeat: no-repeat;background-position: center center;
-} */
 
 /*** temp about */
 .top-right-layout {
@@ -187,8 +171,6 @@
 
 .check-for-integrity-spinner-inline-text {
     padding: 0 0.3rem 0 0;
-    /* font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif; */
-    /* font-weight: bold; */
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     line-height: 1rem;
@@ -198,8 +180,6 @@
 
 .check-for-integrity-spinner-inline-text-error {
     padding: 0 0.3rem 0 0;
-    /* font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif; */
-    /* font-weight: bold; */
     line-height: 1rem;
     font-size: 0.7rem;
     color: #d9401e;
@@ -207,7 +187,6 @@
 
 .check-for-integrity-spinner-inline-underline {
     padding: 0 0.3rem 0 0;
-    /* font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif; */
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     line-height: 1rem;
@@ -229,10 +208,7 @@
     left: 40.65%;
     right: 1rem;
     width: 22.5rem;
-    /* transition: opacity .3s ease-in-out, transform .3s ease-in-out; */
     opacity: 0;
-    /* transform: translateY(-110%); */
-    /* z-index: -1; */
     transition: opacity .3s ease-in-out;
 }
 
@@ -244,7 +220,6 @@
 }
 
 .error.active {
-    /* transform: translateY(10px); */
     opacity: 1;
 }
 
@@ -266,11 +241,6 @@
     transform: translateY(-110%);
     z-index: -1;
     transition: opacity .3s ease-in-out, transform .3s ease-in-out;
-  
-    /* &.visible {
-      transform: translateY(10px);
-      opacity: 1;
-    } */
 }
 
 .notification .visible {

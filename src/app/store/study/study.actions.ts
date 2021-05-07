@@ -10,18 +10,18 @@ export class GetSeriesImg {
 
 export class SetSeriesInfo {
     static readonly type = '[Series] Set Image Url';
-    constructor(public studySeq: number, public studyStatus:string) {}
+    constructor(public studySeq: number, public studyStatus: string) {}
 }
 
-export class isStudySelected {
+export class IsStudySelected {
     static readonly type = '[Study] isSelected';
 }
 
-export class UpdateStudyData {
+export class UpdateStudyStatus {
     static readonly type = '[Study] Set Study Data';
     constructor(public studySeq: number) {}
 }
 
-export class getStudyList {
+export class GetStudyList {
     static readonly type = '[Study] Get Study Data';
 }

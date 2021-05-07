@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { UsersDialogComponent } from './users-dialog/users-dialog.component';
 
 @Component({
+    // tslint:disable-next-line: component-selector
     selector: 'toolbar-users',
     template: `
     <div id="icon_study_download down" class="flex-item-row top-menu-tools-container" (click)="openUsersModal()">
@@ -30,7 +31,7 @@ import { UsersDialogComponent } from './users-dialog/users-dialog.component';
             -webkit-font-smoothing: antialiased;
             color: #cecece;
             font-size: 10px;
-            
+
             padding: 0px 0px 12px 0px;
             font-weight: 400;
             text-align: center;
@@ -39,24 +40,22 @@ import { UsersDialogComponent } from './users-dialog/users-dialog.component';
         }
     `]
 })
-export class ToolbarUsersComponent implements OnInit {
+export class ToolbarUsersComponent {
 
     constructor(private dialog: MatDialog, private cookieService: CookieService) { }
 
-    ngOnInit(): void {
-    }
 
-    openUsersModal() {
-        console.log('settings')
+    openUsersModal(): void {
+        console.log('settings');
         const dialogRef = this.dialog.open(UsersDialogComponent, {
             autoFocus: false,
             width: '50vw',
             height: '55vh'
-        })
+        });
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('the dialog was closed');
-        })
+        });
     }
 
 }

@@ -3,6 +3,7 @@
 html, body { height: 100%;}
 @import "~@angular/cdk/overlay-prebuilt.css";
 body{
+    background: #2B2B2B;
     margin: 0;
     color: #9A9A9A;
     font-weight: 400;
@@ -15,72 +16,6 @@ body{
     margin-top: 0 !important;
 }
 
-/* h1 {
-    color: #000;
-    font-weight: 200;
-    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-size: 2em;
-    letter-spacing: normal;
-    line-height: 2rem;
-    margin-top: 1rem;
-    margin-bottom: 0; 
-}
-  
-h2 {
-    color: #000;
-    font-weight: 200;
-    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-size: 1.166667rem;
-    letter-spacing: normal;
-    line-height: 2rem;
-    margin-top: 1rem;
-    margin-bottom: 0; 
-}
-
-h3 {
-
-    color:white;
-    font-weight: 200;
-    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-size: 0.916667rem;
-    letter-spacing: normal;
-    line-height: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 0; 
-}
-
-h4 {
-    color: #000;
-    font-weight: 200;
-    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: normal;
-    line-height: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 0; 
-}
-
-h5 {
-    color: #565656;
-    font-weight: 400;
-    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-size: 0.666667rem;
-    letter-spacing: 0.01em;
-    line-height: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 0; 
-}
-
-h6 {
-    font-weight: 500;
-    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-    font-size: 0.583333rem;
-    letter-spacing: normal;
-    line-height: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 0;
-    color: #313131; 
-} */
 
 textarea:focus {
     outline: none !important;
@@ -97,42 +32,6 @@ button:focus {
     border-color: none;
     box-shadow: none;
 }
-
-/* .flex-container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-content: stretch;
-    align-items: flex-start;
-    padding-top: 0px;
-}
-
-.flex-container-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-content: stretch;
-    align-items: flex-start;
-    align-self: stretch;
-}
-
-.flex-container-between {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-content: stretch;
-    align-items: flex-start;
-    align-self: stretch;
-}
-
-.flex-item-normal {
-    order: 0;
-    flex: 1 1 auto;
-    align-self: stretch;
-} */
 
 /* width */
 ::-webkit-scrollbar {
@@ -159,15 +58,6 @@ button:focus {
     background: transparent;
 }
 
-/* Hotkeys Dialog custom css */
-.hotkeys-custom-dialog .mat-dialog-container {
-    background-color: rgba(33, 33, 33, 1.0);
-    color: #cecece;
-    overflow-y: hidden !important;
-}
-.hotkeys-custom-dialog .mat-dialog-content {
-    max-height: 100%;
-}
 
 .control-box-custom-dialog .mat-dialog-container {
     background: #212121;
@@ -207,10 +97,6 @@ button:focus {
     height: unset;
 }
 
-.cdk-global-overlay-wrapper > .hotkeys-custom-dialog {
-    overflow: auto;
-}
-
 ::ng-deep .cdk-overlay-container .cdk-overlay-pane .mat-menu-panel .mat-menu-content .mat-menu-item .mat-menu-ripple{
     line-height: 30px;
     border-radius: unset;
@@ -225,16 +111,6 @@ button:focus {
     z-index: 10000 !important;
 }
 
-.modal-backdrop {
-    opacity: 0.3 !important;
-}
-
-.pl-10 {
-    padding-left: 10px;
-}
-.pl-20 {
-    padding-left: 20px;
-}
 
 .study-report-dialog .mat-dialog-container {
     padding: 24px 0px;

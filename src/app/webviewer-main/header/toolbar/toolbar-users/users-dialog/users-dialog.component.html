@@ -6,12 +6,24 @@
     </button>
 </section>
 <section class="CRUser">
-    <button mat-icon-button (click)="openCreateNewUserDialog()">
+    <mat-form-field>
+        <mat-label class="search-form-label">Input search word</mat-label>
+        <input matInput (input)="onSearch($event)" >
+        <button mat-button matPrefix mat-icon-button aria-label="Clear" (click)="''">
+            <span class="material-icons" style="font-size: 20px;">search</span>
+        </button>
+    </mat-form-field>
+    <button mat-icon-button (click)="openCreateNewUserDialog()" >
         <span class="material-icons">add</span>
     </button>
-    <button mat-icon-button>
-        <span class="material-icons">tune</span>
-    </button>
+
+    <!-- <mat-form-field class="search-form">
+        <mat-label class="search-form-label">Input search word</mat-label>
+        <input matInput (input)="onSearch($event)" >
+        <button mat-button matPrefix mat-icon-button aria-label="Clear" (click)="''">
+            <span class="material-icons" style="font-size: 20px;">search</span>
+        </button>
+    </mat-form-field> -->
 </section>
 <section class="user-table" style="background-color: black;">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -49,4 +61,4 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </section>
-<mat-paginator [pageSize]="15" [hidePageSize]="true" class="user_table_pagination"></mat-paginator>
+<mat-paginator [pageSize]="7" [hidePageSize]="true" class="user_table_pagination"></mat-paginator>

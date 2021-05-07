@@ -1,9 +1,9 @@
 <!-- Main Study-->
-<ng-container *ngIf="isGetStudies" [ngTemplateOutlet]="main_study"
-              [ngTemplateOutletContext]="{ data: dataSource, main:true }" ></ng-container>
+<!-- <ng-container *ngIf="isGetStudies" [ngTemplateOutlet]="main_study"
+              [ngTemplateOutletContext]="{ data: dataSource, main:true }" ></ng-container> -->
 
 <!-- Study List -->
-<mat-paginator [pageSize]="40" [hidePageSize]="true"></mat-paginator>
+<mat-paginator [pageSize]="27" [hidePageSize]="true"></mat-paginator>
 <section style="background-color: black;" class="worklist-study-list mat-elevation-z8">
     <table mat-table matSort [dataSource]="dataSource" class="mat-cell" aria-label="Elements" class="mat-elevation-z8">
         <ng-container matColumnDef="status">

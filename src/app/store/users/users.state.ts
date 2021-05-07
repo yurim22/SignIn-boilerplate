@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Action, State, StateContext } from "@ngxs/store";
-import { UserInfoService } from "src/app/signin/services/user-info.service";
+import { Injectable } from '@angular/core';
+import { Action, State, StateContext } from '@ngxs/store';
+import { UserInfoService } from 'src/app/signin/services/user-info.service';
 import { GetCurrentUser } from './users.actions';
 
 export interface CurrentUser{
-    user: Array<UserStateModel>
+    user: Array<UserStateModel>;
 }
 
 export interface UserStateModel {
@@ -24,14 +24,12 @@ export interface UserStateModel {
 
 @Injectable()
 export class CurrentUserState {
-    //constructor(private userInfoService: UserInfoService) {}
-
     @Action(GetCurrentUser)
-    getCurrentUser(ctx: StateContext<CurrentUser>) {
+    getCurrentUser(ctx: StateContext<CurrentUser>): void {
         const state = ctx.getState();
         ctx.setState({
             user: []
-        })
+        });
     }
 }
 

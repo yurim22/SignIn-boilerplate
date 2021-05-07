@@ -1,22 +1,17 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Route, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 // import { UserInfoService } from '../services/user-info.service';
 // import { Apollo, gql, Query } from 'apollo-angular';
-import { async, Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { AuthService } from './auth/auth.service';
-//import { User } from '../models/user.model';
-// import { FIND_USER } from 'src/app/common/graphql/gql';
 import { CookieService } from 'ngx-cookie-service';
-import { takeUntil, tap } from 'rxjs/operators';
-import {UserInfoService} from "./services/user-info.service";
+import { UserInfoService } from './services/user-info.service';
 
 @Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
     styleUrls: ['./signin.component.css'],
-    // encapsulation: ViewEncapsulation.
 })
 export class SigninComponent implements OnInit {
 
@@ -33,14 +28,14 @@ export class SigninComponent implements OnInit {
     refreshToken: string;
     isSigninFailed: boolean;
     invalidPasswordCountOver = false;
-    signInFailed_msg: string;
+    signInFailedMsg: string;
     id = '';
     password = '';
     // oldPassword = '';
     // newPassword = '';
     // newPasswordRepeat = '';
 
-    unsubscribe$ : Subject<any>
+    unsubscribe$: Subject<any>;
 
     constructor(private formBuilder: FormBuilder,
                 private userInfoService: UserInfoService,
@@ -48,12 +43,12 @@ export class SigninComponent implements OnInit {
                 private authService: AuthService,
                 private router: Router) {
 
-        this.rememberedId = this.cookieService.get('rememberedId')
+        this.rememberedId = this.cookieService.get('rememberedId');
 
         this.signInForm = this.formBuilder.group({
             id: [this.rememberedId, Validators.required],
             password: ['', Validators.required]
-        })
+        });
 
         this.isSigninFailed = false;
     }
@@ -65,67 +60,60 @@ export class SigninComponent implements OnInit {
         setTimeout(() => {
             this.isSystemIntegrityChecking = false;
             this.isSystemIntegrityCheckingSuccess = true;
-        }, 2000)
-
+        }, 2000);
     }
 
-    getMyClass() {
+    getMyClass(): string {
         return 'login-wrapper non-banner-image';
     }
 
-    onSubmit(){
-        console.log('onsubmit button')
-        this.authService.signIn(this.signInForm.value.id, this.signInForm.value.password).subscribe(
+    onSubmit(): any{
+        console.log('onsubmit button');
+        const id = this.signInForm.value.id;
+        const password = this.signInForm.value.password;
+
+        this.authService.signIn(id, password).subscribe(
             () => {
                 this.isSigninFailed = false;
-                console.log(this.authService.tokenExpirationDate(this.cookieService.get('refreshToken')))
-                console.log('token decode: ', this.authService.decodeToken(this.cookieService.get('refreshToken')))
-                this.router.navigate(['/webviewer'])
+                this.router.navigate(['/webviewer']);
             },
-            (error)=> {
+            (error) => {
                 this.isSigninFailed = true;
-    
                 console.log(error.error.message);
-                if(error.error.message == "Wrong password more than 5 times"){
-                    console.log('너 이제 락걸렸어')
-                    this.signInFailed_msg = 'Your account is locked'
+                if (error.error.message === 'Wrong password more than 5 times'){
+                    console.log('너 이제 락걸렸어');
+                    this.signInFailedMsg = 'Your account is locked';
                 }else{
-                    console.log('비밀번호 틀렸어')
-                    this.signInFailed_msg = 'Invalid username or password.'
+                    console.log('비밀번호 틀렸어');
+                    this.signInFailedMsg = 'Invalid username or password.';
                 }
-                setTimeout(() => this.isSigninFailed = false, 3000)
+                setTimeout(() => this.isSigninFailed = false, 3000);
             }
-        )
+        );
 
-        //rememberme checkbox
-        if(this.rememberMeCheckboxChecked){
-            this.cookieService.set('rememberedId', this.signInForm.value.id)
+        // rememberme checkbox
+        if (this.rememberMeCheckboxChecked){
+            this.cookieService.set('rememberedId', this.signInForm.value.id);
         } else{
-            this.cookieService.set('rememberedId', '')
+            this.cookieService.set('rememberedId', '');
         }
 
     }
 
-    isRememberedIdExist():boolean {
+    isRememberedIdExist(): boolean {
         if (this.rememberedId === '' || this.rememberedId === undefined || this.rememberedId === null) {
             return false;
         } else {
             return true;
         }
     }
-    onRemembermeChanged(e) {
-        console.log(e);
-        this.rememberMeCheckboxChecked = e.checked
+
+    onRemembermeChanged(e): void {
+        this.rememberMeCheckboxChecked = e.checked;
     }
 
-    showAboutDialog(){
-        console.log('show about dialog')
+    showAboutDialog(): void{
+        console.log('show about dialog');
     }
-
-    
-    // ngOnDestroy() {
-    //     this.unsubscribe$.next();
-    //     this.unsubscribe$.complete();
-    // }
 
 }

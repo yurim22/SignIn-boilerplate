@@ -2,16 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {AngularMaterialsModule} from '../common/shared/angular-materials.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
 import {WebviewerMainComponent} from './webviewer-main.component';
-
 import { ReportImageListComponent } from './report-image-list/report-image-list.component';
 import { HeaderModule } from './header/header.module';
 import { StudyTableComponent } from './study-table/study-table.component';
 import { MousewheelEventDirective } from './mousewheel-event.directive';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '../signin/auth/auth-interceptor.service';
-
 
 @NgModule({
     declarations: [WebviewerMainComponent, ReportImageListComponent, StudyTableComponent, MousewheelEventDirective],
@@ -34,7 +29,7 @@ import { AuthInterceptor } from '../signin/auth/auth-interceptor.service';
     //         provide: HTTP_INTERCEPTORS,
     //         useClass: AuthInterceptor,
     //         multi: true
-    //     }, 
+    //     },
     // ]
 })
 export class WebviewerMainModule { }

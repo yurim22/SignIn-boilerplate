@@ -13,17 +13,9 @@
                 <input class="password" type="password" id="login_password" placeholder="Password" formControlName="password">
                 <mat-checkbox class="checkbox" color="primary" id="rememberme" [checked]="isRememberedIdExist()" (change)="onRemembermeChanged($event)" style="font-size: 14px;">Remember me</mat-checkbox>
 
-                <!-- <div class="error active" [hidden]="signInFailed==0">
-                    Invalid username or password.
-                </div>
-                <div class="error active" *ngIf="invalidPasswordCountOver">
-                    Bad passwords count is over than 5, Your account lockout.
-                </div> -->
-
                 <button type="submit" mat-flat-button >SIGN IN</button>
-                <!-- <button type="submit" class="btn btn-primary">SIGN IN</button> -->
             </div>
-            <div class="login-group" *ngIf="passwordExpired">
+            <!-- <div class="login-group" *ngIf="passwordExpired">
                 <input class="password" type="password" id="old_password" placeholder="Old Password" formControlName="oldPassword">
                 <input class="password" type="password" id="new_password" placeholder="New Password" formControlName="newPassword">
                 <input class="password" type="password" id="new_password_repeat" placeholder="New Password (repetition)" formControlName="newPasswordRepeat">
@@ -48,7 +40,7 @@
                 </div>
                 <div></div>
                 <button type="submit" class="btn btn-primary">CHANGE PASSWORD</button>
-            </div>
+            </div> -->
                 <div class="check-for-integrity">
                     <div class="check-for-integrity-child">
                         <span *ngIf="isSystemIntegrityChecking" class="check-for-integrity-spinner-inline-text">
@@ -61,12 +53,7 @@
                             System Integrity Checking Error
                         </span>
                         <mat-spinner *ngIf="isSystemIntegrityChecking" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
-                        <!-- <mat-icon *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="check-for-integrity-spinner-custom">check_circle_outline</mat-icon> -->
-                        <!-- <mat-icon  *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="check-for-integrity-spinner-custom">check_circle</mat-icon> -->
                         <span *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="material-icons check-for-integrity-spinner-custom">check_circle_outline</span>
-                        <!-- <clr-spinner *ngIf="isSystemIntegrityChecking" clrInline class="check-for-integrity-spinner-custom"></clr-spinner>
-                        <clr-icon *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" shape="success-standard" aria-label="Completed" class="check-for-integrity-spinner-custom"></clr-icon>
-                        <clr-icon *ngIf="!isSystemIntegrityChecking && !isSystemIntegrityCheckingSuccess" shape="error-standard" aria-label="Error" class="check-for-integrity-spinner-custom-error"></clr-icon> -->
                     </div>
                 </div>
                 <div class="check-for-integrity-about">
@@ -75,8 +62,6 @@
                             About
                         </span>
                         <span class="material-icons check-for-integrity-spinner-custom">error_outline</span>
-                        <!-- <mat-icon class="check-for-integrity-spinner-custom">info</mat-icon> -->
-                    <!-- <clr-icon shape="info-standard" class="check-for-integrity-spinner-custom"></clr-icon> -->
                     </div>
                 </div>
 
@@ -84,10 +69,8 @@
             <!-- 로그인 실패 시 error mgs -->
             <div class="error" [class.active]="isSigninFailed">
                 <span class="material-icons">warning_amber</span>
-                {{signInFailed_msg}}
+                {{signInFailedMsg}}
             </div>
         </div>
     </div>
 </div>
-
-  <!-- Invalid username or password. -->

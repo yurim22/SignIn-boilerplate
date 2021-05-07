@@ -11,6 +11,7 @@ export interface SettingsData{
     category: string;
 }
 @Component({
+    // tslint:disable-next-line: component-selector
     selector: 'toolbar-settings',
     templateUrl: './toolbar-settings.component.html',
     styleUrls: ['./toolbar-settings.component.css']
@@ -18,57 +19,37 @@ export interface SettingsData{
 
 export class ToolbarSettingsComponent implements OnInit {
 
-    userInfo: User
-    constructor(private dialog: MatDialog) {
-        // const user = new User();
-        // user.id = localStorage.getItem('id');
-        // user.name = localStorage.getItem('name');
-        // user.seq = parseInt(localStorage.getItem('seq'))
-        // this.userInfo = user
-        // console.log(this.userInfo)
-    }
+    userInfo: User;
+    constructor(private dialog: MatDialog) {}
 
     ngOnInit(): void {
-        console.log('toolbar ngoninit')
-    }  
+        console.log('toolbar ngoninit');
+    }
 
-    openUserSettingModal() {
-        // console.log('settings')
-        // const dialogRef = this.dialog.open(SettingsDialogComponent, {
-        //     width: '31vw',
-        //     height: '53vh',
-        //     autoFocus: false
-        // })
+    openUserSettingModal(): void {
 
-        // dialogRef.afterClosed().subscribe(result => {
-        //     console.log('the dialog was closed');
-        // })
-        if(localStorage.getItem('permission') === 'PHYSICIAN'){
-            const user = new User();
-            user.id = localStorage.getItem('id');
-            user.name = localStorage.getItem('name');
-            user.seq = parseInt(localStorage.getItem('seq'))
-            this.userInfo = user
+        if (JSON.parse(localStorage.getItem('userInfo')).permission === 'PHYSICIAN'){
+            this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
             const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
                 autoFocus: false,
                 width: '17vw',
-                height:'50vh',
+                height: '50vh',
                 data: {userInfo: this.userInfo, mode: 'editMode'},
                 hasBackdrop: false,
-            })
+            });
         } else{
-            console.log('settings')
-            console.log('setting pacs info')
+            console.log('settings');
+            console.log('setting pacs info');
             const dialogRef = this.dialog.open(SettingsDialogComponent, {
                 width: '31vw',
                 height: '53vh',
                 autoFocus: false
-            })
+            });
 
             dialogRef.afterClosed().subscribe(result => {
                 console.log('the dialog was closed');
-            })
+            });
         }
     }
 

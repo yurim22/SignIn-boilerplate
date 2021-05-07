@@ -1,18 +1,15 @@
-import { Component, HostListener, Input, OnInit, Output, EventEmitter, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef, ViewEncapsulation, OnDestroy } from '@angular/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import { SelectSnapshot } from '@ngxs-labs/select-snapshot';
+import { Component, HostListener, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { MatSnackBar} from '@angular/material/snack-bar';
 import { Select, Store } from '@ngxs/store';
 import { Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, filter, map, mapTo, skip, take, takeUntil, tap } from 'rxjs/operators';
-import { SetSeriesInfo } from 'src/app/store/study/study.actions';
+import { map, skip, takeUntil, tap } from 'rxjs/operators';
+import { UpdateStudyStatus } from 'src/app/store/study/study.actions';
 import { StudyState } from 'src/app/store/study/study.state';
-import { StudyTableService } from '../study-table/study-table.service';
 
 @Component({
     selector: 'app-report-image-list',
     templateUrl: './report-image-list.component.html',
     styleUrls: ['./report-image-list.component.css'],
-    // encapsulation: ViewEncapsulation.ShadowDom,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportImageListComponent implements OnInit, OnDestroy {
@@ -20,59 +17,55 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
     @Select(StudyState.getSeriesUrl) imgUrl$: Observable<string>;
     @Select(StudyState.getStudySeq) currentStudySeq$: Observable<number>;
     @Select(StudyState.selectedStudyStatus) studyStatus$: Observable<string>;
-    // @Input() isAnalyzed;
-    // @Input() isReceived;
-    
-    // @Output() confirmed = new EventEmitter<any>();
 
-    isLastIndex: boolean = false;
-    idx = 1
-    report_img: string;
-    error_report_img: string;
-    hasReport: boolean = false;
+    isLastIndex = false;
+    idx = 1;
+    hasReport = false;
     isConfirmed: boolean;
-
     isSelected: boolean;
-
-    snack_message: string;
-    // currentStudySeq: number;
+    snackMessage: string;
+    currentStudySeq: number;
     unsubscribe$ = new Subject();
 
-    constructor(private _snackBar: MatSnackBar, private store: Store,
-        private readonly changeDetectionRef: ChangeDetectorRef,
-        private studyService: StudyTableService) { }
+    constructor(private snackBar: MatSnackBar,
+                private store: Store
+    ) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
+        // [TODO] series info에 대해서 다 따로 따로 받아오고 있는데 한꺼번에 객체로 받아와서 처리할 지 고민..
+        // ngxs가 어려워가지고... ngxs 수정
         this.imgUrl$.pipe(
             skip(1),
-            takeUntil(this.unsubscribe$) 
-        ).subscribe()
+            takeUntil(this.unsubscribe$)
+        ).subscribe(
+            res => console.log(res)
+        );
 
-        console.log(this.imgUrl$)
+        this.currentStudySeq$.pipe(
+            skip(1),
+            takeUntil(this.unsubscribe$)
+        ).subscribe(
+            res => {
+                console.log(res);
+                this.currentStudySeq = res;
+            }
+        );
 
-        this.currentStudySeq$.pipe(skip(1))
-        //     .subscribe(
-        //     (res) => {
-        //         this.report_img = `${res}`;
-        //         console.log(this.report_img)
-        //         if(!!this.report_img){
-        //             console.log('trye')
-        //         }
-        //     }
-        // )
-     
         this.studyStatus$.pipe(
-            map(val => val === 'REVIEWED' || val === 'ANALYZED'? true : false),
+            map(val => val === 'REVIEWED' || val === 'ANALYZED' ? true : false),
             tap((res) => console.log(res))
         ).subscribe(
-            (res) =>{
+            (res) => {
                 this.hasReport = res;
                 // this.currentStudySeq = res.study_seq
             }
-        )
+        );
+
     }
 
-    @HostListener('mousewheel', ['$event']) 
+    // [TODO] 실제 db 연결해서 이미지 받아오면 scroll 기능 연결
+    @HostListener('mousewheel', ['$event'])
+    // tslint:disable-next-line: typedef
     onMousewheel(event) {
         // const step = 1;
         // if (event.wheelDelta > 0 && this.idx !== 1) {
@@ -89,47 +82,28 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
         // }
 
         // this.report_img = this.setImgPath(this.idx);
-        console.log('mousewheel event')
-        
+        console.log('mousewheel event');
+
     }
 
-    // setImgPath() {
-    //     console.log('setImgPath function');
-    //     // return `assets/report_test_210216/${idx}.jpg`
-    //     console.log('imgUrl$', this.imgUrl$)
-    //     this.imgUrl$.pipe(
-
-    //     )
-    //     .subscribe(
-    //         (res) => {
-    //             console.log(res)
-    //             //this.changeDetectionRef.detectChanges()
-    //             return `./src/${res}`
-    //         }
-    //     )
-    // }
-
-    confirm() {
-        console.log('confirm');
-        // this.isConfirmed = true;
-        // this.confirmed.emit(this.isConfirmed);
-        this.studyService.updateStudyStatus({status: 'REVIEWED'}, 6).subscribe(
+    confirm(): any {
+        this.store.dispatch(new UpdateStudyStatus(this.currentStudySeq)).subscribe(
             (res) => {
-                this.store.dispatch(new SetSeriesInfo(6, 'REVIEWED')),
-                this.openSnackBar("Confirm Report")
+                console.log('update study staus'),
+                this.openSnackBar('confirm report');
+                console.log(res);
             }
-        )
+        );
     }
 
-    openSnackBar(msg: string) {
-        this._snackBar.open(msg, '', {
+    openSnackBar(msg: string): void {
+        this.snackBar.open(msg, '', {
             duration: 1500,
-            panelClass:'custom-snackbar',
-            //horizontalPosition: 'right'
-        }) 
+            panelClass: 'custom-snackbar',
+        });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
     }

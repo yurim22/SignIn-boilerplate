@@ -15,7 +15,19 @@
 .CRUser {
     display: flex;
     justify-content: flex-end;
-    color: rgb(189, 188, 188)
+    color: rgb(189, 188, 188);
+    align-items: center;
+}
+::ng-deep .CRUser .search-form .mat-form-field-wrapper{
+    padding-bottom: 18px;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: #9A9A9A;
+}
+.search-form-label {
+    color: #9A9A9A; 
+    font-size: 0.9rem;
+    padding-left: 5px;
 }
 td.mat-cell:first-of-type,
 td.mat-footer-cell:first-of-type,
@@ -144,42 +156,6 @@ table.mat-table {
     align-items: center;
     justify-content: center;
 }
-/* ::ng-deep .mat-paginator-container {
-    position: relative;
-    bottom: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    min-height: fit-content !important;
-    max-height: 30px !important;
-    padding: 0 0px !important;
-    flex-wrap: wrap-reverse;
-    width: 100%;
-    background: #2b2b2b;
-    color: lightgray;
-}
-::ng-deep .mat-paginator-range-label {
-    font-size:13px ;
-    margin: 0px !important;
-} */
-
-/* .mat-paginator{
-    color: whitesmoke;
-    background:transparent;
-}  */
-/* .mat-paginator-container .mat-paginator-range-actions{
-    color: whitesmoke;
-    background-color:transparent;
-} */
-/* ::ng-deep .mat-paginator-icon{
-    width: 22px !important;
-    fill: lightgray !important; 
-    padding-left: 10px;
-} */
-
-/* .mat-column-status .reviewedStatus{
-    color: cornflowerblue;
-} */
 
 th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
     padding-right: 0;

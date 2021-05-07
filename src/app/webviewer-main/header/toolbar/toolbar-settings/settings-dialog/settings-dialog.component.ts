@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -11,72 +12,72 @@ export class SettingsDialogComponent {
 
     receiveForm: FormGroup;
     sendForm: FormGroup;
-    
-    ae: string = 'ORTHANCHP';
-    ip: string = '58.151.234.205';
-    port: string = '5252';
+    ae: string;
+    ip: string;
+    port: string;
 
     pacsConnectionChecking: boolean;
-    pacsConnectionChecking_se: boolean;
-    reTestResult: string = ''
-    seTestResult: string = ''
-    isSuccess_re: boolean = false;
-    isSuccess_se: boolean = false;
-    cnt: number = 0;
+    pacsConnectionCheckingSe: boolean;
+    reTestResult: string;
+    seTestResult: string;
+    isSuccessRe: boolean;
+    isSuccessSe: boolean;
+    cnt: number;
     userPermission: string;
-    // isFail: boolean;
 
     constructor(
         private dialogRef: MatDialogRef<SettingsDialogComponent>,
         private fb: FormBuilder,
+        private httpClient: HttpClient
     ){
         this.receiveForm = fb.group({
-            ae:[this.ae, Validators.required],
-            ip:[this.ip,Validators.required],
-            port:[this.port,Validators.required]
+            ae: [this.ae, Validators.required],
+            ip: [this.ip, Validators.required],
+            port: [this.port, Validators.required]
         });
 
         this.sendForm = fb.group({
-            ae:[this.ae, Validators.required],
-            ip:[this.ip,Validators.required],
-            port:[this.port,Validators.required]
-        })
+            ae: [this.ae, Validators.required],
+            ip: [this.ip, Validators.required],
+            port: [this.port, Validators.required]
+        });
 
-        this.userPermission = localStorage.getItem('permission')
+        this.userPermission = localStorage.getItem('permission');
     }
 
-    save() {
-        console.log('save')
-        //this.dialogRef.close(this.form.value);
+    save(): void {
+        console.log('save');
     }
 
-    close() {
+    close(): void {
         this.dialogRef.close();
     }
 
-    onSubmit_Re(type: string) {
+    onSubmit_Re(form): any {
         // console.log(this.${type}.value);
-        this.pacsConnectionChecking = true
+        this.pacsConnectionChecking = true;
         setTimeout( () =>
             this.pacsConnectionChecking = false , 1000
-        )
-        if(type === "receiveForm" && this.cnt === 0){
-            this.isSuccess_re = false;
-            console.log(this.cnt);
-            this.cnt += 1;
-            this.reTestResult = 'FAIL';
-        } else if(type === 'receiveForm') {
-            this.isSuccess_re = true;
-            this.reTestResult = 'PASS';
-        }
+        );
+        // if(type === "receiveForm" && this.cnt === 0){
+        //     this.isSuccess_re = false;
+        //     console.log(this.cnt);
+        //     this.cnt += 1;
+        //     this.reTestResult = 'FAIL';
+        // } else if(type === 'receiveForm') {
+        //     this.isSuccess_re = true;
+        //     this.reTestResult = 'PASS';
+        // }
+        // [TODO] pacs server connection test
+        this.httpClient.get(`${form.ip}:${form.port}/`);
     }
-    onSubmit_Se(type: string) {
+    onSubmit_Se(type: string): any {
         // console.log(this.${type}.value);
-        this.pacsConnectionChecking_se = true
+        this.pacsConnectionCheckingSe = true;
         setTimeout( () =>
-            this.pacsConnectionChecking_se = false , 1000
-        )
-        this.isSuccess_se = true;
-        this.seTestResult = 'PASS'
+            this.pacsConnectionCheckingSe = false , 1000
+        );
+        this.isSuccessSe = true;
+        this.seTestResult = 'PASS';
     }
 }

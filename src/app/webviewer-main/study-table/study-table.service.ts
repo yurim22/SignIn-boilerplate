@@ -17,14 +17,14 @@ export class StudyTableService {
     ) { }
 
     getStudyList(): Observable<StudyRow[]>{
-        return this.httpClient.get<StudyRow[]>(`${this.appUrl}/studies`)
+        return this.httpClient.get<StudyRow[]>(`${this.appUrl}/studies`);
     }
 
     getSeriesItem(seq: number): Observable<Series> {
-        return this.httpClient.get<Series>(`${this.appUrl}/studies/${seq}`)
+        return this.httpClient.get<Series>(`${this.appUrl}/studies/${seq}`);
     }
 
     updateStudyStatus(updateStudyData: Partial<StudyRow>, seq: number): Observable<StudyRow> {
-        return this.httpClient.patch<StudyRow>(`${this.appUrl}/studies/${seq}`, updateStudyData)
+        return this.httpClient.patch<StudyRow>(`${this.appUrl}/studies/${seq}`, updateStudyData);
     }
 }

@@ -129,7 +129,7 @@ table.mat-table {
 }
 .mat-cell.mat-column-study_date, .mat-cell.mat-column-analysis_date {
     flex: 0 0 15% !important;
-    width: 20% !important;
+    width: 22% !important;
 }
   
 

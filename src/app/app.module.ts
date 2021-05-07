@@ -17,14 +17,11 @@ import { CookieService } from 'ngx-cookie-service';
 import {NgxsSelectSnapshotModule} from '@ngxs-labs/select-snapshot';
 // import { GraphQLModule } from './graphql.module';
 
-import { environment } from 'src/environments/environment';
 import { AuthInterceptor } from './signin/auth/auth-interceptor.service';
 import { GlobalErrorHandlerService } from './common/error/global-error-handler.service';
 import { StudyState } from './store/study/study.state';
-import { HttpInterceptorService } from './common/http/http.interceptor.service';
 
 export function tokenGetter(): string {
-    console.log(localStorage.getItem('token'))
     return localStorage.getItem('token');
 }
 
@@ -46,8 +43,8 @@ export function tokenGetter(): string {
         WebviewerMainModule,
         // Any requests sent using Angular's HttpClient will automatically have a token attached as an Authorization header. => tokengetter
         JwtModule.forRoot({
-            config: { 
-                tokenGetter: tokenGetter,
+            config: {
+                tokenGetter,
                 allowedDomains: ['localhost:3000', 'localhost:3000/api'],
                 disallowedRoutes: [],
                 skipWhenExpired: true

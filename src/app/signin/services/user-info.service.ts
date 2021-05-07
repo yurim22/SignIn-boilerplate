@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -13,61 +13,57 @@ export class UserInfoService {
     appUrl = environment.apiUrl;
 
     userid: string;
+    user: string;
 
-    id: string;
-    name: string;
-    permission: string;
-    institution: string;
-    private seq: number;
-
-    private currentUserIdSubject: BehaviorSubject<String>;
-    public currentUserId: Observable<String>;
+    private currentUserIdSubject: BehaviorSubject<string>;
+    public currentUserId: Observable<string>;
 
     constructor(
         private authService: AuthService,
         private httpClient: HttpClient
     ) {
-        this.currentUserIdSubject = new BehaviorSubject<String>(localStorage.getItem('id'))
+        this.currentUserIdSubject = new BehaviorSubject<string>(localStorage.getItem('id'));
         this.currentUserId = this.currentUserIdSubject.asObservable();
-    }
 
-    ngOnInit(){
-        //if localStorage안의 token값이 [undefined, "", 0]이 아닐때, 즉 token값이 있을 때
-        if(!!localStorage.getItem('token')){
-            this.seq = parseInt(localStorage.getItem('seq'))
-            this.id = localStorage.getItem('id');
-            this.name = localStorage.getItem('name');
-            this.permission = localStorage.getItem('permission');
-            this.institution = localStorage.getItem('institution')
+        // localStorage안의 token 값이 [undefined, "", 0]이 아닐때, 즉 token 값이 있을 떄
+        if (!!localStorage.getItem('token')){
+            this.user = localStorage.getItem('user');
         }else {
-            localStorage.clear()
-            console.log('clear the localstorage')
+            localStorage.clear();
+            console.log('clear the localstorage');
         }
-        console.log('ngOnInit userinfo')
-    }
-    setUserInfo(user){
-        localStorage.setItem('id', user.id)
-        localStorage.setItem('name', user.name)
-        localStorage.setItem('permission', user.permission)
-        localStorage.setItem('institution', user.institution)
-        localStorage.setItem('seq', user.seq)
     }
 
-    clear() {
-        localStorage.removeItem('seq')
-        localStorage.removeItem('id');
-        localStorage.removeItem('name');
-        localStorage.removeItem('permission');
-        localStorage.removeItem('institution');
+    // ngOnInit() {
+    //     // if localStorage안의 token값이 [undefined, "", 0]이 아닐때, 즉 token값이 있을 때
+    //     if (!!localStorage.getItem('token')){
+    //         this.seq = parseInt(localStorage.getItem('seq'));
+    //         this.id = localStorage.getItem('id');
+    //         this.name = localStorage.getItem('name');
+    //         this.permission = localStorage.getItem('permission');
+    //         this.institution = localStorage.getItem('institution');
+    //     }else {
+    //         localStorage.clear();
+    //         console.log('clear the localstorage');
+    //     }
+    //     console.log('ngOnInit userinfo');
+    // }
+
+    setUserInfo(user): void{
+        localStorage.setItem('userInfo', JSON.stringify(user));
+    }
+
+    clear(): void {
+        localStorage.removeItem('userInfo');
     }
 
     getCurrentUser(): Observable<User>{
         this.userid = this.authService.getUserid();
         console.log('this.userid', this.userid);
-        return this.httpClient.get<User>(`${this.appUrl}/users/${this.userid}`).pipe(shareReplay())
+        return this.httpClient.get<User>(`${this.appUrl}/users/${this.userid}`).pipe(shareReplay());
     }
 
-    public get currentUserValue(): String {
+    public get currentUserValue(): string {
         return this.currentUserIdSubject.value;
     }
 }

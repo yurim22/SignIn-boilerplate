@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { from, Subject, zip } from 'rxjs';
-import { map, mapTo, takeUntil, tap, toArray } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, mapTo, switchMap, takeUntil, tap, toArray } from 'rxjs/operators';
 import { CommonDialogComponent } from 'src/app/common/dialog/common-dialog.component';
 // import { Apollo, gql } from 'apollo-angular';
 import { User } from 'src/app/signin/models/user.model';
@@ -20,12 +20,13 @@ import { CreateNewUserDialogComponent } from './new-user-dialog.component';
     encapsulation: ViewEncapsulation.Emulated
 })
 
-export class UsersDialogComponent implements OnInit {
+export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
-    displayedColumns: string[] = ['id', 'name', 'permission','creation_timestamp','institution', 'edit', 'invalid_password_count'];
-    displayedTitle = ['ID', 'Name', 'Permission', 'Creation Date', 'Institution', 'Lockout Status']
-    columnsFromDB: string[] = ['id', 'name', 'permission','creation_timestamp','institution'];
+    displayedColumns: string[] = ['id', 'name', 'permission', 'creation_timestamp', 'institution', 'edit', 'invalid_password_count'];
+    displayedTitle = ['ID', 'Name', 'Permission', 'Creation Date', 'Institution', 'Lockout Status'];
+    columnsFromDB: string[] = ['id', 'name', 'permission', 'creation_timestamp', 'institution'];
 
+    userList: User[];
     dataSource = new MatTableDataSource<User>();
     unsubscribe$ = new Subject();
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -34,7 +35,6 @@ export class UsersDialogComponent implements OnInit {
         private dialog: MatDialog,
         private userService: UserService,
         private router: Router
-        
     ) { }
 
     ngOnInit(): void {
@@ -43,34 +43,33 @@ export class UsersDialogComponent implements OnInit {
 
     ngAfterViewInit(): void {
         console.log('[userlist table.ngAfterViewInit]');
-
         this.dataSource.paginator = this.paginator;
     }
 
-    getUserList() {
+    getUserList(): void {
         this.userService.getUserList().pipe(
             takeUntil(this.unsubscribe$)
         )
         .subscribe(
             (result) => {
-                console.log(result)
+                this.userList = result;
                 from(result).pipe(
-                    map(val=> val.creation_timestamp = val.creation_timestamp.slice(0,10)),
-                ).subscribe()
+                    map(val => val.creation_timestamp = val.creation_timestamp.slice(0, 10)),
+                ).subscribe();
                 this.dataSource.data = result;
-                console.log('this.dataSource.data',this.dataSource.data)
             },
             (error) => {
-                console.log(error)
-                if(error.error.message === 'Unauthorized'){
-                    this.router.navigate(['/signin'])
-                    localStorage.clear()
+                console.log(error);
+                if (error.error.message === 'Unauthorized'){
+                    this.router.navigate(['/signin']);
+                    localStorage.clear();
                 }
             }
-        )
+        );
     }
 
-    deleteUser(row) {
+    deleteUser(row): void {
+        // tslint:disable-next-line: new-parens
         const dialogConfig = new MatDialogConfig;
         dialogConfig.hasBackdrop = true;
         dialogConfig.autoFocus = false;
@@ -85,15 +84,14 @@ export class UsersDialogComponent implements OnInit {
         };
 
         const dialogRef = this.dialog.open(CommonDialogComponent, dialogConfig);
-        
         dialogRef.afterClosed().subscribe(
-            (_res) => this.getUserList(),
+            () => this.getUserList(),
             (error) => console.log(error)
-        )
+        );
     }
 
-    openCreateNewUserDialog(){
-        console.log('settings')
+    openCreateNewUserDialog(): void{
+        console.log('settings');
         this.dialog.closeAll();
         const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
             autoFocus: false,
@@ -101,7 +99,7 @@ export class UsersDialogComponent implements OnInit {
             height: '70vh',
             data: {userInfo: undefined, mode: 'createMode'},
             hasBackdrop: false,
-        })
+        });
 
         dialogRef.afterClosed().subscribe(_ => {
             console.log('the create dialog was closed');
@@ -109,27 +107,21 @@ export class UsersDialogComponent implements OnInit {
                 autoFocus: false,
                 width: '50vw',
                 height: '55vh'
-            })
-        })
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //     console.log('the dialogRef was closed');
-        // })
-
-
+            });
+        });
     }
 
-    openEditUserDialog(row: Partial<User>) {
-        console.log(row)
+    openEditUserDialog(row: Partial<User>): void {
+        console.log(row);
         console.log('edit');
         this.dialog.closeAll();
         const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
             autoFocus: false,
             width: '18vw',
-            height:'70vh',
+            height: '70vh',
             data: {userInfo: row, mode: 'editMode'},
             hasBackdrop: false,
-        })
+        });
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('the edit dialog was closed');
@@ -137,12 +129,13 @@ export class UsersDialogComponent implements OnInit {
                 autoFocus: false,
                 width: '50vw',
                 height: '55vh'
-            })
-        })
+            });
+        });
     }
 
-    unlockSelectedUsers(row: Partial<User>) {
+    unlockSelectedUsers(row: Partial<User>): void {
         console.log(row);
+        // tslint:disable-next-line: new-parens
         const dialogConfig = new MatDialogConfig;
         dialogConfig.hasBackdrop = true;
         dialogConfig.autoFocus = false;
@@ -159,23 +152,35 @@ export class UsersDialogComponent implements OnInit {
         const dialogRef = this.dialog.open(CommonDialogComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe(
-            (_res) => this.getUserList(),
+            () => this.getUserList(),
             (error) => console.log(error)
-        )
+        );
+    }
+    onSearch(ev): void {
+        const inputString = ev.target.value;
+        this.dataSource.data = [];
+        from(this.userList).pipe(
+            takeUntil(this.unsubscribe$),
+            switchMap( (user: User) => {
+                const keys = Object.keys(user);
+                // console.log('keys', keys)
+                const keys2 = keys.filter( key => user[key] !== null); // remove key that has not value.
+                return from(keys2).pipe(
+                    takeUntil(this.unsubscribe$),
+                    filter( key => key === 'id' || key === 'name' || key === 'permission' || key === 'institution'),
+                    filter( key => user[key].indexOf(inputString) > -1),
+                    map( _ => user),
+                    distinctUntilChanged()
+                );
+            }),
+            toArray()
+        ).subscribe( val => {
+            this.dataSource.data = val;
+        });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
     }
-}
-
-//yyyy-MM-dd formating
-export function getFormatDate(date){
-    var year = date.getFullYear();
-    var month = (1 + date.getMonth());
-    month = month >= 10 ? month : '0' + month;
-    var day = date.getDate();
-    day = day >= 10 ? day : '0' + day;
-    return `${year}-${month}-${day}`;
 }

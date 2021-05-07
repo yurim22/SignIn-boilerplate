@@ -42,8 +42,8 @@
                 </div>
                 <div class="save-test">
                     <button type="submit" mat-flat-button>SAVE & TEST</button>
-                    <mat-spinner *ngIf="pacsConnectionChecking_se" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
-                    <span *ngIf="!pacsConnectionChecking_se" class="test-result-string" [ngStyle]="isSuccess_se? {'color':'green'} : {'color':'red'}">{{seTestResult}}</span>
+                    <mat-spinner *ngIf="pacsConnectionCheckingSe" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
+                    <span *ngIf="!pacsConnectionCheckingSe" class="test-result-string" [ngStyle]="isSuccess_se? {'color':'green'} : {'color':'red'}">{{seTestResult}}</span>
                     <!-- <span *ngIf="!isSuccess_re" style="color: red;" class="test-result-string">FAIL</span>
                     <span *ngIf="isSuccess_re" style="color: green;" class="test-result-string">OK</span> -->
                 </div>

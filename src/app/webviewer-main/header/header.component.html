@@ -11,12 +11,6 @@
                         <span class="patient-info" style="font-size: 11px;line-height: 0.8rem;cursor: default;">
                             {{userId}} ({{permission}})
                         </span><br/>
-                        <!-- <ng-container *ngIf="windowName !== 'monitor01'" >
-                            <span (click)="openSyncFailedStudyModal()" *ngIf="syncFailedStudyExist()" class="study-upload-error-blinking">
-                                Study Upload Error ({{syncFailedStudies.length}})
-                            </span>
-                        </ng-container> -->
-                        <!-- <span *ngIf="syncFailedStudyExist()">&nbsp;&nbsp;&nbsp;</span> -->
                         <ng-container *ngIf="permission == 'DEVELOPER' || permission == 'ADMINISTRATOR'">
                             <span style="cursor: default;">Server Storage ({{diskTotalUsage}}GB/{{diskTotalSpace}}GB)</span>
                         </ng-container>
@@ -29,8 +23,6 @@
                         <toolbar-logout class="top-menu-tools-container" (click)="showLogoutModal()"></toolbar-logout>
                     </ng-container>
                     <ng-container *ngIf="permission === 'PHYSICIAN'">
-                        <!-- <toolbar-pacs class="top-menu-tools-container"></toolbar-pacs>
-                        <toolbar-users class="top-menu-tools-container"></toolbar-users> -->
                         <toolbar-settings class="top-menu-tools-container"></toolbar-settings>
                         <toolbar-about class="top-menu-tools-container"></toolbar-about>
                         <toolbar-logout class="top-menu-tools-container" (click)="showLogoutModal()"></toolbar-logout>

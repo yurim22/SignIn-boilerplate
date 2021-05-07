@@ -1,9 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/signin/auth/auth.service';
 import { UserService } from 'src/app/webviewer-main/header/toolbar/toolbar-users/users.service';
-//import { CommonService } from 'src/app/common/services/common.services';
 
 @Component({
     template:
@@ -98,24 +97,6 @@ export class CommonDialogComponent {
                 )
                 this.modalData.response = true;
                 console.log(this.modalData)
-                break;
-            case 'removeNodule':
-                this.modalData.response = true;
-                break;
-            case 'removeStudy':
-                this.modalData.response = true;
-                break;
-            case 'updateSeries':
-                this.modalData.response = true;
-                break;
-            case 'closeMainView':
-                window.close();
-                break;
-            case 'removeSyncFailStudies':
-                this.modalData.response = true;
-                break;
-            case 'Link':
-                this.modalData.response = true;
                 break;
             case 'Unlock':
                 console.log(this.modalData.unlockUserId)

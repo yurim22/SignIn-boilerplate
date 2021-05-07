@@ -4,7 +4,7 @@ export class StudyRow{
     status: string;
     study_date: string;
     results: number;
-    analysis_date: string;
+    analysis_date: Date;
     patient: Patient;
     seq: number;
     volumes: number;

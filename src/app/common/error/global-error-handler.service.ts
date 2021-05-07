@@ -32,6 +32,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
             // }
         } else {
             //A client-side or network error occurred.
+            console.error(error)
             console.error('An error occurred:' + error.message);
         }
     }

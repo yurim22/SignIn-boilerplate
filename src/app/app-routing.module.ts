@@ -22,7 +22,7 @@ const routes: Routes = [
         path: 'webviewer',
         component: WebviewerMainComponent,
         canActivate: [AuthGuard],
-        data: { title: "webviewer", subtitle: 'JWT Authentication'}
+        data: { title: 'webviewer', subtitle: 'JWT Authentication'}
     }
 ];
 
