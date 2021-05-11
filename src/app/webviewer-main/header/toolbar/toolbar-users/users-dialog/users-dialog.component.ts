@@ -120,7 +120,7 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
             autoFocus: false,
             width: '18vw',
-            height: '73vh',
+            height: '79vh',
             data: {userInfo: row, mode: 'editMode'},
             hasBackdrop: false,
         });

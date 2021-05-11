@@ -154,7 +154,10 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
         if (this.userPermission === 'PHYSICIAN'){
             this.updatePersonalForm = this.fb.group({
                 name: [this.data.userInfo.name, Validators.required],
-                password: ['', [Validators.required, , Validators.minLength(8), Validators.pattern(this.regexPassword)]],
+                passwordGroup: this.fb.group({
+                    password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.regexPassword)]],
+                    confirmPassword: ['', Validators.required],
+                }, {validators: this.matchPassword('password', 'confirmPassword')}),
             });
         }
 
@@ -289,10 +292,9 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
     // group: AbstractControl) => ValidationErrors|null
     matchPassword(password: string, confirmPassword: string): ValidatorFn {
         return (formGroup: AbstractControl) => {
-            console.log(formGroup.value);
             const passwordControl = formGroup.value[password];
             const confirmPasswordControl = formGroup.value[confirmPassword];
-            console.log(passwordControl);
+
             if (!passwordControl || !confirmPasswordControl) {
                 return null;
             } else if (confirmPasswordControl.errors && !confirmPasswordControl.errors.passwordMismatch) {

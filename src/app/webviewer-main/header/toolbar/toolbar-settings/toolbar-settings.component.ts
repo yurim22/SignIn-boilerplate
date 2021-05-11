@@ -34,7 +34,7 @@ export class ToolbarSettingsComponent implements OnInit {
             const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
                 autoFocus: false,
                 width: '17vw',
-                height: '50vh',
+                height: '60vh',
                 data: {userInfo: this.userInfo, mode: 'editMode'},
                 hasBackdrop: false,
             });
