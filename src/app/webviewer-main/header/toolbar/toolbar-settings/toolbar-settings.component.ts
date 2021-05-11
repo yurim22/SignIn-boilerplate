@@ -42,7 +42,7 @@ export class ToolbarSettingsComponent implements OnInit {
             console.log('settings');
             console.log('setting pacs info');
             const dialogRef = this.dialog.open(SettingsDialogComponent, {
-                width: '31vw',
+                width: '30vw',
                 height: '53vh',
                 autoFocus: false
             });

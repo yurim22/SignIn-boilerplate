@@ -109,6 +109,9 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
         this.store.dispatch(new SetSeriesInfo(row.seq, row.status));
     }
 
+    onFilter() {
+        console.log('filter click');
+    }
 
     ngOnDestroy(): void {
         this.unsubscribe$.next();

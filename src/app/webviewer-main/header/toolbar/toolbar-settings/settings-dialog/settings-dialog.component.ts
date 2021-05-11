@@ -13,8 +13,8 @@ export class SettingsDialogComponent {
     receiveForm: FormGroup;
     sendForm: FormGroup;
     ae: string;
-    ip: string;
-    port: string;
+    ip = '112.220.20.178';
+    port = '34243';
 
     pacsConnectionChecking: boolean;
     pacsConnectionCheckingSe: boolean;
@@ -55,6 +55,7 @@ export class SettingsDialogComponent {
 
     onSubmit_Re(form): any {
         // console.log(this.${type}.value);
+        console.log(form);
         this.pacsConnectionChecking = true;
         setTimeout( () =>
             this.pacsConnectionChecking = false , 1000
@@ -69,7 +70,10 @@ export class SettingsDialogComponent {
         //     this.reTestResult = 'PASS';
         // }
         // [TODO] pacs server connection test
-        this.httpClient.get(`${form.ip}:${form.port}/`);
+        this.httpClient.get(`${form.value.ip}:${form.value.port}/peers`).subscribe(
+            () => console.log('hellp'),
+            (error) => console.log(error)
+        );
     }
     onSubmit_Se(type: string): any {
         // console.log(this.${type}.value);

@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, merge } from 'rxjs';
@@ -102,6 +102,9 @@ interface DialogData {
         }
     `]
 })
+// [TODO] form validation error 처리 부분 바꾸기
+// [TODO] password validation에서 각 case에 맞는 error msg 띄우기
+// 예를 들면, pattern은 만족했지만, 길이를 못맞춘 경우,, length error만 띄워야한다.
 export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
 
     createUserForm: FormGroup;
@@ -137,11 +140,17 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
         this.createUserForm = this.fb.group({
             id: [this.data.mode === 'createMode' ? '' : this.data.userInfo.id, Validators.required],
             name: [this.data.mode === 'createMode' ? '' : this.data.userInfo.name, Validators.required],
-            password: ['', [Validators.required, , Validators.minLength(8), Validators.pattern(this.regexPassword)]],
+            passwordGroup: this.fb.group({
+                password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.regexPassword)]],
+                confirmPassword: ['', Validators.required],
+            }, {validators: this.matchPassword('password', 'confirmPassword')}),
+            // password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.regexPassword)]],
+            // confirmPassword: ['', Validators.required],
             permission: [this.data.mode === 'createMode' ? '' : this.data.userInfo.permission, Validators.required],
             institution: [this.data.mode === 'createMode' ? '' : this.data.userInfo.institution]
         });
 
+        console.log(this.createUserForm);
         if (this.userPermission === 'PHYSICIAN'){
             this.updatePersonalForm = this.fb.group({
                 name: [this.data.userInfo.name, Validators.required],
@@ -197,10 +206,6 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
 
     onSubmit(form): any {
         // request create user to server
-        console.log('create user');
-        // console.log(this.id);
-        console.log(form.value);
-        console.log(form);
 
         if (this.data.mode === 'createMode'){
             this.userService.createNewUser({
@@ -280,6 +285,31 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
             $event.preventDefault();
             console.log('cant submit;');
         }
+    }
+    // group: AbstractControl) => ValidationErrors|null
+    matchPassword(password: string, confirmPassword: string): ValidatorFn {
+        return (formGroup: AbstractControl) => {
+            console.log(formGroup.value);
+            const passwordControl = formGroup.value[password];
+            const confirmPasswordControl = formGroup.value[confirmPassword];
+            console.log(passwordControl);
+            if (!passwordControl || !confirmPasswordControl) {
+                return null;
+            } else if (confirmPasswordControl.errors && !confirmPasswordControl.errors.passwordMismatch) {
+                return null;
+            } else if (passwordControl !== confirmPasswordControl) {
+                console.log('password mismatch');
+                return { passwordMismatch: true };
+            }
+            // if (confirmPasswordControl.errors && !confirmPasswordControl.errors.passwordMismatch) {
+            //     return null;
+            // }
+
+            // if (passwordControl !== confirmPasswordControl) {
+            //     console.log('password mismatch');
+            //     return { passwordMismatch: true };
+            // }
+        };
     }
 
     ngOnDestroy(): void {

@@ -7,13 +7,13 @@
 </section>
 <section class="CRUser">
     <mat-form-field>
-        <mat-label class="search-form-label">Input search word</mat-label>
+        <!-- <mat-label class="search-form-label">Input search word</mat-label> -->
         <input matInput (input)="onSearch($event)" >
         <button mat-button matPrefix mat-icon-button aria-label="Clear" (click)="''">
             <span class="material-icons" style="font-size: 20px;">search</span>
         </button>
     </mat-form-field>
-    <button mat-icon-button (click)="openCreateNewUserDialog()" >
+    <button mat-icon-button (click)="openCreateNewUserDialog()" title="Create new user">
         <span class="material-icons">add</span>
     </button>
 

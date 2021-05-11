@@ -10,6 +10,8 @@ import { CommonDialogComponent } from 'src/app/common/dialog/common-dialog.compo
 import { User } from 'src/app/signin/models/user.model';
 import { UserService } from '../users.service';
 import { CreateNewUserDialogComponent } from './new-user-dialog.component';
+import { TooltipPosition } from '@angular/material/tooltip';
+import { FormControl } from '@angular/forms';
 // import { USER_LIST, DELETE_USER} from 'src/app/common/graphql/gql';
 
 
@@ -96,7 +98,7 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
             autoFocus: false,
             width: '18vw',
-            height: '70vh',
+            height: '79vh',
             data: {userInfo: undefined, mode: 'createMode'},
             hasBackdrop: false,
         });
@@ -118,7 +120,7 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
             autoFocus: false,
             width: '18vw',
-            height: '70vh',
+            height: '73vh',
             data: {userInfo: row, mode: 'editMode'},
             hasBackdrop: false,
         });

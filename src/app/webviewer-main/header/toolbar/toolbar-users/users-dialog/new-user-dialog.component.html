@@ -9,7 +9,7 @@
         <form [formGroup]="createUserForm" (ngSubmit)="onSubmit(createUserForm)" (keydown.enter)="enterToSubmit($event)">
             <div class="mat-dialog-content flex-container input-user-info">
                 <!-- username field -->
-                <h5>User Name</h5>
+                <h5>User Name *</h5>
                 <input class="userinfo" type="text" formControlName="name" placeholder="name" [class.error]="name.errors?.required && (name.dirty || name.touched)"/>
                 <div *ngIf="name.errors?.required && (name.dirty || name.touched)" class="form-error-msg">
                     <div *ngIf="name.errors.required">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <!-- userid field -->
-                <h5>User ID</h5>
+                <h5>User ID *</h5>
                 <input class="userinfo" type="text" formControlName="id" placeholder="id" [class.error]="id.errors?.required && (id.dirty || id.touched) || duplicatedId"/>
                 <div *ngIf="id.errors?.required && (id.dirty || id.touched)" class="form-error-msg">
                     <div *ngIf="id.errors.required">
@@ -31,37 +31,49 @@
                     <span class="material-icons">priority_high</span>
                     Already existed ID
                 </div>
-                <!-- userpassword field -->
-                <h5>User Password</h5>
-                <input class="userinfo" id="pwdInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="At least 8 characters" [class.error]="(password.dirty || password.touched) && (password.errors?.required || password.errors?.minlength || password.errors?.pattern)" />
-                <button matSuffix (click)="togglePwdHide()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldTextType" [style.color]="'#0094d2'" [style.background]="'#2B2B2B'" [style.border]="'none'" type="button">
-                    <mat-icon>{{fieldTextType ? 'visibility' : 'visibility_off'}}</mat-icon>
-                </button>
-                <div *ngIf="password.errors?.required && (password.dirty || password.touched)" class="form-error-msg">
-                    <div *ngIf="password.errors.required">
-                        <!-- <span class="material-icons">warning_amber</span> -->
-                        <span class="material-icons">priority_high</span>
-                        Password is required.
+
+                <div formGroupName="passwordGroup">
+                    <!-- userpassword field -->
+                    <h5>User Password *</h5>
+                    <input class="userinfo" id="pwdInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="At least 8 characters" [class.error]="(createUserForm.get('passwordGroup.password').dirty || 
+                    createUserForm.get('passwordGroup.password').touched) && (createUserForm.get('passwordGroup.password').errors)"/>
+                    <button matSuffix (click)="togglePwdHide()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldTextType" [style.color]="'#0094d2'" [style.background]="'#2B2B2B'" [style.border]="'none'" type="button">
+                        <mat-icon>{{fieldTextType ? 'visibility' : 'visibility_off'}}</mat-icon>
+                    </button>
+                    <div *ngIf="createUserForm.get('passwordGroup.password').errors?.required && (createUserForm.get('passwordGroup.password').dirty || createUserForm.get('passwordGroup.password').touched)" class="form-error-msg">
+                        <div *ngIf="createUserForm.get('passwordGroup.password').errors?.required">
+                            <span class="material-icons">priority_high</span>
+                            Password is required.
+                        </div>
                     </div>
-                </div>
-                <div *ngIf="password.errors?.minlength || password.errors?.pattern && (password.dirty || password.touched)" class="form-error-msg">
-                    <div *ngIf="password.errors.minlength">
-                        <span class="material-icons">priority_high</span>
-                        Password must be at least 8 characters
+                    <div *ngIf="createUserForm.get('passwordGroup.password').errors?.minlength || createUserForm.get('passwordGroup.password').errors?.pattern && (createUserForm.get('passwordGroup.password').dirty || createUserForm.get('passwordGroup.password').touched)" class="form-error-msg">
+                        <div *ngIf="createUserForm.get('passwordGroup.password').errors.minlength">
+                            <span class="material-icons">priority_high</span>
+                            Password must be at least 8 characters
+                        </div>
+                        <div *ngIf="createUserForm.get('passwordGroup.password').errors.pattern">
+                            <span class="material-icons">priority_high</span>
+                            Password is a combination of uppercase, lowercase, numeric and non-alphanumeric characters
+                        </div>
                     </div>
-                    <div *ngIf="password.errors.pattern">
+
+                    <h5>Confirm Password *</h5>
+                    <input class="userinfo" id="pwdConfirmInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Re-enter your password"
+                        [class.error]="(createUserForm.get('passwordGroup.confirmPassword').dirty || 
+                        createUserForm.get('passwordGroup.confirmPassword').touched) && (createUserForm.get('passwordGroup.confirmPassword').errors?.required || createUserForm.controls.passwordGroup.errors?.passwordMismatch)"/>
+                    <div *ngIf="createUserForm.get('passwordGroup.confirmPassword').errors?.required && (createUserForm.get('passwordGroup.confirmPassword').dirty || createUserForm.get('passwordGroup.confirmPassword').touched)" class="form-error-msg">
+                        <div *ngIf="createUserForm.get('passwordGroup.confirmPassword').errors.required">
+                            <span class="material-icons">priority_high</span>
+                            Re-enter your password
+                        </div>
+                    </div>
+                    <div *ngIf="createUserForm.controls.passwordGroup.errors?.passwordMismatch" class="form-error-msg">
                         <span class="material-icons">priority_high</span>
-                        Password is a combination of uppercase, lowercase, numeric and non-alphanumeric characters
+                        Password does not match
                     </div>
                 </div>
 
-                <!-- <h5>Repeat Password</h5>
-                <input class="userinfo" id="pwdInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="At least 8 characters" [class.error]="(password.dirty || password.touched) && (password.errors?.required || password.errors?.minlength || password.errors?.pattern)" />
-                <button mat-icon-button matSuffix (click)="togglePwdHide()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldTextType" [style.color]="'#0094d2'">
-                    <mat-icon>{{fieldTextType ? 'visibility' : 'visibility_off'}}</mat-icon>
-                </button> -->
-
-                <h5>User Permission</h5>
+                <h5>User Permission *</h5>
                 <!-- <input class="userinfo" type="text" formControlName="permission" /> -->
                 <select id="permission" class="userinfo selectbox" formControlName="permission">
                     <option *ngFor="let permission of selectedPemissionTypeList" [ngValue]="permission.value">
@@ -96,7 +108,7 @@
                 </div>
                 
                 <!-- userpassword field -->
-                <h5>User Password</h5>
+                <h5>User Password *</h5>
                 <input class="userinfo" id="pwdInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="At least 8 characters" [class.error]="(password.dirty || password.touched) && (password.errors?.required || password.errors?.minlength || password.errors?.pattern)" />
                 <button type="button" mat-icon-button matSuffix (click)="togglePwdHide()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldTextType" [style.color]="'#0094d2'" [style.background]="'#2B2B2B'" [style.border]="'none'">
                     <mat-icon>{{fieldTextType ? 'visibility' : 'visibility_off'}}</mat-icon>

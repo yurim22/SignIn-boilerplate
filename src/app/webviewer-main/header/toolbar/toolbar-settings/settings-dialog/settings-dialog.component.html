@@ -6,14 +6,14 @@
         </button>
     </section>
     <section class="settings">
-        <form [formGroup]="receiveForm" (ngSubmit)="onSubmit_Re('receiveForm')">
+        <form [formGroup]="receiveForm" (ngSubmit)="onSubmit_Re(receiveForm)">
             <div class="receive-group">
                 <h3 class="title">Receive</h3>
                 <div class="input-group">
                     <div class="content">Hospital PACS - AE</div>
-                    <input class="pacs pacs-ae" type="text" placeholder="dd" formControlName="ae">
+                    <input class="pacs pacs-ae" type="text" placeholder="ae" formControlName="ae">
                     <div class="content">Hospital PACS - Host</div>
-                    <input class="pacs pacs-user" type="text" placeholder="client" formControlName="ip">
+                    <input class="pacs pacs-user" type="text" placeholder="host" formControlName="ip">
                     <div class="content">Hospital PACS - Port</div>
                     <input class="pacs pacs-port" type="text" placeholder="port" formControlName="port">
                 </div>
@@ -34,7 +34,7 @@
                 <h3 class="title">Send</h3>
                 <div class="input-group">
                     <div class="content">Hospital PACS - AE</div>
-                    <input class="pacs pacs-ae" type="text" placeholder="dd" formControlName="ae">
+                    <input class="pacs pacs-ae" type="text" placeholder="ae" formControlName="ae">
                     <div class="content">Hospital PACS - Client</div>
                     <input class="pacs pacs-user" type="text" placeholder="client" formControlName="ip">
                     <div class="content">Hospital PACS - Port</div>

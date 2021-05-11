@@ -60,7 +60,7 @@ export class SigninComponent implements OnInit {
 
         this.userInfoService.getVersionInfo().subscribe(
             (result: any) => {
-                console.log(result)
+                console.log(result);
                 setTimeout(() => {
                     this.isSystemIntegrityChecking = false;
                     this.isSystemIntegrityCheckingSuccess = true;
@@ -82,6 +82,7 @@ export class SigninComponent implements OnInit {
         const id = this.signInForm.value.id;
         const password = this.signInForm.value.password;
 
+        // system integrity check => error 일때, onSubmit button에 대해서 error를 띄운다
         if (!this.isSystemIntegrityChecking && !this.isSystemIntegrityCheckingSuccess){
             this.isSigninFailed = true;
             this.signInFailedMsg = 'Server connection error';
@@ -105,24 +106,6 @@ export class SigninComponent implements OnInit {
             );
         }
         setTimeout(() => this.isSigninFailed = false, 3000);
-        // this.authService.signIn(id, password).subscribe(
-        //     () => {
-        //         this.isSigninFailed = false;
-        //         this.router.navigate(['/webviewer']);
-        //     },
-        //     (error) => {
-        //         this.isSigninFailed = true;
-        //         console.log(error.error.message);
-        //         if (error.error.message === 'Wrong password more than 5 times'){
-        //             console.log('너 이제 락걸렸어');
-        //             this.signInFailedMsg = 'Your account is locked';
-        //         }else{
-        //             console.log('비밀번호 틀렸어');
-        //             this.signInFailedMsg = 'Invalid username or password.';
-        //         }
-        //         setTimeout(() => this.isSigninFailed = false, 3000);
-        //     }
-        // );
 
         // rememberme checkbox
         if (this.rememberMeCheckboxChecked){

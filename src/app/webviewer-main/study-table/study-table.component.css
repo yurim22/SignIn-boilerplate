@@ -174,3 +174,18 @@ table.mat-table {
 th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type{
     padding-right: 0;
 }
+
+.filter-icon-btn .mat-icon-button{
+    width: fit-content;
+    height: auto;
+    margin-left: 5px
+}
+
+.material-icons.filter-icon {
+    font-size: small;
+    color: gray;
+}
+
+::ng-deep .mat-sort-header-container .mat-sort-header-arrow {
+    margin: 0 0 0 4px;
+}
