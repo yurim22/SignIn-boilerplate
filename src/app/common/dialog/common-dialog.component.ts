@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/signin/auth/auth.service';
-import { UserService } from 'src/app/webviewer-main/header/toolbar/toolbar-users/users.service';
+import { UserService } from 'src/app/header/toolbar/toolbar-users/users.service';
 
 @Component({
     template:

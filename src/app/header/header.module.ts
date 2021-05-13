@@ -9,7 +9,7 @@ import { ToolbarAboutComponent } from './toolbar/toolbar-about/toolbar-about.com
 import { ToolbarLogoutComponent } from './toolbar/toolbar-logout/toolbar-logout.component';
 // import { ToolbarPacsComponent } from '../toolbar/toolbar-pacs';
 
-import { AngularMaterialsModule } from '../../common/shared/angular-materials.module';
+import { AngularMaterialsModule } from '../common/shared/angular-materials.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';

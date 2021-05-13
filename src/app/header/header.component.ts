@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 // import { Apollo, gql } from 'apollo-angular';
-import { CommonDialogComponent } from '../../common/dialog/common-dialog.component';
-import {UserInfoService} from '../../signin/services/user-info.service';
+import { CommonDialogComponent } from '../common/dialog/common-dialog.component';
+import {UserInfoService} from '../signin/services/user-info.service';
 
 @Component({
     selector: 'app-header',
