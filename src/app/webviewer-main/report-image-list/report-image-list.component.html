@@ -1,29 +1,20 @@
-<!-- <ng-template [ngIf]="isReceived" class="img-btn-container">
-    <div class="error-image">
-        <img src="{{error_report_img}}">
-    </div>
-</ng-template>
-
-<ng-template [ngIf]="isAnalyzed" appMousewheelEvent>
-    <div class="img-btn-container">
-        <div class="btn-container2">
-            <button class="custom-btn" (click)="confirm()">
-                <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>&nbsp;Confirm
-            </button>
-        </div>
-        <div class="report_image2">
-            <img src="{{setImgPath()}}">
-        </div>
-    </div>
-</ng-template> -->
-
 <div class="img-btn-container">
-    <div class="btn-container2" *ngIf="hasReport">
+    <div class="btn-container2" *ngIf="studyStatus === 'ANALYZED'; else reviewedCase">
         <button class="custom-btn" (click)="confirm()">
+        <!-- <button class="custom-btn" #confirmButtonEl (click)="confirm()">     -->
             <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>&nbsp;Confirm
         </button>
     </div>
-    <div class="blankbox" *ngIf="!hasReport"></div>
+    <ng-template #reviewedCase>
+        <div class="blankbox" *ngIf="studyStatus === 'REVIEWED'; else receivedCase">
+            <span class="material-icons-outlined tag">tag</span>
+            Confirm user  :  <b class="confirm-user-name"> {{confirmedBy$ | async}}</b>
+        </div>
+    </ng-template>
+    <ng-template #receivedCase>
+        <div class="blankbox"></div>
+    </ng-template>
+    <!-- <pre>{{studyStatus$ | async}}</pre> -->
     <div class="report_image2">
         <img src="{{imgUrl$ | async}}" />
     </div>

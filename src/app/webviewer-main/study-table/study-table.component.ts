@@ -105,10 +105,13 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // 더블클릭하면, action파일의 SetSeriesInfo가 호출된다.
     onDblclick(row: StudyRow): void{
+        console.log(row.confirmed_by);
+        console.log(row);
         this.confirmedStudy = row.seq;
-        this.store.dispatch(new SetSeriesInfo(row.seq, row.status));
+        this.store.dispatch(new SetSeriesInfo(row.seq, row.status, row.confirmed_by));
     }
 
+    // tslint:disable-next-line: typedef
     onFilter() {
         console.log('filter click');
     }

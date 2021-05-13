@@ -25,7 +25,8 @@ export class StudyTableService {
     }
 
     updateStudyStatus(updateStudyData: Partial<StudyRow>, seq: number): Observable<StudyRow> {
-        const userInfo = localStorage.getItem('userInfo');
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        console.log(userInfo);
         return this.httpClient.patch<StudyRow>(`${this.appUrl}/studies/${seq}`, {updateStudyData, userInfo});
     }
 }

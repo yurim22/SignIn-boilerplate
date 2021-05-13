@@ -11,6 +11,7 @@ export interface StudyStateModel {
     hasSelectedStudy: boolean;
     selectedStudyStatus: string;
     allStudies: StudyRow[];
+    confirmUser: string;
 }
 
 @State<StudyStateModel>({
@@ -19,6 +20,7 @@ export interface StudyStateModel {
         selectedSeries: null,
         hasSelectedStudy: false,
         selectedStudyStatus: undefined,
+        confirmUser: undefined,
         allStudies: [],
     }
 })
@@ -48,31 +50,41 @@ export class StudyState {
         return state.allStudies;
     }
 
+    @Selector()
+    static getConfirmedBy(state: StudyStateModel): string {
+        return state.confirmUser;
+    }
+
     @Action(SetSeriesInfo)
     // tslint:disable-next-line: typedef
-    setSeriesInfo({getState, setState}: StateContext<StudyStateModel>, {studySeq, studyStatus}: SetSeriesInfo){
+    setSeriesInfo({getState, setState}: StateContext<StudyStateModel>, {studySeq, studyStatus, confirmedBy}: SetSeriesInfo){
         console.log('studySeq', studySeq);
         console.log('studyStatus', studyStatus);
+        console.log('confirmedBy', confirmedBy);
         // series 정보 전체가 저장된다.
         // setState(state => {
         //     state.hasSelectedStudy = true
         // })
         return this.studyTableService.getSeriesItem(studySeq).pipe(
             tap((res) => {
+                console.log('result of get seriestItme', res);
                 const state = getState();
+                console.log('state info', state);
                 setState({
                     ...state,
+                    confirmUser: confirmedBy,
                     selectedSeries: res,
                     selectedStudyStatus: studyStatus
                 });
-                // console.log(state);
+                console.log(getState());
             })
         );
     }
 
     @Action(UpdateStudyStatus)
     // tslint:disable-next-line: typedef
-    udpateStudyData({getState, setState}: StateContext<StudyStateModel>, {studySeq}: UpdateStudyStatus) {
+    udpateStudyData({getState, setState}: StateContext<StudyStateModel>, {studySeq, confirmedBy}: UpdateStudyStatus) {
+        console.log('========confirmedby user name', confirmedBy);
         return this.studyTableService.updateStudyStatus({status: 'REVIEWED'}, studySeq).pipe(
             tap((result) => {
                 const state = getState();
@@ -82,6 +94,7 @@ export class StudyState {
                 studyList[studyIndex] = result;
                 setState({
                     ...state,
+                    confirmUser: confirmedBy,
                     allStudies: studyList
                 });
                 console.log(result);

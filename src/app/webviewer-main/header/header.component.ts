@@ -10,6 +10,7 @@ import {UserInfoService} from '../../signin/services/user-info.service';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css']
 })
+// [TODO] 맨처음 login 했을 때, error 처리 => localstorage에 아직 값이 없을 때
 export class HeaderComponent implements OnInit, OnDestroy {
 
     isToolbarReady: boolean;
@@ -61,6 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     get userId(): string {
+        
         return JSON.parse(localStorage.getItem('userInfo')).id;
     }
 

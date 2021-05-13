@@ -1,4 +1,4 @@
-import { Patient } from "./patient.model";
+import { Patient } from './patient.model';
 
 export class StudyRow{
     status: string;
@@ -8,4 +8,5 @@ export class StudyRow{
     patient: Patient;
     seq: number;
     volumes: number;
+    confirmed_by: string;
 }
