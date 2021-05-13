@@ -126,7 +126,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy, AfterViewIni
 
     }
 
-
+    // [TODO] button이 text로 변하는 과정에서 약간 부자연스러운 부분이 존재.. 성능 개선 필요
     confirm(): any {
         const userName = JSON.parse(localStorage.getItem('userInfo')).name;
         this.store.dispatch(new UpdateStudyStatus(this.currentStudySeq, userName)).subscribe(
@@ -140,7 +140,11 @@ export class ReportImageListComponent implements OnInit, OnDestroy, AfterViewIni
         );
         // [TODO] confirm button 눌렀을 때 button 대신 confirmed by 넣는거
         // 더 좋은 로직이 있을 것 같다. 수정하기
-        this.studyStatus = 'REVIEWED';
+        setTimeout(() => {
+            this.studyStatus = 'REVIEWED';
+            console.log(this.studyStatus);
+            this.changeDetectorRef.detectChanges();
+        }, 800);
         // this.confirmedBy = JSON.parse(localStorage.getItem('userInfo')).name;
         this.changeDetectorRef.detectChanges();
         // console.log(this.confirmedBy);

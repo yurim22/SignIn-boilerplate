@@ -209,11 +209,12 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
 
     onSubmit(form): any {
         // request create user to server
-
+        console.log('form: ', form);
+        console.log('password', form.value.passwordGroup.password);
         if (this.data.mode === 'createMode'){
             this.userService.createNewUser({
                 id: form.value.id,
-                password: form.value.password,
+                password: form.value.passwordGroup.password,
                 name: form.value.name,
                 institution: form.value.institution,
                 permission: form.value.permission,
@@ -232,7 +233,7 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
             const userSeq = String(this.data.userInfo.seq);
             this.userService.updateUser({
                 id: form.value.id,
-                password: form.value.password,
+                password: form.value.passwordGroup.password,
                 name: form.value.name,
                 institution: form.value.institution,
                 permission: form.value.permission,
@@ -251,7 +252,7 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
             const userSeq = String(this.data.userInfo.seq);
             this.userService.updateUser({
                 name: form.value.name,
-                password: form.value.password
+                password: form.value.passwordGroup.password
             }, userSeq).pipe(
                 takeUntil(this.unsubscribe$)
             ).subscribe(
