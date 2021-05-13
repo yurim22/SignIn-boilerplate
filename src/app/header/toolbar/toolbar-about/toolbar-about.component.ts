@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
+    // tslint:disable-next-line: component-selector
     selector: 'toolbar-about',
     template: `
     <div id="icon_about" class="flex-item-row top-menu-tools-container" (click)="openAboutModal()">
@@ -28,7 +29,7 @@ import { MatDialog } from '@angular/material/dialog';
             -webkit-font-smoothing: antialiased;
             color: #cecece;
             font-size: 10px;
-            
+
             padding: 0px 0px 12px 0px;
             font-weight: 400;
             text-align: center;
@@ -44,25 +45,25 @@ export class ToolbarAboutComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    openAboutModal(){
-        console.log('about');
+    openAboutModal(): void {
         const dialogRef = this.dialog.open(AboutDialogComponent, {
             width: '570px',
             height: '500px',
-        })
+        });
 
         dialogRef.afterClosed().subscribe(result => {
             console.log('the dialog was closed');
-        })
+        });
     }
 }
 
 @Component({
+    // tslint:disable-next-line: component-selector
     selector: 'about-dialog',
-    template:`
+    template: `
         <p>about</p>
     `,
-    styles:[`
+    styles: [`
         p{
             color: white;
         }

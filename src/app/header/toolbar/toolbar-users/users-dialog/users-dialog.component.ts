@@ -10,8 +10,6 @@ import { CommonDialogComponent } from 'src/app/common/dialog/common-dialog.compo
 import { User } from 'src/app/signin/models/user.model';
 import { UserService } from '../users.service';
 import { CreateNewUserDialogComponent } from './new-user-dialog.component';
-import { TooltipPosition } from '@angular/material/tooltip';
-import { FormControl } from '@angular/forms';
 // import { USER_LIST, DELETE_USER} from 'src/app/common/graphql/gql';
 
 
@@ -104,7 +102,6 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(_ => {
-            console.log('the create dialog was closed');
             this.dialog.open(UsersDialogComponent, {
                 autoFocus: false,
                 width: '50vw',
@@ -114,8 +111,6 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     openEditUserDialog(row: Partial<User>): void {
-        console.log(row);
-        console.log('edit');
         this.dialog.closeAll();
         const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
             autoFocus: false,
@@ -126,7 +121,6 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('the edit dialog was closed');
             this.dialog.open(UsersDialogComponent, {
                 autoFocus: false,
                 width: '50vw',
@@ -136,7 +130,6 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     unlockSelectedUsers(row: Partial<User>): void {
-        console.log(row);
         // tslint:disable-next-line: new-parens
         const dialogConfig = new MatDialogConfig;
         dialogConfig.hasBackdrop = true;

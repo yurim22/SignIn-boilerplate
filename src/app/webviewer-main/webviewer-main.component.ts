@@ -21,7 +21,42 @@ import { Component } from '@angular/core';
             </div>
         </div>
     `,
-    styleUrls: ['./webviewer-main.component.css']
+    styles: [`
+        .main-container{
+            display: flex;
+        }
+        .study-list-container{
+            width: 55%;
+        }
+        .report-container {
+            width: 45%;
+        }
+        .study-list-container, .report-container {
+            margin-left: 1%;
+            padding-right: 1%;
+        }
+        .section-title{
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 1.25rem;
+            color: rgb(214, 212, 212);
+            padding-bottom: 4px;
+            margin-bottom: 1px;
+        }
+        .report-image{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @media (max-width: 1224px) {
+            .study-list-container{
+                width: 50%;
+            }
+            .report-container {
+                width: 50%;
+            }
+        }
+    `]
 })
 export class WebviewerMainComponent {
 

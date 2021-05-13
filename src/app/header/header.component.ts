@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         private userInfoService: UserInfoService) { }
 
     ngOnInit(): void {
-        console.log('this is header component ngoninit');
         this.userInfoService.getCurrentUser().subscribe(
             (res) => {
                 console.log(res);
@@ -62,7 +61,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     get userId(): string {
-        
         return JSON.parse(localStorage.getItem('userInfo')).id;
     }
 

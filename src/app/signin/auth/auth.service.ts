@@ -33,7 +33,6 @@ export class AuthService {
     // accesstoken은 localstorage에 저장
     // refreshtoken은 cookie에 저장
     signIn(userId: string, userPwd: string): Observable<Token>{
-        console.log('http request signin');
         return this.httpClient.post<Token>(`${this.appUrl}/auth/signin`, {id: userId, password: userPwd})
         .pipe(
             tap(res => {
@@ -51,7 +50,6 @@ export class AuthService {
         .pipe(
             tap(res => {
                 this.setToken(res.accessToken),
-                console.log(res.accessToken),
                 this.cookieService.set('refreshToken', res.refreshToken);
             }),
             shareReplay()
@@ -60,7 +58,6 @@ export class AuthService {
 
     logout(): void {
         const signoutTime = new Date();
-        console.log(signoutTime);
         this.removeToken();
         this.cookieService.delete('refreshToken');
         this.router.navigate(['']);

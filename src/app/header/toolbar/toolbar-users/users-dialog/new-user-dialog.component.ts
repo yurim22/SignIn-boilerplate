@@ -135,7 +135,6 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
         private userInfoService: UserInfoService
     ){
         this.userPermission =  JSON.parse(localStorage.getItem('userInfo')).permission;
-        console.log(this.userPermission);
 
         this.createUserForm = this.fb.group({
             id: [this.data.mode === 'createMode' ? '' : this.data.userInfo.id, Validators.required],
@@ -144,13 +143,10 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
                 password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.regexPassword)]],
                 confirmPassword: ['', Validators.required],
             }, {validators: this.matchPassword('password', 'confirmPassword')}),
-            // password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.regexPassword)]],
-            // confirmPassword: ['', Validators.required],
             permission: [this.data.mode === 'createMode' ? '' : this.data.userInfo.permission, Validators.required],
             institution: [this.data.mode === 'createMode' ? '' : this.data.userInfo.institution]
         });
 
-        console.log(this.createUserForm);
         if (this.userPermission === 'PHYSICIAN'){
             this.updatePersonalForm = this.fb.group({
                 name: [this.data.userInfo.name, Validators.required],
@@ -164,7 +160,6 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
     }
 
     ngOnInit(): void {
-        console.log('user info dialog2');
         if (this.data.mode === 'createMode'){
             this.dialogName = 'Create User';
             this.originId = '';
@@ -209,8 +204,6 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
 
     onSubmit(form): any {
         // request create user to server
-        console.log('form: ', form);
-        console.log('password', form.value.passwordGroup.password);
         if (this.data.mode === 'createMode'){
             this.userService.createNewUser({
                 id: form.value.id,
@@ -223,7 +216,6 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
             ).subscribe(
                 () => {
                     this.close();
-                    console.log('create user');
                     this.showSnackbar('Create user successfully', '');
                 },
 
@@ -241,9 +233,7 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
                 takeUntil(this.unsubscribe$)
             ).subscribe(
                 (result) => {
-                    console.log(result);
                     this.close();
-                    console.log('update success'),
                     this.showSnackbar('Update user successfully', '');
                 },
                 (error) => console.log(error)
@@ -257,10 +247,8 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
                 takeUntil(this.unsubscribe$)
             ).subscribe(
                 (result) => {
-                    console.log('resuilt', result);
                     this.userInfoService.setUserInfo(result);
                     this.close();
-                    console.log('update success'),
                     this.showSnackbar('Update user successfully', '');
 
                 },
@@ -281,13 +269,11 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
     enterToSubmit($event): void{
         if (this.userPermission === 'PHYSICIAN' && !this.updatePersonalForm.valid){
             $event.preventDefault();
-            console.log('cant submit;');
         }
         if ((this.userPermission === 'PHYSICIAN' && !this.updatePersonalForm.valid) ||
         ((this.userPermission === 'ADMINISTRATOR' || this.userPermission === 'DEVELOPER') &&
         (!this.createUserForm.valid || this.duplicatedId))) {
             $event.preventDefault();
-            console.log('cant submit;');
         }
     }
     // group: AbstractControl) => ValidationErrors|null
@@ -301,7 +287,6 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
             } else if (confirmPasswordControl.errors && !confirmPasswordControl.errors.passwordMismatch) {
                 return null;
             } else if (passwordControl !== confirmPasswordControl) {
-                console.log('password mismatch');
                 return { passwordMismatch: true };
             }
             // if (confirmPasswordControl.errors && !confirmPasswordControl.errors.passwordMismatch) {

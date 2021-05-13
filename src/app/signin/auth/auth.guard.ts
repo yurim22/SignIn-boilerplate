@@ -18,12 +18,10 @@ export class AuthGuard implements CanActivate {
         state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
         if (!this.auth.isAuthenticated()) {
-            console.log('invalid token');
             // 토큰이 만료되었을 때, refresh token 활용해서 새로운 토큰을 다시 받아온다\
             // refreshtoken도 만료되었을 때
             this.auth.silentRefresh().subscribe(
-                (res) => {
-                    console.log(res);
+                () => {
                     this.router.navigate(['/webviewer']);
                     return true;
                 },

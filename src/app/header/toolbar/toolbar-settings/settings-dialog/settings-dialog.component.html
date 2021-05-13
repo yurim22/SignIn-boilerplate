@@ -21,12 +21,7 @@
                     <button type="submit" mat-flat-button>SAVE & TEST</button>
                     <mat-spinner *ngIf="pacsConnectionChecking" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
                     <span *ngIf="!pacsConnectionChecking" class="test-result-string" [ngStyle]="isSuccess_re? {'color':'green'} : {'color':'red'}">{{reTestResult}}</span>
-                    <!-- <span *ngIf="!isSuccess_re" style="color: red;" class="test-result-string">FAIL</span>
-                    <span *ngIf="isSuccess_re" style="color: green;" class="test-result-string">OK</span> -->
                 </div>
-                    
-                <!-- <mat-icon  *ngIf="!isSuccess" style="color: red" class="test-result-icon">cancel</mat-icon> -->
-                <!-- <mat-icon  *ngIf="isSuccess" class="check-for-integrity-spinner-custom" style="color: green;">check_circle</mat-icon> -->
             </div>
         </form>
         <form [formGroup]="sendForm" (ngSubmit)="onSubmit_Se('sendFrom')">
@@ -44,8 +39,6 @@
                     <button type="submit" mat-flat-button>SAVE & TEST</button>
                     <mat-spinner *ngIf="pacsConnectionCheckingSe" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
                     <span *ngIf="!pacsConnectionCheckingSe" class="test-result-string" [ngStyle]="isSuccess_se? {'color':'green'} : {'color':'red'}">{{seTestResult}}</span>
-                    <!-- <span *ngIf="!isSuccess_re" style="color: red;" class="test-result-string">FAIL</span>
-                    <span *ngIf="isSuccess_re" style="color: green;" class="test-result-string">OK</span> -->
                 </div>
             </div> 
         </form>

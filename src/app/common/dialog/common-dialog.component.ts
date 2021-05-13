@@ -86,35 +86,33 @@ export class CommonDialogComponent {
                 private snackBar: MatSnackBar
                 ) {}
 
-    doAction() {
+    doAction(): void {
         switch (this.modalData.name) {
             case 'Logout':
                 this.authService.logout();
                 break;
             case 'Delete':
                 this.userService.deleteUser(this.modalData.deleteUserId).subscribe(
-                    () => {console.log('delete user'),this.showSnackbar('Delete user successfully', '')}
-                )
+                    () => {console.log('delete user'), this.showSnackbar('Delete user successfully', ''); }
+                );
                 this.modalData.response = true;
-                console.log(this.modalData)
                 break;
             case 'Unlock':
-                console.log(this.modalData.unlockUserId)
+                console.log(this.modalData.unlockUserId);
                 this.userService.unlockUser(this.modalData.unlockUserId).subscribe(
                     () => {
-                        console.log('unlock user')
-                        this.showSnackbar('Unlock user successfully', '')
+                        this.showSnackbar('Unlock user successfully', '');
                     },
                     (error) => console.log(error)
-                )
+                );
+                break;
             default:
                 break;
         }
         this.dialogRef.close(this.modalData);
-        
     }
 
-    close() {
+    close(): void{
         switch (this.modalData.name) {
             case 'removeNodule':
                 this.modalData.response = false;
@@ -126,12 +124,11 @@ export class CommonDialogComponent {
         }
     }
 
-    
-    showSnackbar(content:string, action:string) {
+    showSnackbar(content: string, action: string): void {
         this.snackBar.open(content, action, {
             duration: 2000,
             verticalPosition: 'bottom',
-            panelClass: ["custom-snackbar-style"]
+            panelClass: ['custom-snackbar-style']
         });
     }
 }

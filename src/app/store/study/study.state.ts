@@ -58,25 +58,15 @@ export class StudyState {
     @Action(SetSeriesInfo)
     // tslint:disable-next-line: typedef
     setSeriesInfo({getState, setState}: StateContext<StudyStateModel>, {studySeq, studyStatus, confirmedBy}: SetSeriesInfo){
-        console.log('studySeq', studySeq);
-        console.log('studyStatus', studyStatus);
-        console.log('confirmedBy', confirmedBy);
-        // series 정보 전체가 저장된다.
-        // setState(state => {
-        //     state.hasSelectedStudy = true
-        // })
         return this.studyTableService.getSeriesItem(studySeq).pipe(
             tap((res) => {
-                console.log('result of get seriestItme', res);
                 const state = getState();
-                console.log('state info', state);
                 setState({
                     ...state,
                     confirmUser: confirmedBy,
                     selectedSeries: res,
                     selectedStudyStatus: studyStatus
                 });
-                console.log(getState());
             })
         );
     }
@@ -84,11 +74,9 @@ export class StudyState {
     @Action(UpdateStudyStatus)
     // tslint:disable-next-line: typedef
     udpateStudyData({getState, setState}: StateContext<StudyStateModel>, {studySeq, confirmedBy}: UpdateStudyStatus) {
-        console.log('========confirmedby user name', confirmedBy);
         return this.studyTableService.updateStudyStatus({status: 'REVIEWED'}, studySeq).pipe(
             tap((result) => {
                 const state = getState();
-                console.log(state);
                 const studyList = [...state.allStudies];
                 const studyIndex = studyList.findIndex(item => item.seq === studySeq);
                 studyList[studyIndex] = result;
@@ -97,7 +85,6 @@ export class StudyState {
                     confirmUser: confirmedBy,
                     allStudies: studyList
                 });
-                console.log(result);
             })
         );
     }
@@ -107,7 +94,6 @@ export class StudyState {
     getStudyList({getState, setState}: StateContext<StudyStateModel>){
         return this.studyTableService.getStudyList().pipe(
             tap((res) => {
-                console.log('res in action', res);
                 const state = getState();
                 setState({
                     ...state,

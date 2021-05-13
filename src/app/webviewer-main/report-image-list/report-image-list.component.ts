@@ -46,50 +46,28 @@ export class ReportImageListComponent implements OnInit, OnDestroy, AfterViewIni
         this.imgUrl$.pipe(
             // skip(1),
             takeUntil(this.unsubscribe$)
-        ).subscribe(
-            res => console.log(res)
-        );
+        ).subscribe();
 
         this.currentStudySeq$.pipe(
             // skip(1),
             takeUntil(this.unsubscribe$)
         ).subscribe(
             res => {
-                console.log(res);
                 this.currentStudySeq = res;
             }
         );
         this.studyStatus$.pipe(
-            // skip(1),
-            tap(res => console.log(res)),
             takeUntil(this.unsubscribe$)
         ).subscribe(
             (res) => {
-                console.log(res);
                 this.studyStatus = res;
-                // this.currentStudySeq = res.study_seq
                 this.changeDetectorRef.detectChanges();
-                console.log('--studystatus 바뀔 때 confirmedby', this.confirmedBy$.subscribe(() => console.log('he')));
             }
         );
 
         this.confirmedBy$.pipe(
-            tap(res => console.log(res)),
             takeUntil(this.unsubscribe$)
-        ).subscribe(
-            (res) => {
-                console.log(res);
-            }
-        );
-
-        // fromEvent( this.confirmButtonEl.nativeElement, 'click').subscribe(
-        //     () => {
-        //         console.log('button clicked');
-        //         this.studyStatus = 'REVIEWED';
-        //         // this.confirmedBy = JSON.parse(localStorage.getItem('userInfo')).name;
-        //         this.changeDetectorRef.detectChanges();
-        //     }
-        // );
+        ).subscribe();
     }
     // *ngIf로 해놔서 조건에 맞지 않을 경우 아예 template 형성이 되지 않는다.
     ngAfterViewInit(): void {
@@ -131,10 +109,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy, AfterViewIni
         const userName = JSON.parse(localStorage.getItem('userInfo')).name;
         this.store.dispatch(new UpdateStudyStatus(this.currentStudySeq, userName)).subscribe(
             (res) => {
-                console.log('update study staus'),
                 this.openSnackBar('confirm report');
-                console.log('---after click confirm button', res.study.confirmUser);
-                console.log(res);
                 this.changeDetectorRef.detectChanges();
             }
         );
@@ -142,12 +117,10 @@ export class ReportImageListComponent implements OnInit, OnDestroy, AfterViewIni
         // 더 좋은 로직이 있을 것 같다. 수정하기
         setTimeout(() => {
             this.studyStatus = 'REVIEWED';
-            console.log(this.studyStatus);
             this.changeDetectorRef.detectChanges();
         }, 800);
         // this.confirmedBy = JSON.parse(localStorage.getItem('userInfo')).name;
         this.changeDetectorRef.detectChanges();
-        // console.log(this.confirmedBy);
     }
 
     openSnackBar(msg: string): void {

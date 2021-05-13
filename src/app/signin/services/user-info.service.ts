@@ -30,7 +30,6 @@ export class UserInfoService {
             this.user = localStorage.getItem('user');
         }else {
             localStorage.clear();
-            console.log('clear the localstorage');
         }
     }
 

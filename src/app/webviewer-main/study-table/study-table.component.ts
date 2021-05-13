@@ -48,15 +48,12 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             takeUntil(this.unsubscribe$)
         ).subscribe(
             (res) => {
-                console.log(res);
                 this.dataSource.data = res;
             }
         );
     }
 
     ngAfterViewInit(): void {
-        console.log('[StudyTableComponent.ngAfterViewInit]');
-
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
 
@@ -89,7 +86,6 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
         // tslint:disable-next-line: new-parens
         this.store.dispatch(new GetStudyList).subscribe(
             (res) => {
-                console.log('res in getStudy List', res.study.allStudies);
                 this.dataSource.data = res.study.allStudies;
             }
         );
@@ -105,8 +101,6 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // 더블클릭하면, action파일의 SetSeriesInfo가 호출된다.
     onDblclick(row: StudyRow): void{
-        console.log(row.confirmed_by);
-        console.log(row);
         this.confirmedStudy = row.seq;
         this.store.dispatch(new SetSeriesInfo(row.seq, row.status, row.confirmed_by));
     }

@@ -45,30 +45,17 @@ export class SettingsDialogComponent {
         this.userPermission = localStorage.getItem('permission');
     }
 
-    save(): void {
-        console.log('save');
-    }
+    save(): void {}
 
     close(): void {
         this.dialogRef.close();
     }
 
     onSubmit_Re(form): any {
-        // console.log(this.${type}.value);
-        console.log(form);
         this.pacsConnectionChecking = true;
         setTimeout( () =>
             this.pacsConnectionChecking = false , 1000
         );
-        // if(type === "receiveForm" && this.cnt === 0){
-        //     this.isSuccess_re = false;
-        //     console.log(this.cnt);
-        //     this.cnt += 1;
-        //     this.reTestResult = 'FAIL';
-        // } else if(type === 'receiveForm') {
-        //     this.isSuccess_re = true;
-        //     this.reTestResult = 'PASS';
-        // }
         // [TODO] pacs server connection test
         this.httpClient.get(`${form.value.ip}:${form.value.port}/peers`).subscribe(
             () => console.log('hellp'),
@@ -76,7 +63,6 @@ export class SettingsDialogComponent {
         );
     }
     onSubmit_Se(type: string): any {
-        // console.log(this.${type}.value);
         this.pacsConnectionCheckingSe = true;
         setTimeout( () =>
             this.pacsConnectionCheckingSe = false , 1000

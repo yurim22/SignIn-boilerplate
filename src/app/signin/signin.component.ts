@@ -60,7 +60,6 @@ export class SigninComponent implements OnInit {
 
         this.userInfoService.getVersionInfo().subscribe(
             (result: any) => {
-                console.log(result);
                 setTimeout(() => {
                     this.isSystemIntegrityChecking = false;
                     this.isSystemIntegrityCheckingSuccess = true;
@@ -78,7 +77,6 @@ export class SigninComponent implements OnInit {
     }
 
     onSubmit(): any{
-        console.log('onsubmit button');
         const id = this.signInForm.value.id;
         const password = this.signInForm.value.password;
 
@@ -94,7 +92,6 @@ export class SigninComponent implements OnInit {
                 },
                 (error) => {
                     this.isSigninFailed = true;
-                    console.log(error.error.message);
                     if (error.error.message === 'Wrong password more than 5 times'){
                         console.log('너 이제 락걸렸어');
                         this.signInFailedMsg = 'Your account is locked';
