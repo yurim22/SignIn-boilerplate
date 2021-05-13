@@ -34,7 +34,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy, AfterViewIni
     currentStudySeq: number;
     unsubscribe$ = new Subject();
     studyStatus: string;
-
+    afterConfirm: boolean;
     constructor(private snackBar: MatSnackBar,
                 private store: Store,
                 private readonly changeDetectorRef: ChangeDetectorRef
@@ -113,6 +113,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy, AfterViewIni
                 this.changeDetectorRef.detectChanges();
             }
         );
+        this.studyStatus = 'Loading';
         // [TODO] confirm button 눌렀을 때 button 대신 confirmed by 넣는거
         // 더 좋은 로직이 있을 것 같다. 수정하기
         setTimeout(() => {
