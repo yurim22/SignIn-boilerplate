@@ -1,0 +1,82 @@
+
+<div class="signin-container">
+    <form class="login" [formGroup]="changePwdForm" (ngSubmit)="onSubmit()" style="background-color:#2B2B2B">
+        <label class="title">
+            <h4 class="welcome">Change Password</h4>
+            <div class="prd-name">JUNO</div>
+            <div class="hint">
+                <h5 class="hint-msg">{{explanation}}</h5>
+                <h5 class="hint-msg">Change to new password.</h5>
+            </div>
+        </label>
+        
+        <div class="login-group">
+
+            <input class="password" type="password" id="old_password" placeholder="Old Password" formControlName="oldPassword"
+            [class.errors]="(changePwdForm.get('oldPassword').dirty || changePwdForm.get('oldPassword').touched) && changePwdForm.get('oldPassword').errors?.required" />
+            <div *ngIf="(changePwdForm.get('oldPassword').dirty || changePwdForm.get('oldPassword').touched) && changePwdForm.get('oldPassword').errors?.required" class="form-error-msg">
+                <div *ngIf="changePwdForm.get('oldPassword').errors.required">
+                    <span class="material-icons">priority_high</span>
+                    Old Password is required
+                </div>
+            </div>
+
+            <div formGroupName="passwordGroup" class="passwordGroup">
+                <input class="password" type="password" id="new_password" placeholder="New Password" formControlName="newPassword" 
+                [class.errors]="((changePwdForm.get('passwordGroup.newPassword').dirty || changePwdForm.get('passwordGroup.newPassword').touched) && changePwdForm.get('passwordGroup.newPassword').errors) || (changePwdForm.value.oldPassword !== '' && (changePwdForm.value.oldPassword === changePwdForm.value.passwordGroup.newPassword))" />
+                <div *ngIf="changePwdForm.get('passwordGroup.newPassword').errors?.required && (changePwdForm.get('passwordGroup.newPassword').dirty || changePwdForm.get('passwordGroup.newPassword').touched)" class="form-error-msg">
+                    <div *ngIf="changePwdForm.get('passwordGroup.newPassword').errors.required">
+                        <span class="material-icons">priority_high</span>
+                            New Password is required.
+                    </div>
+                </div>
+                <div *ngIf="(changePwdForm.get('passwordGroup.newPassword').errors?.minlength || changePwdForm.get('passwordGroup.newPassword').errors?.pattern) 
+                && (changePwdForm.get('passwordGroup.newPassword').dirty || changePwdForm.get('passwordGroup.newPassword').touched)" class="form-error-msg">
+                    <div *ngIf="changePwdForm.get('passwordGroup.newPassword').errors.minlength">
+                        <span class="material-icons">priority_high</span>
+                        New Password must be at least 8 characters
+                    </div>
+                    <div *ngIf="changePwdForm.get('passwordGroup.newPassword').errors.pattern">
+                        <span class="material-icons">priority_high</span>
+                        New Password is a combination of uppercase, lowercase, numeric and non-alphanumeric characters
+                    </div>
+                </div>
+                <div *ngIf="changePwdForm.value.oldPassword !== '' && (changePwdForm.value.oldPassword === changePwdForm.value.passwordGroup.newPassword)" class="form-error-msg">
+                    <span class="material-icons">priority_high</span>
+                    New Password is the same with old password
+                </div>
+
+                <input class="password" type="password" id="new_password_repeat" placeholder="New Password (repetition)" formControlName="newPasswordRepeat"
+                [class.errors]="(changePwdForm.get('passwordGroup.newPasswordRepeat').dirty || changePwdForm.get('passwordGroup.newPasswordRepeat').touched) && changePwdForm.get('passwordGroup.newPasswordRepeat').errors || changePwdForm.get('passwordGroup').errors?.passwordMismatch" />
+                <div *ngIf="(changePwdForm.get('passwordGroup.newPasswordRepeat').dirty || changePwdForm.get('passwordGroup.newPasswordRepeat').touched) && changePwdForm.get('passwordGroup.newPasswordRepeat').errors?.required" class="form-error-msg">
+                    <div *ngIf="changePwdForm.get('passwordGroup.newPasswordRepeat').errors.required">
+                        <span class="material-icons">priority_high</span>
+                        Re-enter your new password
+                    </div>
+                </div>
+                <div *ngIf="changePwdForm.controls.passwordGroup.errors?.passwordMismatch" class="form-error-msg">
+                    <span class="material-icons">priority_high</span>
+                    New password and its repetition do not match
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" mat-flat-button [disabled]="!changePwdForm.valid">
+                    CHANGE PASSWORD
+                </button>
+                <button type="button" mat-flat-button (click)="changeNextTime()">
+                    SKIP
+                </button>
+                <!-- <button type="button" mat-flat-button>
+                    CHANGE NEXT TIME
+                </button> -->
+            </div>
+        </div>
+
+    </form>
+    <!-- 로그인 실패 시 error mgs -->
+    <div class="error" [class.active]="isInvalidPwd">
+        <span class="material-icons">warning_amber</span>
+        {{invalidPwdMsg}}
+    </div>
+</div>

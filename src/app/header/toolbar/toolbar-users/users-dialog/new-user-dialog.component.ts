@@ -50,7 +50,7 @@ interface DialogData {
             font-size: 0.83rem;
             color: #9a9a9a;
             transition: border-bottom 0.2s ease;
-            margin: 0.5rem 0 ;
+            margin: 0.8rem 0 ;
         }
 
         .flex-container .userinfo:focus {

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { UserInfoService } from '../services/user-info.service';
 // import { Apollo, gql, Query } from 'apollo-angular';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { UserInfoService } from './services/user-info.service';
+import { Store } from '@ngxs/store';
+import { UpdateUserLoginStatus } from '../store/users/users.actions';
 
 @Component({
     selector: 'app-signin',
@@ -31,9 +33,7 @@ export class SigninComponent implements OnInit {
     signInFailedMsg: string;
     id = '';
     password = '';
-    // oldPassword = '';
-    // newPassword = '';
-    // newPasswordRepeat = '';
+    passwordStatus: string;
 
     unsubscribe$: Subject<any>;
 
@@ -41,7 +41,8 @@ export class SigninComponent implements OnInit {
                 private userInfoService: UserInfoService,
                 private cookieService: CookieService,
                 private authService: AuthService,
-                private router: Router) {
+                private router: Router,
+                private store: Store) {
 
         this.rememberedId = this.cookieService.get('rememberedId');
 
@@ -70,10 +71,8 @@ export class SigninComponent implements OnInit {
                 this.isSystemIntegrityCheckingSuccess = false;
             }
         );
-    }
 
-    getMyClass(): string {
-        return 'login-wrapper non-banner-image';
+        // const userId = this.activatedRoute.snapshot.paramMap.get('userId');
     }
 
     onSubmit(): any{
@@ -86,9 +85,21 @@ export class SigninComponent implements OnInit {
             this.signInFailedMsg = 'Server connection error';
         } else {
             this.authService.signIn(id, password).subscribe(
-                () => {
+                (res) => {
                     this.isSigninFailed = false;
-                    this.router.navigate(['/webviewer']);
+                    console.log('result in signin component', res);
+                    // const userId = this.activatedRoute.snapshot.paramMap.get('userId');
+                    if (res.pwdStatus === 'first login') {
+                        this.passwordStatus = 'This is your first login.';
+                        this.store.dispatch(new UpdateUserLoginStatus(this.passwordStatus));
+                        this.router.navigate(['/changePwd', res.userId]);
+                    } else if (res.pwdStatus === 'password expired') {
+                        this.passwordStatus = 'Your password has been expired.';
+                        this.store.dispatch(new UpdateUserLoginStatus(this.passwordStatus));
+                        this.router.navigate(['/changePwd', res.userId]);
+                    } else{
+                        this.router.navigate(['/webviewer']);
+                    }
                 },
                 (error) => {
                     this.isSigninFailed = true;

@@ -20,6 +20,8 @@ import {NgxsSelectSnapshotModule} from '@ngxs-labs/select-snapshot';
 import { AuthInterceptor } from './signin/auth/auth-interceptor.service';
 import { GlobalErrorHandlerService } from './common/error/global-error-handler.service';
 import { StudyState } from './store/study/study.state';
+import { AccountComponent } from './account/account.component';
+import { CurrentUserState } from './store/users/users.state';
 
 export function tokenGetter(): string {
     return localStorage.getItem('token');
@@ -29,7 +31,8 @@ export function tokenGetter(): string {
     declarations: [
         AppComponent,
         SigninComponent,
-        CommonDialogComponent
+        CommonDialogComponent,
+        AccountComponent
     ],
     imports: [
         // GraphQLModule,
@@ -51,7 +54,8 @@ export function tokenGetter(): string {
             }
         }),
         NgxsModule.forRoot([
-            StudyState
+            StudyState,
+            CurrentUserState
         ]),
         NgxsSelectSnapshotModule.forRoot(),
     ],

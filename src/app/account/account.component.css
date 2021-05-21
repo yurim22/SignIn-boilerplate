@@ -1,0 +1,289 @@
+.signin-container{
+    display: flex;
+    justify-content: center;
+}
+
+.login {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    width: 23rem;
+}
+
+.login .title {
+    color: white;
+    font-weight: 100;
+    font-size: 1.333333rem;
+    letter-spacing: normal;
+}
+
+.login .title .welcome{
+    font-weight: lighter;
+    line-height: 1.6rem;
+    margin: 0;
+}
+
+.login .title .prd-name{
+    font-size: xx-large;
+    padding: 18px 0 20px 0; 
+}
+
+.login .title .hint {
+    color: white;
+    margin: 1.25rem 0;
+    /* font-weight: lighter;
+    font-size: 0.9rem; */
+}
+
+.login .hint .hint-msg{
+    font-size: 0.9rem;
+    font-weight: lighter;
+    margin: 0.5rem 0;
+}
+
+.login .login-group {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0 0 0;
+}
+
+.login .login-group .passwordGroup{
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+}
+
+.login .login-group .username,
+.login .login-group .password{
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+
+    height: 1.5rem;
+    display: inline-block;
+    min-width: 2.5rem;
+    border-bottom: 1.5px solid #9a9a9a;
+    padding: 0 0.25rem;
+    font-family: 'Montserrat', sans-serif ;
+    font-weight: 500;
+    font-size: 0.83rem;
+    transition: border 0.2s ease;
+}
+
+.login .login-group .username:focus,
+.login .login-group .password:focus {
+    border-bottom: 1.5px solid #0094d2;
+}
+
+.login .login-group .username,
+.login .login-group .password,
+.login .login-group .checkbox{
+    margin: 1rem 0 0.25rem 0;
+    color: #9a9da0;
+}
+
+.login .login-group .password.errors {
+    border-bottom: 1.5px solid #FF6347;
+}
+
+.login .login-group .checkbox{
+    margin-bottom: 1.5rem;
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border: 1.8px solid #9a9da0;
+    width: 14px;
+    height: 14px;
+}
+
+.buttons {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-flat-button{
+    border: 1px solid #525252;
+    background-color: #212121;
+    color: #fff;
+    letter-spacing: 1px;
+    margin: 0.5rem 0;
+}
+
+.mat-flat-button:hover{
+    color: #959BA4;
+}
+
+.mat-flat-button .inside-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mat-flat-button .button-icon {
+    font-size: 16px;
+    font-weight: lighter;
+    margin-right: 0.3rem;
+}
+
+.change-password-group {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0 0 0;
+
+    color: #9A9A9A;
+    font-weight: 400;
+    font-size: 0.583333rem;
+    letter-spacing: normal;
+    line-height: 1rem;
+    margin-bottom: 0;
+    font-family: Metropolis, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    margin-top: 0 !important;
+}
+
+/*** temp about */
+.top-right-layout {
+    order: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+}
+
+.flex-top-menu-tools-icon-item-text {
+/* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+-webkit-font-smoothing: antialiased; */
+    color: #cecece;
+    font-size: 0.6rem;
+    padding: 3px 0px 0px 0px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: text-top;
+    line-height: 0.6rem;
+}
+
+.about-body {
+    font-size:13px;
+    color:#f2f2f2;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-font-smoothing: antialiased;
+}
+
+.check-for-integrity {
+    padding: 0.8rem 0 0.5rem 0 ;
+}
+
+.check-for-integrity-about {
+    padding: 0 0 0 0;
+    margin-bottom: 1.5rem;
+}
+
+.check-for-integrity-child {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.check-for-integrity-spinner-custom {
+    height: 13px;
+    width: 13px;
+    font-size: 0.85rem
+}
+
+.check-for-integrity-spinner-custom-error {
+    height: 13px;
+    width: 13px;
+    font-size: 0.85rem;
+    color: #d9401e;
+}
+
+.check-for-integrity-spinner-inline-text {
+    padding: 0 0.3rem 0 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    line-height: 1rem;
+    font-size: 0.6rem;
+    word-spacing: 1.5px;
+}
+
+.check-for-integrity-spinner-inline-text-error {
+    padding: 0 0.3rem 0 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    line-height: 1rem;
+    font-size: 0.6rem;
+    word-spacing: 1.5px;
+    color: #d9401e;
+}
+
+.check-for-integrity-spinner-inline-underline {
+    padding: 0 0.3rem 0 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    line-height: 1rem;
+    font-size: 0.6rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.error {
+    color: white;
+    background-color: #CC0000;
+    padding: 1rem 0;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: center;
+    font-weight: 500;
+    position: absolute;
+    bottom: 10rem;
+    left: 40.65%;
+    right: 1rem;
+    width: 22.5rem;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+}
+
+.error .material-icons{
+    font-size: 1rem;
+    color: #ffbb33;
+    padding-right: 5px;
+    font-weight: 500;
+}
+
+.error.active {
+    opacity: 1;
+}
+
+.notification {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    padding: 10px 15px;
+    font-size: 0.8em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: 'Roboto';
+    opacity: 0;
+    transform: translateY(-110%);
+    z-index: -1;
+    transition: opacity .3s ease-in-out, transform .3s ease-in-out;
+}
+
+.notification .visible {
+    transform: translateY(10px);
+    opacity: 1;
+}
+.notification span {
+    flex: 1
+}
+
+
+.login-group .form-error-msg, .login-group .form-error-msg .material-icons{
+    font-size: 0.7rem;
+    color: #FF6347;
+}

@@ -36,6 +36,7 @@ export class AuthService {
         return this.httpClient.post<Token>(`${this.appUrl}/auth/signin`, {id: userId, password: userPwd})
         .pipe(
             tap(res => {
+                console.log('res result', res);
                 this.setToken(res.accessToken);
                 this.cookieService.set('refreshToken', res.refreshToken);
 
@@ -54,6 +55,10 @@ export class AuthService {
             }),
             shareReplay()
         );
+    }
+
+    chagnePassword(userId: string, oldPassword: string, newPassword: string): Observable<any> {
+        return this.httpClient.patch(`${this.appUrl}/users/changePwd/${userId}`, {oldPassword, newPassword});
     }
 
     logout(): void {

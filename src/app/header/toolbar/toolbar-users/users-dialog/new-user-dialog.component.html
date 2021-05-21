@@ -107,28 +107,6 @@
                     </div>
                 </div>
                 
-                <!-- userpassword field -->
-                <!-- <h5>User Password *</h5>
-                <input class="userinfo" id="pwdInput" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="At least 8 characters" [class.error]="(password.dirty || password.touched) && (password.errors?.required || password.errors?.minlength || password.errors?.pattern)" />
-                <button type="button" mat-icon-button matSuffix (click)="togglePwdHide()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="fieldTextType" [style.color]="'#0094d2'" [style.background]="'#2B2B2B'" [style.border]="'none'">
-                    <mat-icon>{{fieldTextType ? 'visibility' : 'visibility_off'}}</mat-icon>
-                </button>
-                <div *ngIf="password.errors?.required && (password.dirty || password.touched)" class="form-error-msg">
-                    <div *ngIf="password.errors.required">
-                        <span class="material-icons">priority_high</span>
-                        Password is required.
-                    </div>
-                </div>
-                <div *ngIf="password.errors?.minlength || password.errors?.pattern && (password.dirty || password.touched)" class="form-error-msg">
-                    <div *ngIf="password.errors.minlength">
-                        <span class="material-icons">priority_high</span>
-                        Password must be at least 8 characters
-                    </div>
-                    <div *ngIf="password.errors.pattern">
-                        <span class="material-icons">priority_high</span>
-                        Password is a combination of uppercase, lowercase, numeric and non-alphanumeric characters
-                    </div>
-                </div> -->
                 <div formGroupName="passwordGroup">
                     <!-- userpassword field -->
                     <h5>User Password *</h5>

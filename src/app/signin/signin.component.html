@@ -1,77 +1,48 @@
-<div oncontextmenu="return false" ondragstart="return false" onselectstart="return false" class="signin-container">
-    <div [ngClass]="getMyClass()">
-      <div class="flex-container">
-        <form class="login" [formGroup]="signInForm" (ngSubmit)="onSubmit()" style="background-color:#2B2B2B">
-            <label class="title">
-                <h4 class="welcome">Sign in to</h4>
-                <div class="prd-name">JUNO</div>
-                <h5 class="hint" *ngIf="!passwordExpired">Enter your username and password.</h5>
-                <h5 class="hint" *ngIf="passwordExpired">Your password has been expired. Change to new password.</h5>
-            </label>
-            <div class="login-group" *ngIf="!passwordExpired">
-                <input class="username" type="text" id="login_username" placeholder="UserID" formControlName="id">
-                <input class="password" type="password" id="login_password" placeholder="Password" formControlName="password">
-                <mat-checkbox class="checkbox" color="primary" id="rememberme" [checked]="isRememberedIdExist()" (change)="onRemembermeChanged($event)" style="font-size: 14px;">Remember me</mat-checkbox>
 
-                <button type="submit" mat-flat-button >SIGN IN</button>
-            </div>
-            <!-- <div class="login-group" *ngIf="passwordExpired">
-                <input class="password" type="password" id="old_password" placeholder="Old Password" formControlName="oldPassword">
-                <input class="password" type="password" id="new_password" placeholder="New Password" formControlName="newPassword">
-                <input class="password" type="password" id="new_password_repeat" placeholder="New Password (repetition)" formControlName="newPasswordRepeat">
-                <div class="error active" *ngIf="invalidOldPassword">
-                    Invalid password.
-                </div>
-                <div class="error active" *ngIf="invalidNewPassword">
-                    New password can not be empty.
-                </div>
-                <div class="error active" *ngIf="newPassworldIsSameToOldOne">
-                    New password is same to old password.
-                </div>
-                <div class="error active" *ngIf="newPassworldAreNotSame">
-                    New password and New password repetition are not same.
-                </div>
-                <div class="error active" *ngIf="invalidPasswordFormat">
-                    Password must contain a minimum of 8 characters.<br/>
-                    Password must contain at least one lowercase character.<br/>
-                    Password must contain at least one uppercase character.<br/>
-                    Password must contain at least one numeric character.<br/>
-                    Password must contain at least one non-alphanumeric character.
-                </div>
-                <div></div>
-                <button type="submit" class="btn btn-primary">CHANGE PASSWORD</button>
-            </div> -->
-                <div class="check-for-integrity">
-                    <div class="check-for-integrity-child">
-                        <span *ngIf="isSystemIntegrityChecking" class="check-for-integrity-spinner-inline-text">
-                            Checking System Integrity ...
-                        </span>
-                        <span *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="check-for-integrity-spinner-inline-text">
-                            System Integrity Checking Completed
-                        </span>
-                        <span *ngIf="!isSystemIntegrityChecking && !isSystemIntegrityCheckingSuccess" class="check-for-integrity-spinner-inline-text-error">
-                            System Integrity Checking Error
-                        </span>
-                        <mat-spinner *ngIf="isSystemIntegrityChecking" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
-                        <span *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="material-icons check-for-integrity-spinner-custom">check_circle_outline</span>
-                        <span *ngIf="!isSystemIntegrityChecking && !isSystemIntegrityCheckingSuccess" class="material-icons check-for-integrity-spinner-custom-error">warning_amber</span>
-                    </div>
-                </div>
-                <div class="check-for-integrity-about">
-                    <div class="check-for-integrity-child">
-                        <span (click)="showAboutDialog()" class="check-for-integrity-spinner-inline-underline">
-                            About
-                        </span>
-                        <span class="material-icons check-for-integrity-spinner-custom">error_outline</span>
-                    </div>
-                </div>
+<div class="signin-container">
+    <form class="login" [formGroup]="signInForm" (ngSubmit)="onSubmit()" style="background-color:#2B2B2B">
+        <label class="title">
+            <h4 class="welcome">Sign in to</h4>
+            <div class="prd-name">JUNO</div>
+            <h5 class="hint" *ngIf="!passwordExpired">Enter your username and password.</h5>
+            <h5 class="hint" *ngIf="passwordExpired">Your password has been expired. Change to new password.</h5>
+        </label>
+        <div class="login-group" *ngIf="!passwordExpired">
+            <input class="username" type="text" id="login_username" placeholder="UserID" formControlName="id">
+            <input class="password" type="password" id="login_password" placeholder="Password" formControlName="password">
+            <mat-checkbox class="checkbox" color="primary" id="rememberme" [checked]="isRememberedIdExist()" (change)="onRemembermeChanged($event)" style="font-size: 14px;">Remember me</mat-checkbox>
 
-            </form>
-            <!-- 로그인 실패 시 error mgs -->
-            <div class="error" [class.active]="isSigninFailed">
-                <span class="material-icons">warning_amber</span>
-                {{signInFailedMsg}}
+            <button type="submit" mat-flat-button >SIGN IN</button>
+        </div>
+        <div class="check-for-integrity">
+            <div class="check-for-integrity-child">
+                <span *ngIf="isSystemIntegrityChecking" class="check-for-integrity-spinner-inline-text">
+                    Checking System Integrity ...
+                </span>
+                <span *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="check-for-integrity-spinner-inline-text">
+                    System Integrity Checking Completed
+                </span>
+                <span *ngIf="!isSystemIntegrityChecking && !isSystemIntegrityCheckingSuccess" class="check-for-integrity-spinner-inline-text-error">
+                    System Integrity Checking Error
+                </span>
+                <mat-spinner *ngIf="isSystemIntegrityChecking" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
+                <span *ngIf="!isSystemIntegrityChecking && isSystemIntegrityCheckingSuccess" class="material-icons check-for-integrity-spinner-custom">check_circle_outline</span>
+                <span *ngIf="!isSystemIntegrityChecking && !isSystemIntegrityCheckingSuccess" class="material-icons check-for-integrity-spinner-custom-error">warning_amber</span>
             </div>
         </div>
+        <div class="check-for-integrity-about">
+            <div class="check-for-integrity-child">
+                <span (click)="showAboutDialog()" class="check-for-integrity-spinner-inline-underline">
+                    About
+                </span>
+                <span class="material-icons check-for-integrity-spinner-custom">error_outline</span>
+            </div>
+        </div>
+
+    </form>
+    <!-- 로그인 실패 시 error mgs -->
+    <div class="error" [class.active]="isSigninFailed">
+        <span class="material-icons">warning_amber</span>
+        {{signInFailedMsg}}
     </div>
 </div>

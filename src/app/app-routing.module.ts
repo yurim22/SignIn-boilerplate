@@ -7,6 +7,7 @@ import { SigninComponent } from './signin/signin.component';
 import { WebviewerMainComponent } from './webviewer-main/webviewer-main.component';
 import { AngularMaterialsModule } from './common/shared/angular-materials.module';
 import { AuthGuard } from './signin/auth/auth.guard';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
     {
@@ -23,6 +24,10 @@ const routes: Routes = [
         component: WebviewerMainComponent,
         canActivate: [AuthGuard],
         data: { title: 'webviewer', subtitle: 'JWT Authentication'}
+    },
+    {
+        path: 'changePwd/:userId',
+        component: AccountComponent
     }
 ];
 

@@ -61,11 +61,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     get userId(): string {
-        return JSON.parse(localStorage.getItem('userInfo')).id;
+        if (localStorage.getItem('userInfo')) {
+            return JSON.parse(localStorage.getItem('userInfo')).id;
+        }
     }
 
     get permission(): string {
-        return JSON.parse(localStorage.getItem('userInfo')).permission;
+        if (localStorage.getItem('userInfo')) {
+            return JSON.parse(localStorage.getItem('userInfo')).permission;
+        }
     }
 
     get name(): string {
