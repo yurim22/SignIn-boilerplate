@@ -7,9 +7,12 @@ import { ReportImageListComponent } from './report-image-list/report-image-list.
 import { HeaderModule } from '../header/header.module';
 import { StudyTableComponent } from './study-table/study-table.component';
 import { MousewheelEventDirective } from './mousewheel-event.directive';
+// import { HighlightDirective } from './highlight.directive';
+import { CornerstoneDirective } from './cornerstone/cornerstone.directive';
 
 @NgModule({
-    declarations: [WebviewerMainComponent, ReportImageListComponent, StudyTableComponent, MousewheelEventDirective],
+    declarations: [WebviewerMainComponent, ReportImageListComponent,
+        StudyTableComponent, MousewheelEventDirective, CornerstoneDirective],
     imports: [
         CommonModule,
         AngularMaterialsModule,
@@ -22,7 +25,9 @@ import { MousewheelEventDirective } from './mousewheel-event.directive';
         ReportImageListComponent,
         StudyTableComponent,
         MousewheelEventDirective,
-        AngularMaterialsModule
+        AngularMaterialsModule,
+        // HighlightDirective,
+        CornerstoneDirective
     ],
     // providers:[
     //     {

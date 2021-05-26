@@ -22,6 +22,9 @@ import { GlobalErrorHandlerService } from './common/error/global-error-handler.s
 import { StudyState } from './store/study/study.state';
 import { AccountComponent } from './account/account.component';
 import { CurrentUserState } from './store/users/users.state';
+// import { CornerstoneDirective } from './webviewer-main/cornerstone/cornerstone.directive';
+import { CornerstoneService } from './webviewer-main/cornerstone/cornerstone.service';
+// import { HighlightDirective } from './webviewer-main/highlight.directive';
 
 export function tokenGetter(): string {
     return localStorage.getItem('token');
@@ -32,7 +35,9 @@ export function tokenGetter(): string {
         AppComponent,
         SigninComponent,
         CommonDialogComponent,
-        AccountComponent
+        AccountComponent,
+        // CornerstoneDirective,
+        // HighlightDirective
     ],
     imports: [
         // GraphQLModule,
@@ -61,7 +66,8 @@ export function tokenGetter(): string {
     ],
     bootstrap: [AppComponent],
     exports: [
-        SigninComponent
+        SigninComponent,
+        // HighlightDirective
     ],
     providers:
       [
@@ -78,6 +84,7 @@ export function tokenGetter(): string {
         // },
         GlobalErrorHandlerService,
         {provide: ErrorHandler, useClass: GlobalErrorHandlerService},
+        CornerstoneService
     ]
 })
 export class AppModule {}

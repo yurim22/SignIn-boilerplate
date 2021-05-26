@@ -17,5 +17,11 @@
       "esnext.asynciterable"
     ],
     "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "angularCompilerOptions": {
+    "types" : ["node"]
   }
 }

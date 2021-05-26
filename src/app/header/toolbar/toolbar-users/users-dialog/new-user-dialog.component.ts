@@ -50,7 +50,7 @@ interface DialogData {
             font-size: 0.83rem;
             color: #9a9a9a;
             transition: border-bottom 0.2s ease;
-            margin: 0.8rem 0 ;
+            margin: 0.8rem 0 0.4rem 0 ;
         }
 
         .flex-container .userinfo:focus {
@@ -242,7 +242,7 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
             const userSeq = String(this.data.userInfo.seq);
             this.userService.updateUser({
                 name: form.value.name,
-                password: form.value.passwordGroup.password
+                password: form.value.passwordGroup.password,
             }, userSeq).pipe(
                 takeUntil(this.unsubscribe$)
             ).subscribe(

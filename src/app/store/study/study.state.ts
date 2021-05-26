@@ -60,6 +60,7 @@ export class StudyState {
     setSeriesInfo({getState, setState}: StateContext<StudyStateModel>, {studySeq, studyStatus, confirmedBy}: SetSeriesInfo){
         return this.studyTableService.getSeriesItem(studySeq).pipe(
             tap((res) => {
+                // res : series image_url 결과
                 const state = getState();
                 setState({
                     ...state,

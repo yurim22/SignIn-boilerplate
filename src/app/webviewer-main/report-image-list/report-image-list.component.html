@@ -1,5 +1,5 @@
 <div class="img-btn-container">
-    
+    <!-- <p appHighlight>hello</p> -->
     <div class="btn-container2" *ngIf="studyStatus === 'ANALYZED'; else loadingCase">
         <button class="custom-btn" (click)="confirm()">
         <!-- <button class="custom-btn" #confirmButtonEl (click)="confirm()">     -->
@@ -17,13 +17,30 @@
         <div class="blankbox" *ngIf="studyStatus === 'REVIEWED'; else receivedCase">
             <span class="material-icons-outlined tag">tag</span>
             Confirm user  :  <b class="confirm-user-name"> {{confirmedBy$ | async}}</b>
+            <!-- <div appHighlight>hello</div> -->
         </div>
     </ng-template>
     <ng-template #receivedCase>
         <div class="blankbox"></div>
     </ng-template>
     <!-- <pre>{{studyStatus$ | async}}</pre> -->
-    <div class="report_image2">
-        <img src="{{imgUrl$ | async}}" />
+    <!-- <div class="report_image2"> -->
+    <div id="dicomWrapper"
+        class='report_image2'
+        unselectable='on'
+        onselectstart='return false;'
+        onmousedown='return false;'>
+        <div #dicomImage
+            style="width:790px; height:790px; display: flex; justify-content: center;
+            align-items: center;">
+        </div>
+
     </div>
+    <!-- </div> -->
+    <!-- <div appCornerstone
+        [image]="imageData"
+        id="dicomImage"
+        class="report_image2"
+        >
+    </div> -->
 </div>
