@@ -6,13 +6,10 @@ import {WebviewerMainComponent} from './webviewer-main.component';
 import { ReportImageListComponent } from './report-image-list/report-image-list.component';
 import { HeaderModule } from '../header/header.module';
 import { StudyTableComponent } from './study-table/study-table.component';
-import { MousewheelEventDirective } from './mousewheel-event.directive';
-// import { HighlightDirective } from './highlight.directive';
-import { CornerstoneDirective } from './cornerstone/cornerstone.directive';
 
 @NgModule({
     declarations: [WebviewerMainComponent, ReportImageListComponent,
-        StudyTableComponent, MousewheelEventDirective, CornerstoneDirective],
+        StudyTableComponent],
     imports: [
         CommonModule,
         AngularMaterialsModule,
@@ -24,10 +21,7 @@ import { CornerstoneDirective } from './cornerstone/cornerstone.directive';
     exports: [
         ReportImageListComponent,
         StudyTableComponent,
-        MousewheelEventDirective,
         AngularMaterialsModule,
-        // HighlightDirective,
-        CornerstoneDirective
     ],
     // providers:[
     //     {
