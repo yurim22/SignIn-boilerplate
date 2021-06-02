@@ -164,7 +164,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
         // [TODO] confirm button 눌렀을 때 button 대신 confirmed by 넣는거
         // 더 좋은 로직이 있을 것 같다. 수정하기
         setTimeout(() => {
-            this.studyStatus = 'REVIEWED';
+            this.studyStatus = 'Reviewed';
             this.changeDetectorRef.detectChanges();
         }, 800);
         // this.confirmedBy = JSON.parse(localStorage.getItem('userInfo')).name;

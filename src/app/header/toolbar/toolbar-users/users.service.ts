@@ -26,7 +26,7 @@ export class UserService{
     }
 
     updateUser(updateUserData: Partial<User>, userSeq: string): Observable<any> {
-        console.log('updateUserDate', updateUserData)
+        console.log('updateUserDate', updateUserData);
         return this.httpClient.patch(`${this.appUrl}/users/${userSeq}`, updateUserData);
     }
 

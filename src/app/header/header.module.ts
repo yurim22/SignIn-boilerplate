@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsDialogComponent } from './toolbar/toolbar-settings/settings-dialog/settings-dialog.component';
 import { UsersDialogComponent } from './toolbar/toolbar-users/users-dialog/users-dialog.component';
 import { CreateNewUserDialogComponent } from './toolbar/toolbar-users/users-dialog/new-user-dialog.component';
+import { PacsDialogComponent } from './toolbar/toolbar-pacs/pacs-dialog/pacs-dialog.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,7 @@ import { CreateNewUserDialogComponent } from './toolbar/toolbar-users/users-dial
         ToolbarUsersComponent,
         ToolbarSettingsComponent,
         ToolbarAboutComponent,
-        ToolbarLogoutComponent, SettingsDialogComponent, UsersDialogComponent, CreateNewUserDialogComponent
+        ToolbarLogoutComponent, SettingsDialogComponent, UsersDialogComponent, CreateNewUserDialogComponent, PacsDialogComponent
     ],
     imports: [
         CommonModule,

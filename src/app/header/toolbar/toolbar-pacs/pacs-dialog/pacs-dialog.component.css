@@ -1,0 +1,17 @@
+.flex-container {
+    color:whitesmoke;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0.6rem;
+}
+.header .mat-icon-button .mat-icon{
+    padding-bottom: 30px;
+}
+
+.header .new-study:hover{
+    color: rgb(150, 150, 150);
+    border-bottom: 1px solid rgb(131, 131, 131);
+}

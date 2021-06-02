@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { PacsDialogComponent } from './pacs-dialog/pacs-dialog.component';
 
 @Component({
+    // tslint:disable-next-line: component-selector
     selector: 'toolbar-pacs',
     template: `
-    <div id="icon_study_download down" class="flex-item-row top-menu-tools-container">
+    <div id="icon_study_download down" class="flex-item-row top-menu-tools-container" (click)="openPacsModal()">
         <div title="Pacs" class="flex-top-menu-tools-icon-item-row">
             <img class="top-menu-tools-icon-button" src="assets/icons/cloud-computing.svg">
         </div>
@@ -27,7 +30,6 @@ import { Component, OnInit } from '@angular/core';
             -webkit-font-smoothing: antialiased;
             color: #cecece;
             font-size: 10px;
-            
             padding: 0px 0px 12px 0px;
             font-weight: 400;
             text-align: center;
@@ -38,9 +40,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarPacsComponent implements OnInit {
 
-    constructor() { }
+    constructor(private dialog: MatDialog) { }
 
     ngOnInit(): void {
+    }
+
+    openPacsModal(): void{
+        const dialogRef = this.dialog.open(PacsDialogComponent, {
+            width: '60vw',
+            autoFocus: false,
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('pacs dialog was closed');
+        })
     }
 
 }

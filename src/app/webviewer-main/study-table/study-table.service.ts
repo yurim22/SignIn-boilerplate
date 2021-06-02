@@ -16,8 +16,14 @@ export class StudyTableService {
         private httpClient: HttpClient
     ) { }
 
-    getStudyList(): Observable<StudyRow[]>{
-        return this.httpClient.get<StudyRow[]>(`${this.appUrl}/studies`);
+    getStudyList(filterStatus: object): Observable<StudyRow[]>{
+        console.log('get study list in db');
+        console.log(filterStatus);
+
+        const queryString = Object.entries(filterStatus).filter(status => status[1] === true).map(status =>
+            encodeURIComponent('status') + '=' + encodeURIComponent(status[0])).join('&');
+        console.log(queryString);
+        return this.httpClient.get<StudyRow[]>(`${this.appUrl}/studies?${queryString}`);
     }
 
     getSeriesItem(seq: number): Observable<Series> {

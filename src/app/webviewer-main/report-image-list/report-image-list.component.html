@@ -1,6 +1,6 @@
 <div class="img-btn-container">
     <!-- <p appHighlight>hello</p> -->
-    <div class="btn-container2" *ngIf="studyStatus === 'ANALYZED'; else loadingCase">
+    <div class="btn-container2" *ngIf="studyStatus === 'Analyzed'; else loadingCase">
         <button class="custom-btn" (click)="confirm()">
         <!-- <button class="custom-btn" #confirmButtonEl (click)="confirm()">     -->
             <i class="fa fa-check-circle" aria-hidden="true" style="color: green;"></i>&nbsp;Confirm
@@ -14,7 +14,7 @@
         </div>
     </ng-template>
     <ng-template #reviewedCase>
-        <div class="blankbox" *ngIf="studyStatus === 'REVIEWED'; else receivedCase">
+        <div class="blankbox" *ngIf="studyStatus === 'Reviewed'; else receivedCase">
             <span class="material-icons-outlined tag">tag</span>
             Confirm user  :  <b class="confirm-user-name"> {{confirmedBy$ | async}}</b>
         </div>

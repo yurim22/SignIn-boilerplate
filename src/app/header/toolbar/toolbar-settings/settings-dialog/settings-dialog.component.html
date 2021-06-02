@@ -20,11 +20,11 @@
                 <div class="save-test">
                     <button type="submit" mat-flat-button>SAVE & TEST</button>
                     <mat-spinner *ngIf="pacsConnectionChecking" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
-                    <span *ngIf="!pacsConnectionChecking" class="test-result-string" [ngStyle]="isSuccess_re? {'color':'green'} : {'color':'red'}">{{reTestResult}}</span>
+                    <span *ngIf="!pacsConnectionChecking" class="test-result-string" [ngStyle]="isSuccessRe? {'color':'green'} : {'color':'red'}">{{reTestResult}}</span>
                 </div>
             </div>
         </form>
-        <form [formGroup]="sendForm" (ngSubmit)="onSubmit_Se('sendFrom')">
+        <form [formGroup]="sendForm" (ngSubmit)="onSubmit_Se(sendForm)">
             <div class="receive-group">
                 <h3 class="title">Send</h3>
                 <div class="input-group">
@@ -38,7 +38,7 @@
                 <div class="save-test">
                     <button type="submit" mat-flat-button>SAVE & TEST</button>
                     <mat-spinner *ngIf="pacsConnectionCheckingSe" class="check-for-integrity-spinner-custom" diameter="14"></mat-spinner>
-                    <span *ngIf="!pacsConnectionCheckingSe" class="test-result-string" [ngStyle]="isSuccess_se? {'color':'green'} : {'color':'red'}">{{seTestResult}}</span>
+                    <span *ngIf="!pacsConnectionCheckingSe" class="test-result-string" [ngStyle]="isSuccessSe? {'color':'green'} : {'color':'red'}">{{seTestResult}}</span>
                 </div>
             </div> 
         </form>

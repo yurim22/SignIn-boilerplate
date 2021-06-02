@@ -9,6 +9,17 @@
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef id="status" mat-sort-header>
                 Status
+                <!-- <div>
+                    <button mat-icon-button class="filter-icon-btn" [matMenuTriggerFor]="status"><span class="material-icons filter-icon">filter_alt</span></button>
+                </div> -->
+                <div class="filter-icon-btn" [matMenuTriggerFor]="status" (click)="onStatusFilter($event)"><span class="material-icons filter-icon">filter_alt</span></div>
+                <mat-menu #status>
+                    <div matMenuContent style="display: flex; flex-direction: column;" [formGroup]="statusForm">
+                        <mat-checkbox class="mat-menu-item" formControlName="ANALYZED" (click)="$event.stopPropagation();">Analyzed</mat-checkbox>
+                        <mat-checkbox class="mat-menu-item" formControlName="REVIEWED" (click)="$event.stopPropagation();">Reviewed</mat-checkbox>
+                        <mat-checkbox class="mat-menu-item" formControlName="RECEIVED" (click)="$event.stopPropagation();">Received</mat-checkbox>
+                    </div>
+                </mat-menu>
             </th>
             <td mat-cell *matCellDef="let element">{{element.status}}</td>
         </ng-container>
@@ -16,11 +27,15 @@
             <th mat-header-cell *matHeaderCellDef id="patient_id" mat-sort-header>
                 Patient ID
                 <!-- <button mat-icon-button class="filter-icon-btn"><span class="material-icons filter-icon">filter_alt</span></button> -->
+                <div class="filter-icon-btn" (click)="onFilter($event, 2)"><span class="material-icons filter-icon">filter_alt</span></div>
             </th>
             <td mat-cell *matCellDef="let element">{{element.patient_id}}</td>
         </ng-container>
         <ng-container matColumnDef="patient_name">
-            <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>Patient Name</th>
+            <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>
+                Patient Name
+                <div class="filter-icon-btn" (click)="onFilter($event, 3)"><span class="material-icons filter-icon">filter_alt</span></div>
+            </th>
             <td mat-cell *matCellDef="let element">{{element.patient.patient_name}}</td>
         </ng-container>
         <ng-container matColumnDef="sex">

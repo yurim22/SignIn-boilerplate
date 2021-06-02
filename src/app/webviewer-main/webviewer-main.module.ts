@@ -6,10 +6,12 @@ import {WebviewerMainComponent} from './webviewer-main.component';
 import { ReportImageListComponent } from './report-image-list/report-image-list.component';
 import { HeaderModule } from '../header/header.module';
 import { StudyTableComponent } from './study-table/study-table.component';
+import { FilterTextDialogComponent } from './study-table/filter-text-dialog/filter-text-dialog.component';
 
 @NgModule({
     declarations: [WebviewerMainComponent, ReportImageListComponent,
-        StudyTableComponent],
+        StudyTableComponent,
+        FilterTextDialogComponent],
     imports: [
         CommonModule,
         AngularMaterialsModule,

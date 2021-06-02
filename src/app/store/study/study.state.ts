@@ -92,8 +92,9 @@ export class StudyState {
 
     @Action(GetStudyList)
     // tslint:disable-next-line: typedef
-    getStudyList({getState, setState}: StateContext<StudyStateModel>){
-        return this.studyTableService.getStudyList().pipe(
+    getStudyList({getState, setState}: StateContext<StudyStateModel>, filter){
+        console.log(filter.filterStatus);
+        return this.studyTableService.getStudyList(filter.filterStatus).pipe(
             tap((res) => {
                 const state = getState();
                 setState({

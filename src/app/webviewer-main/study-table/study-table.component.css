@@ -175,10 +175,12 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
     padding-right: 0;
 }
 
-.filter-icon-btn .mat-icon-button{
-    width: fit-content;
-    height: auto;
-    margin-left: 5px
+.filter-icon-btn{
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    margin-left: 2px;
+    /* margin-bottom: 2px; */
 }
 
 .material-icons.filter-icon {
@@ -188,4 +190,38 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
 
 ::ng-deep .mat-sort-header-container .mat-sort-header-arrow {
     margin: 0 0 0 4px;
+}
+
+.mat-menu-content{
+    display: flex;
+    flex-direction: column;
+}
+
+/* ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+    opacity: 0.03 !important;
+    background-color: #008055!important;
+} */
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #008bc2;
+}
+
+.mat-menu-item {
+    line-height: 38px;
+    height: 38px;
+}
+
+::ng-deep .mat-menu-item .mat-checkbox-layout .mat-checkbox-inner-container {
+    height: 15px !important;
+    width: 15px !important;
+}
+
+/* Worklist Filter Dialog custom css */
+.filter-text-dialog .mat-dialog-container {
+    overflow: hidden;
+    padding: 0px 20px;
+}
+.filter-text-dialog .mat-dialog-content {
+    margin: none;
+    padding: none;
 }
