@@ -7,11 +7,13 @@ import { ReportImageListComponent } from './report-image-list/report-image-list.
 import { HeaderModule } from '../header/header.module';
 import { StudyTableComponent } from './study-table/study-table.component';
 import { FilterTextDialogComponent } from './study-table/filter-text-dialog/filter-text-dialog.component';
+import { AutofocusDirective } from './study-table/filter-text-dialog/autofocus.directive';
 
 @NgModule({
     declarations: [WebviewerMainComponent, ReportImageListComponent,
         StudyTableComponent,
-        FilterTextDialogComponent],
+        FilterTextDialogComponent,
+        AutofocusDirective],
     imports: [
         CommonModule,
         AngularMaterialsModule,

@@ -1,9 +1,22 @@
-<!-- Main Study-->
-<!-- <ng-container *ngIf="isGetStudies" [ngTemplateOutlet]="main_study"
-              [ngTemplateOutletContext]="{ data: dataSource, main:true }" ></ng-container> -->
-
 <!-- Study List -->
-<mat-paginator [pageSize]="27" [hidePageSize]="true"></mat-paginator>
+<section class="table-info-section" [ngClass]="{filtering : hasFilterCondition}">
+    <ng-container *ngIf="hasFilterCondition">
+        <section class="filter-section">
+            <span class="material-icons">filter_alt</span>
+            <b>Filters</b>
+            <mat-chip-list #chipList>
+                <mat-chip *ngFor="let condition of filterObjForTemp | keyvalue"
+                    [selectable]="selectable"
+                    [removable]="removable"
+                    (removed)="remove(condition)">
+                    <b>{{condition.key}} </b> :  &nbsp;{{condition.value}}
+                    <mat-icon matChipRemove *ngIf="removable">close</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </section>
+    </ng-container>
+    <mat-paginator [pageSize]="27" [hidePageSize]="true"></mat-paginator>
+</section>
 <section style="background-color: black;" class="worklist-study-list mat-elevation-z8">
     <table mat-table matSort [dataSource]="dataSource" class="mat-cell" aria-label="Elements" class="mat-elevation-z8">
         <ng-container matColumnDef="status">
@@ -12,7 +25,7 @@
                 <!-- <div>
                     <button mat-icon-button class="filter-icon-btn" [matMenuTriggerFor]="status"><span class="material-icons filter-icon">filter_alt</span></button>
                 </div> -->
-                <div class="filter-icon-btn" [matMenuTriggerFor]="status" (click)="onStatusFilter($event)"><span class="material-icons filter-icon">filter_alt</span></div>
+                <div class="filter-icon-btn" [matMenuTriggerFor]="status" (click)="onStatusFilter($event, 0)"><span class="material-icons filter-icon">filter_alt</span></div>
                 <mat-menu #status>
                     <div matMenuContent style="display: flex; flex-direction: column;" [formGroup]="statusForm">
                         <mat-checkbox class="mat-menu-item" formControlName="ANALYZED" (click)="$event.stopPropagation();">Analyzed</mat-checkbox>
@@ -27,14 +40,14 @@
             <th mat-header-cell *matHeaderCellDef id="patient_id" mat-sort-header>
                 Patient ID
                 <!-- <button mat-icon-button class="filter-icon-btn"><span class="material-icons filter-icon">filter_alt</span></button> -->
-                <div class="filter-icon-btn" (click)="onFilter($event, 2)"><span class="material-icons filter-icon">filter_alt</span></div>
+                <div class="filter-icon-btn" (click)="onTextFilter($event, 1)"><span class="material-icons filter-icon">filter_alt</span></div>
             </th>
             <td mat-cell *matCellDef="let element">{{element.patient_id}}</td>
         </ng-container>
         <ng-container matColumnDef="patient_name">
             <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>
                 Patient Name
-                <div class="filter-icon-btn" (click)="onFilter($event, 3)"><span class="material-icons filter-icon">filter_alt</span></div>
+                <div class="filter-icon-btn" (click)="onTextFilter($event, 2)"><span class="material-icons filter-icon">filter_alt</span></div>
             </th>
             <td mat-cell *matCellDef="let element">{{element.patient.patient_name}}</td>
         </ng-container>
@@ -48,11 +61,20 @@
         </ng-container>
 
         <ng-container matColumnDef="study_date">
-            <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>Study Date</th>
+            <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>
+                Study Date
+                <!-- <mat-datepicker-toggle>
+                    <div class="filter-icon-btn" (click)="onDateFilter($event, 6)"><span class="material-icons filter-icon">edit_calendar</span></div>
+                </mat-datepicker-toggle> -->
+                <!-- <div class="filter-icon-btn" (click)="onDateFilter($event, 6)"><span class="material-icons filter-icon">edit_calendar</span></div> -->
+            </th>
             <td mat-cell *matCellDef="let element">{{element.study_date}}</td>
         </ng-container>
         <ng-container matColumnDef="analysis_date">
-            <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>Analysis Date</th>
+            <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>
+                Analysis Date
+                <div class="filter-icon-btn" (click)="onDateFilter($event, 7)"><span class="material-icons filter-icon">edit_calendar</span></div>
+            </th>
             <td mat-cell *matCellDef="let element">{{element.analysis_date}}</td>
         </ng-container>
         <ng-container matColumnDef="results">

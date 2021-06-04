@@ -74,6 +74,7 @@ button:focus {
 
 /* Worklist Filter Dialog custom css */
 .filter-text-dialog .mat-dialog-container {
+    background-color: whitesmoke;
     overflow: hidden;
     padding: 0px 20px;
 }

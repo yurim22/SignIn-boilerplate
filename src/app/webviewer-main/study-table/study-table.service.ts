@@ -17,11 +17,11 @@ export class StudyTableService {
     ) { }
 
     getStudyList(filterStatus: object): Observable<StudyRow[]>{
-        console.log('get study list in db');
-        console.log(filterStatus);
-
-        const queryString = Object.entries(filterStatus).filter(status => status[1] === true).map(status =>
-            encodeURIComponent('status') + '=' + encodeURIComponent(status[0])).join('&');
+        console.log('filterStatus in table service', filterStatus);
+        const queryString = Object.keys(filterStatus).map(condition => encodeURIComponent(condition)
+        + '=' + encodeURIComponent(filterStatus[condition])).join('&');
+        // const queryString = Object.entries(filterStatus).filter(status => status[1] === true).map(status =>
+        //     encodeURIComponent('status') + '=' + encodeURIComponent(status[0])).join('&');
         console.log(queryString);
         return this.httpClient.get<StudyRow[]>(`${this.appUrl}/studies?${queryString}`);
     }

@@ -96,6 +96,7 @@ export class StudyState {
         console.log(filter.filterStatus);
         return this.studyTableService.getStudyList(filter.filterStatus).pipe(
             tap((res) => {
+                console.log(res);
                 const state = getState();
                 setState({
                     ...state,

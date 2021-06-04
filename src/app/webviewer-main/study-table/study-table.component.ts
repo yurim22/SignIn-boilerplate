@@ -43,7 +43,15 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
     sortedData: StudyRow[];
 
     statusForm: FormGroup;
-    currentColumn;
+    sexForm: FormGroup;
+    currentColumn: string;
+    filterConditions = [];
+    hasFilterCondition: boolean;
+    visible = true;
+    selectable = true;
+    removable = true;
+    filterObj = new Object();
+    filterObjForTemp = new Object();
     constructor(
         private store: Store,
         fb: FormBuilder,
@@ -56,7 +64,7 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             REVIEWED: true,
             RECEIVED: true
         });
-        console.log(this.statusForm.value)
+        console.log('filterObj 입니다', this.filterObj);
     }
 
     ngOnInit(): void {
@@ -65,6 +73,8 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             takeUntil(this.unsubscribe$)
         ).subscribe(
             (res) => {
+                // study list가 바뀔 때 마다 여기에서 받아서 새로운 table data를 만든다.
+                console.log('studylist change');
                 this.reviewed$ = from(res).pipe(
                     filter(val => val.status === 'REVIEWED'),
                     map(val => val.status = 'Reviewed')
@@ -82,6 +92,7 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
                 console.log(this.dataSource.data);
             }
         );
+        console.log(this.filterConditions);
     }
 
     ngAfterViewInit(): void {
@@ -114,18 +125,26 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getStudyList(): any {
+        // this.filterObj[this.displayedColumns[0]] = 'Analyzed,Reviewed,Received';
         // tslint:disable-next-line: new-parens
-        if (this.statusForm){
-            console.log('yes');
-        } else{
-            this.store.dispatch(new GetStudyList({ANALYZED: true, REVIEWED: true, RECEIVED: true})).subscribe(
-                (res) => {
-                    console.log(this.statusForm);
-                    console.log(res);
-                    this.dataSource.data = res.study.allStudies;
-                }
-            );
-        }
+        this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
+            (res) => {
+                console.log(this.statusForm);
+                console.log(res);
+                this.dataSource.data = res.study.allStudies;
+            }
+        );
+        // if (this.statusForm){
+        //     console.log('yes');
+        // } else{
+        //     this.store.dispatch(new GetStudyList({ANALYZED: true, REVIEWED: true, RECEIVED: true})).subscribe(
+        //         (res) => {
+        //             console.log(this.statusForm);
+        //             console.log(res);
+        //             this.dataSource.data = res.study.allStudies;
+        //         }
+        //     );
+        // }
         // this.store.dispatch(new GetStudyList(this.statusForm.value)).subscribe(
         //     (res) => {
         //         console.log(this.statusForm);
@@ -150,15 +169,30 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // tslint:disable-next-line: typedef
-    onStatusFilter(event) {
-        console.log('filter click');
+    onStatusFilter(event, idx: number) {
+        const el = this.displayedColumns[idx];
+        this.currentColumn = el;
+        const elTitle = this.displayedTitle[idx];
         event.stopPropagation();
+
+        // statusForm의 변화를 감지하여 filtering 후의 새로운 data를 가져온다.
         this.statusForm.valueChanges.subscribe(values => {
-            console.log(values);
-            this.store.dispatch(new GetStudyList(this.statusForm.value)).subscribe(
+            const selectedStatus = Object.entries(values).filter(status => status[1] === true)
+            .map(status => status[0].toLowerCase()).map(status => status[0].toUpperCase() + status.slice(1))
+            .map(status => `${status}`).join(',');
+
+            if (selectedStatus === 'Analyzed,Reviewed,Received'){
+                this.filterObjForTemp[elTitle] = 'All';
+            } else{
+                this.filterObjForTemp[elTitle] = selectedStatus;
+            }
+
+            this.filterObj[el] = selectedStatus; // ex. {status: " reviewed, received"}
+            // this.filterObjForTemp[elTitle] = selectedStatus;
+            this.hasFilterCondition = true;
+            console.log(this.filterObj);
+            this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
                 (res) => {
-                    console.log(this.statusForm);
-                    console.log(res);
                     this.dataSource.data = res.study.allStudies;
                     this.changeDetection.detectChanges();
                 }
@@ -166,16 +200,14 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    onFilter(event, idx: number): void {
+    // filtering table data with text => patient id, patient name
+    onTextFilter(event, idx: number): void {
         const el = this.displayedColumns[idx];
         this.currentColumn = el;
-        console.log('click filter icon');
+        const elTitle = this.displayedTitle[idx];
         event.stopPropagation();
         const y = window.scrollY + document.querySelector(`#${el}`).getBoundingClientRect().top; // Y
         const x = window.scrollX + document.querySelector(`#${el}`).getBoundingClientRect().left; // X
-        console.log(y);
-        console.log(x);
-        // const xx = this.current : x;
         const dialogPosition: DialogPosition = {
             left: Math.round(x - 50) + 'px',
             top: Math.round(y + 30) + 'px'
@@ -186,10 +218,48 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             position: dialogPosition,
             height: '85px',
             autoFocus: false,
-            // data: {title: this.displayedColumns[idx], query: this.getQuery(idx)}
+            // data: {title: this.displayedCoFlumns[idx], query: this.getQuery(idx)}
+        }).afterClosed().subscribe(result => {
+            console.log('the dialog was closed', result);
+            if (result.value !== ''){
+                this.hasFilterCondition = true;
+                this.filterObj[el] = result.value;
+                this.filterObjForTemp[elTitle] = result.value;
+            }
+            this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
+                (res) => {
+                    this.dataSource.data = res.study.allStudies;
+                    this.changeDetection.detectChanges();
+                }
+            );
         });
     }
 
+    onDateFilter(event, idx: number): void {
+        console.log('filtering by date');
+        event.stopPropagation();
+    }
+
+    remove(condition: any): void {
+        console.log('---condition', condition);
+        console.log(this.statusForm);
+        // [TODO]title의 index를 찾아내서 같은 이름의 조건 찾아내기
+        const index = this.displayedTitle.indexOf(condition.key);
+        console.log(index);
+        delete this.filterObjForTemp[condition.key];
+        delete this.filterObj[this.displayedColumns[index]];
+        // delete this.filterObj[condition.key];
+        console.log(this.filterObj);
+        if (Object.keys(this.filterObjForTemp).length === 0) {
+            this.hasFilterCondition = false;
+        }
+        this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
+            (res) => {
+                this.dataSource.data = res.study.allStudies;
+                this.changeDetection.detectChanges();
+            }
+        );
+    }
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
