@@ -61,19 +61,16 @@
         </ng-container>
 
         <ng-container matColumnDef="study_date">
-            <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef id="study_date" mat-sort-header>
                 Study Date
-                <!-- <mat-datepicker-toggle>
-                    <div class="filter-icon-btn" (click)="onDateFilter($event, 6)"><span class="material-icons filter-icon">edit_calendar</span></div>
-                </mat-datepicker-toggle> -->
-                <!-- <div class="filter-icon-btn" (click)="onDateFilter($event, 6)"><span class="material-icons filter-icon">edit_calendar</span></div> -->
+                <div class="filter-icon-btn" (click)="onTextFilter($event, 5)"><span class="material-icons filter-icon">edit_calendar</span></div>
             </th>
             <td mat-cell *matCellDef="let element">{{element.study_date}}</td>
         </ng-container>
         <ng-container matColumnDef="analysis_date">
-            <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef id="analysis_date" mat-sort-header>
                 Analysis Date
-                <div class="filter-icon-btn" (click)="onDateFilter($event, 7)"><span class="material-icons filter-icon">edit_calendar</span></div>
+                <div class="filter-icon-btn" (click)="onTextFilter($event, 6)"><span class="material-icons filter-icon">edit_calendar</span></div>
             </th>
             <td mat-cell *matCellDef="let element">{{element.analysis_date}}</td>
         </ng-container>

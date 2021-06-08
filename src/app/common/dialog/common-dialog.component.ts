@@ -57,7 +57,7 @@ import { UserService } from 'src/app/header/toolbar/toolbar-users/users.service'
             border-radius: 0.125rem;
             border: 1px solid #2d2d2d;
             min-width: 3rem;
-            min-height: 1rem
+            min-height: 1rem;
             max-width: 15rem;
             max-height: 1.3rem;
             white-space: nowrap;

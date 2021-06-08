@@ -4,8 +4,7 @@ import { filter, map, mapTo, skip, takeUntil, tap} from 'rxjs/operators';
 import { StudyRow} from '../../models/studyrow.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { Observable } from 'rxjs/internal/Observable';
-import { from, merge, Subject } from 'rxjs';
+import { from, merge, Subject, Observable } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import { GetStudyList, SetSeriesInfo } from 'src/app/store/study/study.actions';
 import { Select, Store } from '@ngxs/store';
@@ -14,6 +13,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { StudyTableService } from './study-table.service';
 import { DialogPosition, MatDialog } from '@angular/material/dialog';
 import { FilterTextDialogComponent } from './filter-text-dialog/filter-text-dialog.component';
+import moment from 'moment';
 
 
 @Component({
@@ -190,7 +190,7 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             this.filterObj[el] = selectedStatus; // ex. {status: " reviewed, received"}
             // this.filterObjForTemp[elTitle] = selectedStatus;
             this.hasFilterCondition = true;
-            console.log(this.filterObj);
+            // console.log(this.filterObj);
             this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
                 (res) => {
                     this.dataSource.data = res.study.allStudies;
@@ -218,13 +218,20 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             position: dialogPosition,
             height: '85px',
             autoFocus: false,
-            // data: {title: this.displayedCoFlumns[idx], query: this.getQuery(idx)}
+            // data: {title: this.displayedColumns[idx], query: this.getQuery(idx)}
+            data: {title: this.displayedColumns[idx]}
         }).afterClosed().subscribe(result => {
             console.log('the dialog was closed', result);
             if (result.value !== ''){
                 this.hasFilterCondition = true;
                 this.filterObj[el] = result.value;
                 this.filterObjForTemp[elTitle] = result.value;
+            } else if (result.date.length !== 0){
+                this.hasFilterCondition = true;
+                const startDate = moment(result.date.startDate).format('YYYY-MM-DD');
+                const endDate = moment(result.date.endDate).format('YYYY-MM-DD');
+                this.filterObj[el] = `${startDate}-${endDate}`;
+                this.filterObjForTemp[elTitle] = `${startDate} ~ ${endDate}`;
             }
             this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
                 (res) => {

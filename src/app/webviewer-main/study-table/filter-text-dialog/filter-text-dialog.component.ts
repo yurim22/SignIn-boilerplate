@@ -1,19 +1,34 @@
 import {AfterViewInit, Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 // import {SetStudyFilteredColumn} from '../../../store/status/status.actions';
 import {Store} from '@ngxs/store';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import moment from 'moment';
+
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'YYYY-MM-DD'
+    },
+    display: {
+        dateInput: 'YYYY-MM-DD',
+        monthYearLabel: 'YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'YYYY'
+    }
+};
 
 @Component({
     selector: 'app-filter-text-dialog',
     template: `
-        <form (ngSubmit)="apply()" class="filter-dialog">
+        <form (ngSubmit)="apply()" class="filter-dialog" [formGroup]="dateForm">
             <div class="header">
                 <button mat-icon-button class="close-button" [mat-dialog-close]="true">
                     <mat-icon class="close-icon">close</mat-icon>
                 </button>
             </div>
-            <ng-container>
+            <ng-container *ngIf="!dateFilter">
                 <input id="dataInput"
                     type="text"
                     name="value"
@@ -23,7 +38,18 @@ import {Store} from '@ngxs/store';
                     autocomplete="off"
                 >
             </ng-container>
-        </form>  `,
+            <ng-container *ngIf="dateFilter">
+                <mat-form-field class="calender-form">
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="Start date" autocomplete="off" formControlName="startDate" id="dateRange" appAutofocus>
+                        <input matEndDate placeholder="End date" autocomplete="off" formControlName="endDate">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+                <button type="submit">SIGN IN</button>
+            </ng-container>
+        </form>`,
     styles: [`
         .filter-dialog{
             display: flex;
@@ -31,8 +57,10 @@ import {Store} from '@ngxs/store';
         }
         .filter-dialog .header .close-button {
             width: 20px;
-            height: 35px;
-            border-radius: 0%;
+            height: 20px;
+            line-height: 20px;
+            margin-top: 10px;
+            margin-bottom: 0.8rem;
         }
         .filter-dialog .header .close-icon{
             font-size: medium !important;
@@ -60,7 +88,18 @@ import {Store} from '@ngxs/store';
         .filter-dialog .header{
             text-align: right
         }
+        ::ng-deep .mat-form-field-infix {
+            width: 185px !important;
+            border: 0;
+        }
+        .mat-date-range-input {
+            font-size: 14px;
+        }
     `],
+    providers: [
+        {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+        {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
+    ]
 })
 export class FilterTextDialogComponent implements OnInit, AfterViewInit {
     // input_value = new FormControl('');
@@ -70,21 +109,45 @@ export class FilterTextDialogComponent implements OnInit, AfterViewInit {
     dataInput = new FormControl('');
     el: HTMLElement;
     isModifiedFilterCondition = false;
+    dateFilter: boolean;
+    dateForm: FormGroup;
 
     public constructor(
         private store: Store,
         private readonly dialogRef: MatDialogRef<FilterTextDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) private readonly filterData: any
-    ) {}
+        @Inject(MAT_DIALOG_DATA) private readonly filterData: any,
+        private fb: FormBuilder
+    ) {
+        // const defaultDate = this.getFormatDate(new Date());
+        this.dateForm = fb.group({
+            startDate: new FormControl(moment()),
+            endDate: new FormControl(moment())
+        });
+        console.log('this.dateForm', this.dateForm);
+    }
 
-    ngOnInit() {
-        this.dataInput.valueChanges.subscribe(
-            (res) => console.log(res)
-        )
+    ngOnInit(): void {
+        // this.dataInput.valueChanges.subscribe(
+        //     (res) => console.log(res)
+        // );
+        if (this.filterData.title === 'study_date' || this.filterData.title === 'analysis_date'){
+            this.dateFilter = true;
+        } else{
+            this.dateFilter = false;
+        }
+
+        this.dateForm.valueChanges.subscribe(
+            res => console.log(res)
+        );
     }
 
     ngAfterViewInit(): void {
         console.log('[FilterTextDialogComponent.ngAfterViewInit]', this.filterData);
+        // if (this.filterData.title === 'study_date' || this.filterData.title === 'analysis_date'){
+        //     this.dateFilter = true;
+        // } else{
+        //     this.dateFilter = false;
+        // }
         // this.displayName = this.filterData.title;
         // this.inputData = this.filterData.query;
         // this.isModifiedFilterCondition = !!this.filterData.query;
@@ -93,7 +156,7 @@ export class FilterTextDialogComponent implements OnInit, AfterViewInit {
         // this.model = this.filterData.filter || new TextFilter(this.filterData.column.name);
     }
 
-    onClearInput()  {
+    onClearInput(): void  {
         this.dataInput.patchValue('');
         this.el.focus();
     }
@@ -104,18 +167,36 @@ export class FilterTextDialogComponent implements OnInit, AfterViewInit {
         // const non_space = /[^a-zA-Z0-9\s]/gi;
         const nonSpace = /^\S*$/; // to cancel whenever space is input.
         // console.log('this.input_data-->',non_space.test(this.data_input.value), this.data_input.value, this.isModifyStatus );
-        if (!nonSpace.test(this.dataInput.value) ||
-            this.dataInput.value === undefined ||
-            this.dataInput.value === '') {
-            this.dialogRef.close({value: 'remove_filter_column', column: this.displayName});
-        } else {
-            console.log(this.dataInput.value);
-            // this.store.dispatch(new SetStudyFilteredColumn({ [this.displayName]: this.data_input.value }));
-            this.dialogRef.close({value: this.dataInput.value});
-        }
+        // if (!nonSpace.test(this.dataInput.value) ||
+        //     this.dataInput.value === undefined ||
+        //     this.dataInput.value === '') {
+        //     this.dialogRef.close({value: 'remove_filter_column', column: this.displayName});
+        // } else {
+        //     console.log(this.dataInput.value);
+        //     // this.store.dispatch(new SetStudyFilteredColumn({ [this.displayName]: this.data_input.value }));
+        //     this.dialogRef.close({value: this.dataInput.value, date: this.dateForm.value});
+        // }
+        // if (this.dateForm.value) {
+        //     const startDate = moment(this.dateForm.value.startDate);
+        //     const endDate = moment(this.dateForm.value.endDate);
+
+        // }
+        this.dialogRef.close({value: this.dataInput.value, date: this.dateForm.value});
+        console.log(this.dateForm.value);
     }
 
-    onCancel() {
+    onCancel(): void {
         this.dialogRef.close({value: 'null'});
+    }
+
+    getFormatDate(date): string{
+        console.log(date);
+        const year = date.getFullYear();
+        let month = (1 + date.getMonth());
+        month = month >= 10 ? month : '0' + month;
+        let day = date.getDate();
+        day = day >= 10 ? day : '0' + day;
+        console.log([year, month, day].join('-'));
+        return [year, month, day].join('-');
     }
 }

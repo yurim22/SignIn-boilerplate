@@ -23,6 +23,7 @@ import { StudyState } from './store/study/study.state';
 import { AccountComponent } from './account/account.component';
 import { CurrentUserState } from './store/users/users.state';
 import { CornerstoneService } from './webviewer-main/cornerstone/cornerstone.service';
+import { environment } from 'src/environments/environment';
 
 export function tokenGetter(): string {
     return localStorage.getItem('token');
@@ -57,7 +58,9 @@ export function tokenGetter(): string {
         NgxsModule.forRoot([
             StudyState,
             CurrentUserState
-        ]),
+        ],
+            {developmentMode: environment.production}
+        ),
         NgxsSelectSnapshotModule.forRoot(),
     ],
     bootstrap: [AppComponent],

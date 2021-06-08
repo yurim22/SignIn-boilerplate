@@ -2,6 +2,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    max-height: 36px;
     /* margin: 0.5rem 0 0.3rem 0; */
 }
 .table-info-section.filtering {
@@ -19,12 +20,18 @@
 
 .filter-section .mat-chip-list {
     margin-left: 0.5rem;
+    overflow: hidden;
 }
 
+::ng-deep .filter-section .mat-chip-list .mat-chip-list-wrapper {
+    flex-wrap: nowrap !important;
+    overflow-x: scroll !important;
+}
 .filter-section .mat-chip-list .mat-chip {
     min-height: 28px;
     font-size: 13px;
     animation: fadein 1s;
+    flex: 0 0 auto;
 }
 .mat-table {
     overflow: auto;
@@ -181,7 +188,8 @@ table.mat-table {
 
 ::ng-deep .mat-paginator-range-label {
     font-size:13px ;
-    margin: 0px !important;
+    margin: 0 0 0 1rem !important;
+    min-width: fit-content;
 }
 
 /* .mat-paginator{
