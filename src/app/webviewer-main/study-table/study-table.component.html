@@ -15,7 +15,7 @@
             </mat-chip-list>
         </section>
     </ng-container>
-    <mat-paginator [pageSize]="27" [hidePageSize]="true"></mat-paginator>
+    <mat-paginator [pageSize]="27" [hidePageSize]="true" (page)="onSelectPage($event)"></mat-paginator>
 </section>
 <section style="background-color: black;" class="worklist-study-list mat-elevation-z8">
     <table mat-table matSort [dataSource]="dataSource" class="mat-cell" aria-label="Elements" class="mat-elevation-z8">
@@ -25,7 +25,8 @@
                 <!-- <div>
                     <button mat-icon-button class="filter-icon-btn" [matMenuTriggerFor]="status"><span class="material-icons filter-icon">filter_alt</span></button>
                 </div> -->
-                <div class="filter-icon-btn" [matMenuTriggerFor]="status" (click)="onStatusFilter($event, 0)"><span class="material-icons filter-icon">filter_alt</span></div>
+                <div class="filter-icon-btn" [matMenuTriggerFor]="status" (click)="onStatusFilter($event, 0)"><span class="material-icons filter-icon"
+                    [ngStyle]="{color: coloringFilterSymbol('status') ? '#0288D1': 'grey'}">filter_alt</span></div>
                 <mat-menu #status>
                     <div matMenuContent style="display: flex; flex-direction: column;" [formGroup]="statusForm">
                         <mat-checkbox class="mat-menu-item" formControlName="ANALYZED" (click)="$event.stopPropagation();">Analyzed</mat-checkbox>
@@ -40,14 +41,18 @@
             <th mat-header-cell *matHeaderCellDef id="patient_id" mat-sort-header>
                 Patient ID
                 <!-- <button mat-icon-button class="filter-icon-btn"><span class="material-icons filter-icon">filter_alt</span></button> -->
-                <div class="filter-icon-btn" (click)="onTextFilter($event, 1)"><span class="material-icons filter-icon">filter_alt</span></div>
+                <div class="filter-icon-btn" (click)="onTextFilter($event, 1)"><span class="material-icons filter-icon"
+                    [ngStyle]="{color: coloringFilterSymbol('patient_id') ? '#0288D1': 'grey'}">
+                    filter_alt</span>
+                </div>
             </th>
             <td mat-cell *matCellDef="let element">{{element.patient_id}}</td>
         </ng-container>
         <ng-container matColumnDef="patient_name">
             <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>
                 Patient Name
-                <div class="filter-icon-btn" (click)="onTextFilter($event, 2)"><span class="material-icons filter-icon">filter_alt</span></div>
+                <div class="filter-icon-btn" (click)="onTextFilter($event, 2)"><span class="material-icons filter-icon"
+                    [ngStyle]="{color: coloringFilterSymbol('patient_name') ? '#0288D1': 'grey'}">filter_alt</span></div>
             </th>
             <td mat-cell *matCellDef="let element">{{element.patient.patient_name}}</td>
         </ng-container>
@@ -63,14 +68,16 @@
         <ng-container matColumnDef="study_date">
             <th mat-header-cell *matHeaderCellDef id="study_date" mat-sort-header>
                 Study Date
-                <div class="filter-icon-btn" (click)="onTextFilter($event, 5)"><span class="material-icons filter-icon">edit_calendar</span></div>
+                <div class="filter-icon-btn" (click)="onTextFilter($event, 5)"><span class="material-icons filter-icon"
+                    [ngStyle]="{color: coloringFilterSymbol('study_date') ? '#0288D1': 'grey'}">edit_calendar</span></div>
             </th>
             <td mat-cell *matCellDef="let element">{{element.study_date}}</td>
         </ng-container>
         <ng-container matColumnDef="analysis_date">
             <th mat-header-cell *matHeaderCellDef id="analysis_date" mat-sort-header>
                 Analysis Date
-                <div class="filter-icon-btn" (click)="onTextFilter($event, 6)"><span class="material-icons filter-icon">edit_calendar</span></div>
+                <div class="filter-icon-btn" (click)="onTextFilter($event, 6)"><span class="material-icons filter-icon"
+                    [ngStyle]="{color: coloringFilterSymbol('analysis_date') ? '#0288D1': 'grey'}">edit_calendar</span></div>
             </th>
             <td mat-cell *matCellDef="let element">{{element.analysis_date}}</td>
         </ng-container>

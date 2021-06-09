@@ -139,7 +139,7 @@
 }
 
 ::ng-deep .mat-simple-snackbar{
-    font-size: 1vw;
+    font-size: 0.8vw;
 }
 
 @media (max-width: 1224px) {
@@ -177,7 +177,7 @@
         padding: 14px 0.5vw; */
     }
     ::ng-deep .mat-simple-snackbar{
-        font-size: 1.3vw;
+        font-size: 1vw;
     }
 }
 

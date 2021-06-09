@@ -18,6 +18,8 @@ export class AuthInterceptor implements HttpInterceptor{
 
         // 헤더에 인증 토큰을 추가한 새로운 httpRequest 객체를 생성(클론)한다.
 
+        // const clonedRequest: HttpRequest<any> = req.clone({ setHeaders: {
+        //     Authorization: `Bearer ${localStorage.getItem('token')}` } });
         const clonedRequest: HttpRequest<any> = req.clone();
 
         // 원본 HttpRequest 객체 대신 클론한 httpRequest 객체를 다음 미들웨어 체인으로 전달한다.
@@ -43,6 +45,7 @@ export class AuthInterceptor implements HttpInterceptor{
     // tslint:disable-next-line: typedef
     private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
         this.refreshToken = this.cookieService.get('refreshToken');
+        console.log(this.isRefreshing);
         if (!this.isRefreshing) {
             this.isRefreshing = true;
             this.refreshTokenSubject.next(null);
@@ -72,6 +75,7 @@ export class AuthInterceptor implements HttpInterceptor{
     // request header에 새로운 token 붙여서 전달
     // tslint:disable-next-line: typedef
     private addToken(request: HttpRequest<any>, token: string) {
+        console.log('아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ-------------------')
         const newReq = request.clone({
             setHeaders: {
                 Authorization: `Bearer ${token}`

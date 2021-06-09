@@ -110,11 +110,11 @@ table.mat-table {
     padding: 0px;
 }
 
-.mat-cell.mat-column-status {
+.mat-cell.mat-column-status, .mat-column-status {
     flex: 0 0 9% !important;
     width: 9% !important;
 }
-.mat-cell.mat-column-patient_id {
+.mat-cell.mat-column-patient_id, .mat-column-patient_id {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 13% !important;
@@ -131,11 +131,11 @@ table.mat-table {
     hyphens: auto;
 }
 
-.mat-cell.mat-column-patient_name {
+.mat-cell.mat-column-patient_name, .mat-column-patient_name {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 20% !important;
-    width: 20% !important;
+    flex: 0 0 18% !important;
+    width: 18% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
     overflow: hidden;
@@ -148,7 +148,7 @@ table.mat-table {
     hyphens: auto;
 }
 
-.mat-cell.mat-column-sex {
+.mat-cell.mat-column-sex, .mat-column-sex {
     flex: 0 0 6% !important;
     width: 6% !important;
 }
@@ -158,15 +158,20 @@ table.mat-table {
     width: 6.5% !important;
 }
 
-.mat-cell.mat-column-age {
+.mat-cell.mat-column-age, .mat-column-age{
     flex: 0 0 6% !important;
     width: 6% !important;
 }
-.mat-cell.mat-column-study_date, .mat-cell.mat-column-analysis_date {
-    flex: 0 0 15% !important;
-    width: 22% !important;
+.mat-cell.mat-column-study_date, .mat-cell.mat-column-analysis_date, .mat-column-study_date, .mat-column-analysis_date {
+    flex: 0 0 20% !important;
+    width: 20% !important;
 }
-  
+.mat-sort-header-container{
+    border-bottom: none !important;
+}
+::ng-deep .mat-sort-header-container{
+    border-bottom: none !important;
+}
 .mat-paginator {
     background-color: #2b2b2b;
 }

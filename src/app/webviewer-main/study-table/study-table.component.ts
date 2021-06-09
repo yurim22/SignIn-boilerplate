@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild, ViewEncapsulation, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { filter, map, mapTo, skip, takeUntil, tap} from 'rxjs/operators';
+import { filter, map, skip, takeUntil, tap} from 'rxjs/operators';
 
 import { StudyRow} from '../../models/studyrow.model';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,6 +14,7 @@ import { StudyTableService } from './study-table.service';
 import { DialogPosition, MatDialog } from '@angular/material/dialog';
 import { FilterTextDialogComponent } from './filter-text-dialog/filter-text-dialog.component';
 import moment from 'moment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -57,14 +58,14 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
         fb: FormBuilder,
         private studyTableService: StudyTableService,
         private changeDetection: ChangeDetectorRef,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        private snackBar: MatSnackBar) {
         this.getStudyList();
         this.statusForm = fb.group({
             ANALYZED: true,
             REVIEWED: true,
             RECEIVED: true
         });
-        console.log('filterObj 입니다', this.filterObj);
     }
 
     ngOnInit(): void {
@@ -73,85 +74,45 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             takeUntil(this.unsubscribe$)
         ).subscribe(
             (res) => {
-                // study list가 바뀔 때 마다 여기에서 받아서 새로운 table data를 만든다.
-                console.log('studylist change');
-                this.reviewed$ = from(res).pipe(
-                    filter(val => val.status === 'REVIEWED'),
-                    map(val => val.status = 'Reviewed')
-                );
-                this.analyzed$ = from(res).pipe(
-                    filter(val => val.status === 'ANALYZED'),
-                    map(val => val.status = 'Analyzed')
-                );
-                this.received$ = from(res).pipe(
-                    filter(val => val.status === 'RECEIVED'),
-                    map(val => val.status = 'Received')
-                );
-                merge(this.analyzed$, this.reviewed$, this.received$).subscribe();
+                console.log('-------in ngOninit', res);
+                if (res.length === 0) {
+                    console.log('there is no study data');
+                    this.openSnackBar('There is no study data');
+                }
+                // this.reviewed$ = from(res).pipe(
+                //     tap(val => console.log(val)),
+                //     filter(val => val.status === 'REVIEWED'),
+                //     tap(val => console.log(val)),
+                //     map(val => val.status = 'Reviewed')
+                // );
+                // this.analyzed$ = from(res).pipe(
+                //     filter(val => val.status === 'ANALYZED'),
+                //     map(val => val.status = 'Analyzed')
+                // );
+                // this.received$ = from(res).pipe(
+                //     filter(val => val.status === 'RECEIVED'),
+                //     map(val => val.status = 'Received')
+                // );
+                // merge(this.analyzed$, this.reviewed$, this.received$).subscribe();
                 this.dataSource.data = res;
-                console.log(this.dataSource.data);
             }
+
         );
-        console.log(this.filterConditions);
     }
 
     ngAfterViewInit(): void {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-
-        // this.filteredAndPagedIssues = merge(this.sort.sortChange, this.paginator.page)
-        // .pipe(
-        //     startWith({}),
-        //     switchMap(() => {
-        //         this.isLoadingResults = true;
-        //         return this.exampleDatabase!.getRepoIssues(
-        //             this.sort.active, this.sort.direction, this.paginator.pageIndex);
-        //     }),
-        //     map(data => {
-        //         // Flip flag to show that loading has finished.
-        //         this.isLoadingResults = false;
-        //         this.isRateLimitReached = false;
-        //         this.resultsLength = data.total_count;
-
-        //         return data.items;
-        //     }),
-        //     catchError(() => {
-        //         this.isLoadingResults = false;
-        //         // Catch if the GitHub API has reached its rate limit. Return empty data.
-        //         this.isRateLimitReached = true;
-        //         return observableOf([]);
-        //     })
-        // );
     }
 
     getStudyList(): any {
-        // this.filterObj[this.displayedColumns[0]] = 'Analyzed,Reviewed,Received';
-        // tslint:disable-next-line: new-parens
         this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
             (res) => {
-                console.log(this.statusForm);
-                console.log(res);
+                console.log('-----getStudyList()', res.study.allStudies);
                 this.dataSource.data = res.study.allStudies;
+                this.changeDetection.detectChanges();
             }
         );
-        // if (this.statusForm){
-        //     console.log('yes');
-        // } else{
-        //     this.store.dispatch(new GetStudyList({ANALYZED: true, REVIEWED: true, RECEIVED: true})).subscribe(
-        //         (res) => {
-        //             console.log(this.statusForm);
-        //             console.log(res);
-        //             this.dataSource.data = res.study.allStudies;
-        //         }
-        //     );
-        // }
-        // this.store.dispatch(new GetStudyList(this.statusForm.value)).subscribe(
-        //     (res) => {
-        //         console.log(this.statusForm);
-        //         console.log(res);
-        //         this.dataSource.data = res.study.allStudies;
-        //     }
-        // );
     }
 
     getBackground(row): any{
@@ -188,23 +149,16 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             this.filterObj[el] = selectedStatus; // ex. {status: " reviewed, received"}
-            // this.filterObjForTemp[elTitle] = selectedStatus;
             this.hasFilterCondition = true;
-            // console.log(this.filterObj);
-            this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
-                (res) => {
-                    this.dataSource.data = res.study.allStudies;
-                    this.changeDetection.detectChanges();
-                }
-            );
+            this.getStudyList();
         });
     }
 
     // filtering table data with text => patient id, patient name
     onTextFilter(event, idx: number): void {
         const el = this.displayedColumns[idx];
-        this.currentColumn = el;
         const elTitle = this.displayedTitle[idx];
+        this.currentColumn = el;
         event.stopPropagation();
         const y = window.scrollY + document.querySelector(`#${el}`).getBoundingClientRect().top; // Y
         const x = window.scrollX + document.querySelector(`#${el}`).getBoundingClientRect().left; // X
@@ -218,54 +172,60 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             position: dialogPosition,
             height: '85px',
             autoFocus: false,
-            // data: {title: this.displayedColumns[idx], query: this.getQuery(idx)}
-            data: {title: this.displayedColumns[idx]}
+            data: {title: this.displayedColumns[idx], query: this.filterObjForTemp[elTitle]}
         }).afterClosed().subscribe(result => {
             console.log('the dialog was closed', result);
-            if (result.value !== ''){
-                this.hasFilterCondition = true;
-                this.filterObj[el] = result.value;
-                this.filterObjForTemp[elTitle] = result.value;
-            } else if (result.date.length !== 0){
-                this.hasFilterCondition = true;
-                const startDate = moment(result.date.startDate).format('YYYY-MM-DD');
-                const endDate = moment(result.date.endDate).format('YYYY-MM-DD');
-                this.filterObj[el] = `${startDate}-${endDate}`;
-                this.filterObjForTemp[elTitle] = `${startDate} ~ ${endDate}`;
-            }
-            this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
-                (res) => {
-                    this.dataSource.data = res.study.allStudies;
-                    this.changeDetection.detectChanges();
+            if (result !== undefined) {
+                if (result.value !== '' && result.value !== undefined){
+                    this.hasFilterCondition = true;
+                    this.filterObj[el] = result.value;
+                    this.filterObjForTemp[elTitle] = result.value;
+                } else if (result.date.length !== 0){
+                    this.hasFilterCondition = true;
+                    const startDate = moment(result.date.startDate).format('YYYY-MM-DD');
+                    const endDate = moment(result.date.endDate).format('YYYY-MM-DD');
+                    this.filterObj[el] = `${startDate}-${endDate}`;
+                    this.filterObjForTemp[elTitle] = `${startDate} ~ ${endDate}`;
                 }
-            );
+                this.getStudyList();
+            }
         });
     }
 
-    onDateFilter(event, idx: number): void {
-        console.log('filtering by date');
-        event.stopPropagation();
-    }
-
     remove(condition: any): void {
-        console.log('---condition', condition);
-        console.log(this.statusForm);
         // [TODO]title의 index를 찾아내서 같은 이름의 조건 찾아내기
         const index = this.displayedTitle.indexOf(condition.key);
-        console.log(index);
         delete this.filterObjForTemp[condition.key];
         delete this.filterObj[this.displayedColumns[index]];
-        // delete this.filterObj[condition.key];
-        console.log(this.filterObj);
+
         if (Object.keys(this.filterObjForTemp).length === 0) {
             this.hasFilterCondition = false;
         }
-        this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
-            (res) => {
-                this.dataSource.data = res.study.allStudies;
-                this.changeDetection.detectChanges();
-            }
-        );
+        this.getStudyList();
+    }
+
+    openSnackBar(msg: string): void {
+        this.snackBar.open(msg, '', {
+            duration: 1500,
+            verticalPosition: 'top',
+            // panelClass: 'custom-snackbar',
+        });
+    }
+
+    private coloringFilterSymbol(name: string): boolean {
+        // console.log(name);
+        // console.log(Object.keys(this.filterObj));
+        // console.log(Object.keys(this.filterObj).includes(name));
+        return Object.keys(this.filterObj).includes(name);
+    }
+    /** Called by clicking previous or next button in the paginator */
+    async onSelectPage(ev): Promise<void> {
+        const skip = ev.pageIndex * ev.pageSize;
+        console.log('---- page ', ev, ev.first, ev.last, skip);
+        // if (this.studyFilteredColumn.length === 0) {
+        //     this.dataSource.paginator = null;
+        //     await this.getStudiesData();
+        // }
     }
     ngOnDestroy(): void {
         this.unsubscribe$.next();

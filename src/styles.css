@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%;}
 @import "~@angular/cdk/overlay-prebuilt.css";
+html, body { height: 100%;}
 body{
     background: #2B2B2B;
     margin: 0;
@@ -116,4 +115,8 @@ button:focus {
 .study-report-dialog .mat-dialog-container {
     padding: 24px 0px;
     max-height: calc(100vh - 70px);
+}
+
+.cdk-program-focused .mat-sort-header-container {
+    border-bottom: none;
 }

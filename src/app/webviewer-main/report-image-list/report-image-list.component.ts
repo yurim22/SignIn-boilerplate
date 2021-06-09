@@ -71,6 +71,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
                         if (arr.length !== 0) {
                             arr = arr.slice(0, 10);
                             this.instances['#dicomImage'] = arr;
+                            console.log(arr);
                             console.log(this.instances);
 
                             const newArr = [];

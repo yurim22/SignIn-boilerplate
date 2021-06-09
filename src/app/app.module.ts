@@ -47,19 +47,20 @@ export function tokenGetter(): string {
         HttpClientModule,
         WebviewerMainModule,
         // Any requests sent using Angular's HttpClient will automatically have a token attached as an Authorization header. => tokengetter
+        // cf) https://github.com/auth0/angular2-jwt
         JwtModule.forRoot({
             config: {
                 tokenGetter,
                 allowedDomains: ['localhost:3000', 'localhost:3000/api'],
                 disallowedRoutes: [],
-                skipWhenExpired: true
+                skipWhenExpired: true,
             }
         }),
         NgxsModule.forRoot([
             StudyState,
             CurrentUserState
         ],
-            {developmentMode: environment.production}
+            {developmentMode: !environment.production}
         ),
         NgxsSelectSnapshotModule.forRoot(),
     ],
