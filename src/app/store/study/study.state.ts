@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { tap } from 'rxjs/operators';
+import { from } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Series } from 'src/app/models/series.model';
 import { StudyRow } from 'src/app/models/studyrow.model';
 import { StudyTableService } from 'src/app/webviewer-main/study-table/study-table.service';
@@ -93,11 +94,12 @@ export class StudyState {
     @Action(GetStudyList)
     // tslint:disable-next-line: typedef
     getStudyList({getState, setState}: StateContext<StudyStateModel>, filter){
-        console.log(filter);
         console.log('limit in study state', filter.limit);
         return this.studyTableService.getStudyList(filter.filterStatus, filter.limit, filter.skip).pipe(
-            tap((res) => {
-                console.log(res);
+            tap((res: StudyRow[]) => {
+                from(res).pipe(
+                    map(val => val.status = val.status[0] + val.status.slice(1).toLowerCase()),
+                ).subscribe();
                 const state = getState();
                 setState({
                     ...state,

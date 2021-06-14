@@ -175,6 +175,11 @@ table.mat-table {
 .mat-paginator {
     background-color: #2b2b2b;
 }
+.flex-container-row {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 0 0.5rem !important;
+}
 ::ng-deep .mat-paginator-container {
     position: relative;
     bottom: 0px;
@@ -193,10 +198,12 @@ table.mat-table {
 
 ::ng-deep .mat-paginator-range-label {
     font-size:13px ;
-    margin: 0 0 0 1rem !important;
+    margin: 0 0 0 0.5rem !important;
     min-width: fit-content;
 }
-
+::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: whitesmoke;
+}
 /* .mat-paginator{
     color: whitesmoke;
     background:transparent;
@@ -207,7 +214,7 @@ table.mat-table {
 } */
 ::ng-deep .mat-paginator-icon{
     width: 22px !important;
-    fill: lightgray !important; 
+    /* fill: lightgray !important;  */
     padding-left: 10px;
 }
 

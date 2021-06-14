@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { from, Subject, zip } from 'rxjs';
-import { distinctUntilChanged, filter, map, mapTo, switchMap, takeUntil, tap, toArray } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, mapTo, switchMap, take, takeUntil, tap, toArray } from 'rxjs/operators';
 import { CommonDialogComponent } from 'src/app/common/dialog/common-dialog.component';
 // import { Apollo, gql } from 'apollo-angular';
 import { User } from 'src/app/signin/models/user.model';
@@ -48,10 +48,10 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
     getUserList(): void {
         this.userService.getUserList().pipe(
-            takeUntil(this.unsubscribe$)
-        )
-        .subscribe(
+            takeUntil(this.unsubscribe$),
+        ).subscribe(
             (result) => {
+                console.log('user result', result);
                 this.userList = result;
                 from(result).pipe(
                     map(val => val.creation_timestamp = val.creation_timestamp.slice(0, 10)),

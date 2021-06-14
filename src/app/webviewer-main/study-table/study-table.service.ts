@@ -19,7 +19,6 @@ export class StudyTableService {
     getStudyList(filterStatus: object, limit: number, skip: number): Observable<StudyRow[]>{
         const queryString = Object.keys(filterStatus).map(condition => encodeURIComponent(condition)
         + '=' + encodeURIComponent(filterStatus[condition])).join('&');
-        console.log(limit);
         // const queryString = Object.entries(filterStatus).filter(status => status[1] === true).map(status =>
         //     encodeURIComponent('status') + '=' + encodeURIComponent(status[0])).join('&');
         return this.httpClient.get<StudyRow[]>(`${this.appUrl}/studies?${queryString}&limit=${limit}&skip=${skip}`);
