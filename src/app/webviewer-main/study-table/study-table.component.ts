@@ -53,6 +53,12 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
     removable = true;
     filterObj = new Object();
     filterObjForTemp = new Object();
+    PAGE_SIZE = 50; // page size
+    skip = 0;
+    searchCount = 0;
+    firstPageSize: number;
+    totalCount: number;
+
     constructor(
         private store: Store,
         fb: FormBuilder,
@@ -60,7 +66,7 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
         private changeDetection: ChangeDetectorRef,
         private dialog: MatDialog,
         private snackBar: MatSnackBar) {
-        this.getStudyList();
+
         this.statusForm = fb.group({
             ANALYZED: true,
             REVIEWED: true,
@@ -69,6 +75,26 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        console.log('ngOnInit');
+        this.dataSource.paginator = this.paginator;
+        // First of all, get the number of studies
+        // this.getSearchCount('', this.filterObj).subscribe(
+        //     val => {
+        //         console.log('the number of data', val);
+        //         this.paginator.length = val;
+        //         this.totalCount = val;
+
+        //         this.totalCount > this.PAGE_SIZE ? this.searchCount = this.PAGE_SIZE
+        //         : this.searchCount = this.totalCount;
+
+        //         // get all study data with count limitation
+        //         this.getStudyList();
+        //     }
+        // );
+        this.getStudyListWithLimitation();
+        // get all study data with count limitation
+        // this.getStudyList();
+        // when table has filtering condition, get new table data by using observable
         this.studyList$.pipe(
             skip(1),
             takeUntil(this.unsubscribe$)
@@ -95,24 +121,53 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
                 // );
                 // merge(this.analyzed$, this.reviewed$, this.received$).subscribe();
                 this.dataSource.data = res;
+                this.changeDetection.detectChanges();
             }
-
         );
     }
 
     ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator;
+        // this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        // console.log(this.paginator.length);
+        // this.paginator.length = this.totalCount;
+        // console.log(this.paginator.length);
+        this.changeDetection.detectChanges();
     }
 
     getStudyList(): any {
-        this.store.dispatch(new GetStudyList(this.filterObj)).subscribe(
+        console.log('------getStudyList');
+        console.log('this skip', this.skip);
+        this.store.dispatch(new GetStudyList(this.filterObj, this.searchCount, this.skip)).subscribe(
             (res) => {
                 console.log('-----getStudyList()', res.study.allStudies);
                 this.dataSource.data = res.study.allStudies;
-                this.changeDetection.detectChanges();
             }
         );
+        // this.getSearchCount('', this.filterObj).subscribe(
+        //     (val) => {
+        //         console.log(val);
+        //         // this.totalCount = val;
+        //         val > this.PAGE_SIZE ? this.searchCount = this.PAGE_SIZE : this.searchCount = val;
+        //         // this.searchCount = val;
+        //         console.log(this.searchCount);
+        //         this.store.dispatch(new GetStudyList(this.filterObj, this.searchCount)).subscribe(
+        //             (res) => {
+        //                 console.log('-----getStudyList()', res.study.allStudies);
+        //                 this.dataSource.data = res.study.allStudies;
+        //                 console.log(val);
+        //                 // this.changeDetection.detectChanges();
+        //             }
+        //         );
+        //     }
+        // );
+        // this.store.dispatch(new GetStudyList(this.filterObj, this.searchCount)).subscribe(
+        //     (res) => {
+        //         console.log('-----getStudyList()', res.study.allStudies);
+        //         this.dataSource.data = res.study.allStudies;
+        //         this.changeDetection.detectChanges();
+        //     }
+        // );
     }
 
     getBackground(row): any{
@@ -150,7 +205,8 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.filterObj[el] = selectedStatus; // ex. {status: " reviewed, received"}
             this.hasFilterCondition = true;
-            this.getStudyList();
+            this.getStudyListWithLimitation();
+            // this.getStudyList();
         });
     }
 
@@ -187,7 +243,7 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.filterObj[el] = `${startDate}-${endDate}`;
                     this.filterObjForTemp[elTitle] = `${startDate} ~ ${endDate}`;
                 }
-                this.getStudyList();
+                this.getStudyListWithLimitation();
             }
         });
     }
@@ -201,7 +257,9 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
         if (Object.keys(this.filterObjForTemp).length === 0) {
             this.hasFilterCondition = false;
         }
-        this.getStudyList();
+        this.skip = 0;
+        this.paginator.pageIndex = 0;
+        this.getStudyListWithLimitation();
     }
 
     openSnackBar(msg: string): void {
@@ -212,21 +270,52 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
+    // private async prepareConditionForGetStudiesData(): Promise<void> {
+    //     await this.getSearchCount('', this.filterObj).subscribe(val => {
+    //         console.log(val);
+    //         this.paginator.length = val;
+    //         this.searchCount = val;
+    //         this.firstPageSize = this.searchCount < this.PAGE_SIZE ? this.searchCount : this.PAGE_SIZE;
+    //         console.log('searchCount in prepareCOnditionDor~~', this.searchCount);
+    //         console.log(this.firstPageSize);
+    //         this.getStudyList();
+    //     });
+    // }
+
+    // filter icon color on / off
     private coloringFilterSymbol(name: string): boolean {
-        // console.log(name);
-        // console.log(Object.keys(this.filterObj));
-        // console.log(Object.keys(this.filterObj).includes(name));
         return Object.keys(this.filterObj).includes(name);
     }
+
     /** Called by clicking previous or next button in the paginator */
     async onSelectPage(ev): Promise<void> {
-        const skip = ev.pageIndex * ev.pageSize;
-        console.log('---- page ', ev, ev.first, ev.last, skip);
+        this.skip = ev.pageIndex * ev.pageSize;
+        console.log('---- page ', ev, ev.first, ev.last, this.skip);
+        // this.getStudyList();
         // if (this.studyFilteredColumn.length === 0) {
         //     this.dataSource.paginator = null;
         //     await this.getStudiesData();
         // }
+        this.getStudyListWithLimitation();
     }
+
+    private getSearchCount(lastId: string, query: any, first = this.PAGE_SIZE): Observable<number> {
+        return this.studyTableService.getStudiesCount(query).pipe(takeUntil(this.unsubscribe$));
+    }
+
+    private async getStudyListWithLimitation(): Promise<void> {
+        await this.getSearchCount('', this.filterObj).subscribe(
+            val => {
+                console.log('result of get the number of study data', val);
+                this.paginator.length = val;
+                this.searchCount = val;
+                console.log(this.searchCount);
+                this.searchCount = this.searchCount < this.PAGE_SIZE ? this.searchCount : this.PAGE_SIZE;
+                this.getStudyList();
+            }
+        );
+    }
+
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();

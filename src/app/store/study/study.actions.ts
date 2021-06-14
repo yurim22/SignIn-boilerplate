@@ -24,5 +24,5 @@ export class UpdateStudyStatus {
 
 export class GetStudyList {
     static readonly type = '[Study] Get Study Data';
-    constructor(public filterStatus: object) {}
+    constructor(public filterStatus: object, public limit: number, public skip: number) {}
 }

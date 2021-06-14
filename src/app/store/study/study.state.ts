@@ -93,7 +93,9 @@ export class StudyState {
     @Action(GetStudyList)
     // tslint:disable-next-line: typedef
     getStudyList({getState, setState}: StateContext<StudyStateModel>, filter){
-        return this.studyTableService.getStudyList(filter.filterStatus).pipe(
+        console.log(filter);
+        console.log('limit in study state', filter.limit);
+        return this.studyTableService.getStudyList(filter.filterStatus, filter.limit, filter.skip).pipe(
             tap((res) => {
                 console.log(res);
                 const state = getState();
