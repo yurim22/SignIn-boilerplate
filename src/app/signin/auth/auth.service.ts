@@ -33,7 +33,7 @@ export class AuthService {
     // accesstoken은 localstorage에 저장
     // refreshtoken은 cookie에 저장
     signIn(userId: string, userPwd: string): Observable<Token>{
-        return this.httpClient.post<Token>(`${this.appUrl}/auth/signin`, {id: userId, password: userPwd})
+        return this.httpClient.post<Token>(`${this.appUrl}/api/v1/auth/signin`, {id: userId, password: userPwd})
         .pipe(
             tap(res => {
                 console.log('res result', res);
@@ -47,7 +47,7 @@ export class AuthService {
 
     silentRefresh(): Observable<any> {
         this.refreshToken = this.cookieService.get('refreshToken');
-        return this.httpClient.post<Token>(`${this.appUrl}/auth/silent-refresh`, {refreshToken : this.refreshToken})
+        return this.httpClient.post<Token>(`${this.appUrl}/api/v1/auth/silent-refresh`, {refreshToken : this.refreshToken})
         .pipe(
             tap(res => {
                 this.setToken(res.accessToken),
@@ -58,7 +58,7 @@ export class AuthService {
     }
 
     chagnePassword(userId: string, oldPassword: string, newPassword: string): Observable<any> {
-        return this.httpClient.patch(`${this.appUrl}/users/changePwd/${userId}`, {oldPassword, newPassword});
+        return this.httpClient.patch(`${this.appUrl}/api/v1/users/changePwd/${userId}`, {oldPassword, newPassword});
     }
 
     logout(): void {

@@ -14,20 +14,20 @@ export class PacsService {
     ) { }
     
     getReceivePacsInfo(userid: string): Observable<any>{
-        return this.httpClient.get(`${this.appUrl}/pacs/rePacs/${userid}`);
+        return this.httpClient.get(`${this.appUrl}/api/v1/pacs/rePacs/${userid}`);
     }
     
     getSendPacsInfo(userid: string): Observable<any>{
-        return this.httpClient.get(`${this.appUrl}/pacs/sePacs/${userid}`);
+        return this.httpClient.get(`${this.appUrl}/api/v1/pacs/sePacs/${userid}`);
     }
 
     setReceivePacsInfo(createPacsData, userId: string): Observable<any> {
         console.log(userId);
-        return this.httpClient.post(`${this.appUrl}/pacs/rePacs/${userId}`, createPacsData);
+        return this.httpClient.post(`${this.appUrl}/api/v1/pacs/rePacs/${userId}`, createPacsData);
     }
 
     setSendPacsInfo(createPacsData, userId: string): Observable<any> {
-        return this.httpClient.post(`${this.appUrl}/pacs/sePacs/${userId}`, createPacsData);
+        return this.httpClient.post(`${this.appUrl}/api/v1/pacs/sePacs/${userId}`, createPacsData);
     }
 
 }

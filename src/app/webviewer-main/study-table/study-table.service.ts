@@ -21,21 +21,21 @@ export class StudyTableService {
         + '=' + encodeURIComponent(filterStatus[condition])).join('&');
         // const queryString = Object.entries(filterStatus).filter(status => status[1] === true).map(status =>
         //     encodeURIComponent('status') + '=' + encodeURIComponent(status[0])).join('&');
-        return this.httpClient.get<StudyRow[]>(`${this.appUrl}/studies?${queryString}&limit=${limit}&skip=${skip}`);
+        return this.httpClient.get<StudyRow[]>(`${this.appUrl}/api/v1/studies?${queryString}&limit=${limit}&skip=${skip}`);
     }
 
     getStudiesCount(filterStatus: object): Observable<number> {
         const queryString = Object.keys(filterStatus).map(condition => encodeURIComponent(condition)
         + '=' + encodeURIComponent(filterStatus[condition])).join('&');
-        return this.httpClient.get<number>(`${this.appUrl}/studies/studiesCount?${queryString}`);
+        return this.httpClient.get<number>(`${this.appUrl}/api/v1/studies/studiesCount?${queryString}`);
     }
 
     getSeriesItem(seq: number): Observable<Series> {
-        return this.httpClient.get<Series>(`${this.appUrl}/studies/${seq}`);
+        return this.httpClient.get<Series>(`${this.appUrl}/api/v1/studies/${seq}`);
     }
 
     updateStudyStatus(updateStudyData: Partial<StudyRow>, seq: number): Observable<StudyRow> {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-        return this.httpClient.patch<StudyRow>(`${this.appUrl}/studies/${seq}`, {updateStudyData, userInfo});
+        return this.httpClient.patch<StudyRow>(`${this.appUrl}/api/v1/studies/${seq}`, {updateStudyData, userInfo});
     }
 }

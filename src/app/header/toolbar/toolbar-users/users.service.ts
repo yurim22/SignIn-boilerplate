@@ -18,28 +18,28 @@ export class UserService{
     ){}
 
     getUserList(): Observable<User[]>{
-        return this.httpClient.get<User[]>(`${this.appUrl}/users`).pipe();
+        return this.httpClient.get<User[]>(`${this.appUrl}/api/v1/users`).pipe();
     }
 
     createNewUser(createUserData: Partial<User>): Observable<any> {
-        return this.httpClient.post(`${this.appUrl}/users`, createUserData);
+        return this.httpClient.post(`${this.appUrl}/api/v1/users`, createUserData);
     }
 
     updateUser(updateUserData: Partial<User>, userSeq: string): Observable<any> {
         console.log('updateUserDate', updateUserData);
-        return this.httpClient.patch(`${this.appUrl}/users/${userSeq}`, updateUserData);
+        return this.httpClient.patch(`${this.appUrl}/api/v1/users/${userSeq}`, updateUserData);
     }
 
     deleteUser(userId: string): Observable<any>{
 
-        return this.httpClient.delete(`${this.appUrl}/users/${userId}`);
+        return this.httpClient.delete(`${this.appUrl}/api/v1/users/${userId}`);
     }
 
     findDuplicateUser(userId: string): Observable<boolean>{
-        return this.httpClient.get<boolean>(`${this.appUrl}/users/checkId/${userId}`);
+        return this.httpClient.get<boolean>(`${this.appUrl}/api/v1/users/checkId/${userId}`);
     }
 
     unlockUser(userId: string): Observable<any>{
-        return this.httpClient.patch(`${this.appUrl}/users/unlock/${userId}`, {invalid_password_count: 0});
+        return this.httpClient.patch(`${this.appUrl}/api/v1/users/unlock/${userId}`, {invalid_password_count: 0});
     }
 }
