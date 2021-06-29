@@ -24,6 +24,7 @@ export class AuthInterceptor implements HttpInterceptor{
 
         // 원본 HttpRequest 객체 대신 클론한 httpRequest 객체를 다음 미들웨어 체인으로 전달한다.
         // 다음 인터셉터가 없는 경우, Observable을 반환하고 종료
+        console.log(clonedRequest);
         if (clonedRequest){
             return next.handle(clonedRequest).pipe(catchError(
                 error => {

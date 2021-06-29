@@ -95,8 +95,8 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dialog.closeAll();
         const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
             autoFocus: false,
-            width: '18vw',
-            height: '79vh',
+            width: '20rem',
+            // height: 'fit-content',
             data: {userInfo: undefined, mode: 'createMode'},
             hasBackdrop: false,
         });
@@ -104,8 +104,8 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         dialogRef.afterClosed().subscribe(_ => {
             this.dialog.open(UsersDialogComponent, {
                 autoFocus: false,
-                width: '50vw',
-                height: '55vh'
+                width: '50rem',
+                // height: '55vh'
             });
         });
     }
@@ -114,8 +114,8 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dialog.closeAll();
         const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
             autoFocus: false,
-            width: '18vw',
-            height: '79vh',
+            width: '20rem',
+            // height: '79vh',
             data: {userInfo: row, mode: 'editMode'},
             hasBackdrop: false,
         });
@@ -123,8 +123,8 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             this.dialog.open(UsersDialogComponent, {
                 autoFocus: false,
-                width: '50vw',
-                height: '55vh'
+                width: '50rem',
+                // height: '55vh'
             });
         });
     }

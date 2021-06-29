@@ -1,18 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/cdk/overlay-prebuilt.css";
-html, body { height: 100%;}
 body{
     background: #2B2B2B;
-    margin: 0;
+    /* margin: 0; */
     color: #9A9A9A;
     font-weight: 400;
     /* font-size: 0.583333rem; */
     letter-spacing: normal;
     line-height: 1rem;
     /* margin-top: 1rem; */
-    margin-bottom: 0;
+    /* margin-bottom: 0; */
     font-family: 'Montserrat', sans-serif;
-    margin-top: 0 !important;
+    margin: 0 !important;
 }
 
 

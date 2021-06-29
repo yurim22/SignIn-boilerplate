@@ -47,7 +47,7 @@ export class ToolbarPacsComponent implements OnInit {
 
     openPacsModal(): void{
         const dialogRef = this.dialog.open(PacsDialogComponent, {
-            width: '60vw',
+            width: '60rem',
             autoFocus: false,
         });
 

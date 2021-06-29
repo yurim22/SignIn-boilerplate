@@ -67,15 +67,15 @@ export class ToolbarSettingsComponent implements OnInit {
 
             const dialogRef = this.dialog.open(CreateNewUserDialogComponent, {
                 autoFocus: false,
-                width: '17vw',
-                height: '60vh',
+                width: '20rem',
+                // height: '60vh',
                 data: {userInfo: this.userInfo, mode: 'editMode'},
                 hasBackdrop: false,
             });
         } else{
             const dialogRef = this.dialog.open(SettingsDialogComponent, {
-                width: '30vw',
-                height: '53vh',
+                width: '35rem',
+                // height: '60%',
                 autoFocus: false
             });
 
