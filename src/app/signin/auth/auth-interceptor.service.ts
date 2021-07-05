@@ -13,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor{
     private isRefreshing: boolean;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     refreshToken: string;
-    constructor(private authService: AuthService, private cookieService: CookieService, private dialog: MatDialog){ }
+    constructor(private authService: AuthService, private cookieService: CookieService, private dialog: MatDialog){}
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         // 헤더에 인증 토큰을 추가한 새로운 httpRequest 객체를 생성(클론)한다.
@@ -26,11 +26,13 @@ export class AuthInterceptor implements HttpInterceptor{
         // 다음 인터셉터가 없는 경우, Observable을 반환하고 종료
         console.log(clonedRequest);
         if (clonedRequest){
+            console.log(this.isRefreshing);
             return next.handle(clonedRequest).pipe(catchError(
                 error => {
                     if (error instanceof HttpErrorResponse && error.status === 401) {
                         return this.handle401Error(clonedRequest, next);
                     }else{
+                        this.isRefreshing = false;
                         return throwError(error);
                     }
                 }
@@ -45,9 +47,11 @@ export class AuthInterceptor implements HttpInterceptor{
     // clonedrequest가 아닌 새로운 request를 생성해야함
     // tslint:disable-next-line: typedef
     private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+        console.log('401 error');
         this.refreshToken = this.cookieService.get('refreshToken');
         console.log(this.isRefreshing);
         if (!this.isRefreshing) {
+            console.log('when isRefreshing is false');
             this.isRefreshing = true;
             this.refreshTokenSubject.next(null);
 
@@ -58,15 +62,19 @@ export class AuthInterceptor implements HttpInterceptor{
                     return next.handle(this.addToken(request, token.accessToken));
                 }),
                 catchError((error) => {
+                    console.log('isRefreshing is false', error);
+                    this.showExpiredTokenModal();
                     return throwError(error);
                 })
             );
         }
         else{
+            console.log('when isRefreshing is true');
             return next.handle(request)
             .pipe(
                 catchError((error) => {
-                    this.showExpiredTokenModal();
+                    console.log('when isRefreshing is true');
+                    // this.showExpiredTokenModal();
                     return throwError(error);
                 })
             );

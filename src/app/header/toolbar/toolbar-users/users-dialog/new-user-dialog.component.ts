@@ -77,6 +77,7 @@ interface DialogData {
         .create-user-btn {
             margin-top: 1.5rem;
             padding-left: 0.5rem;
+            margin-bottom: 1rem;
         }
         .create-user-btn .mat-button {
             background-color: #9A9A9A;
@@ -192,6 +193,10 @@ export class CreateNewUserDialogComponent implements OnInit, OnDestroy{
             },
             (error) => console.log(error),
         );
+
+        this.createUserForm.valueChanges.subscribe(
+            () => console.log(this.createUserForm)
+        )
     }
 
     togglePwdHide(): void {

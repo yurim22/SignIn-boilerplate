@@ -34,7 +34,7 @@
     flex: 0 0 auto;
 }
 .mat-table {
-    overflow: auto;
+    /* overflow: auto; */
     table-layout: fixed;
     font-family: 'Montserrat', sans-serif;
 }
@@ -63,6 +63,7 @@ th.mat-header-cell:first-of-type {
     line-height: fit-content;
     text-overflow: ellipsis;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .mat-cell {
@@ -76,6 +77,7 @@ th.mat-header-cell:first-of-type {
     padding-left: 4px;
     text-overflow: ellipsis;
     overflow: hidden;
+    white-space: nowrap;
 }
 .mat-header-row {
     padding-left:5px;
@@ -120,7 +122,7 @@ table.mat-table {
     flex: 0 0 13% !important;
     width: 13% !important;
     overflow-wrap: break-word;
-    word-wrap: break-word;
+    
     overflow: hidden;
   
     word-break: break-word;
@@ -202,7 +204,7 @@ table.mat-table {
     min-width: fit-content;
 }
 ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
-    stroke: whitesmoke;
+    stroke: rgb(230, 230, 230);
 }
 /* .mat-paginator{
     color: whitesmoke;
@@ -239,6 +241,7 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
 .material-icons.filter-icon {
     font-size: small;
     color: gray;
+    /* cursor: pointer; */
     /* color: rgb(0, 113, 219); */
 }
 

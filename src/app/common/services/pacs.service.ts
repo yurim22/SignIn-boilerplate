@@ -8,15 +8,16 @@ import { environment } from 'src/environments/environment';
 })
 export class PacsService {
     appUrl = environment.apiUrl;
+    cloudServerHostIp = environment.cloudServerHostIp;
 
     constructor(
         private httpClient: HttpClient
     ) { }
-    
+
     getReceivePacsInfo(userid: string): Observable<any>{
         return this.httpClient.get(`${this.appUrl}/api/v1/pacs/rePacs/${userid}`);
     }
-    
+
     getSendPacsInfo(userid: string): Observable<any>{
         return this.httpClient.get(`${this.appUrl}/api/v1/pacs/sePacs/${userid}`);
     }
@@ -28,6 +29,12 @@ export class PacsService {
 
     setSendPacsInfo(createPacsData, userId: string): Observable<any> {
         return this.httpClient.post(`${this.appUrl}/api/v1/pacs/sePacs/${userId}`, createPacsData);
+    }
+
+    doHospitalDicomNodeConnectionTest(ae: string, host: string, port: string): Observable<any> {
+
+        const url = 'http://' + this.cloudServerHostIp + ':9435/dicom/' + ae + '/' + host + '/' + port + '/query';
+        return this.httpClient.get(url);
     }
 
 }

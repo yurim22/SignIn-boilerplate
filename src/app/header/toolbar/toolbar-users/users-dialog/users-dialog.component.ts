@@ -104,7 +104,7 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         dialogRef.afterClosed().subscribe(_ => {
             this.dialog.open(UsersDialogComponent, {
                 autoFocus: false,
-                width: '50rem',
+                width: '60rem',
                 // height: '55vh'
             });
         });
@@ -123,7 +123,7 @@ export class UsersDialogComponent implements OnInit, AfterViewInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             this.dialog.open(UsersDialogComponent, {
                 autoFocus: false,
-                width: '50rem',
+                width: '60rem',
                 // height: '55vh'
             });
         });

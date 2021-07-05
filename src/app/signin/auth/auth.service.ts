@@ -47,6 +47,7 @@ export class AuthService {
 
     silentRefresh(): Observable<any> {
         this.refreshToken = this.cookieService.get('refreshToken');
+        console.log('silentRefresh in service');
         return this.httpClient.post<Token>(`${this.appUrl}/api/v1/auth/silent-refresh`, {refreshToken : this.refreshToken})
         .pipe(
             tap(res => {

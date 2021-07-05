@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
@@ -9,7 +9,7 @@ import { PacsService } from 'src/app/common/services/pacs.service';
 @Component({
   selector: 'app-settings-dialog',
   templateUrl: './settings-dialog.component.html',
-  styleUrls: ['./settings-dialog.component.css']
+  styleUrls: ['./settings-dialog.component.css'],
 })
 export class SettingsDialogComponent{
 
@@ -29,12 +29,11 @@ export class SettingsDialogComponent{
     userPermission: string;
     currentUser: string;
     unsubscribe$ = new Subject();
-    
+
     constructor(
         private dialogRef: MatDialogRef<SettingsDialogComponent>,
         private fb: FormBuilder,
-        private httpClient: HttpClient,
-        private pacsService: PacsService
+        private pacsService: PacsService,
     ){
         this.currentUser = JSON.parse(localStorage.getItem('userInfo')).id;
         this.userPermission = localStorage.getItem('permission');
@@ -90,40 +89,97 @@ export class SettingsDialogComponent{
     onSubmit_Re(form): any {
         this.pacsConnectionChecking = true;
         setTimeout( () =>
-            this.pacsConnectionChecking = false , 1000
+            this.pacsConnectionChecking = false , 1500
         );
+        console.log(form.value);
+        this.pacsService.doHospitalDicomNodeConnectionTest(form.value.ae, form.value.host, form.value.port).subscribe(
+            (result: any) => {
+                console.log(
+                    '[doHospitalDicomNodePortConnectionTest] result: ' +
+                    JSON.stringify(result)
+                );
 
-        console.log(form);
-        this.pacsService.setReceivePacsInfo(form.value, this.currentUser).subscribe(
-            () => {
-                console.log('success');
-                this.isSuccessRe = true;
-                this.reTestResult = 'PASS';
+                if (result) {
+                    console.log(
+                    '[doHospitalDicomNodePortConnectionTest] result: ' +
+                        JSON.stringify(result)
+                    );
+                    if (result.code === 2000000) {
+                        this.isSuccessRe = true;
+                        this.reTestResult = 'PASS';
+                        this.pacsService.setReceivePacsInfo(form.value, this.currentUser).subscribe(
+                            () => {
+                                console.log('successfully save data in server');
+                            },
+                            (error) => {
+                                console.log('pass connection test but failed to save data in server');
+                            }
+                        );
+                    } else {
+                        this.reTestResult = 'FAIL';
+                    }
+                }
             },
             (error) => {
-                console.log('fail');
                 this.isSuccessRe = false;
                 this.reTestResult = 'FAIL';
             }
         );
+
     }
     onSubmit_Se(form): any {
         this.pacsConnectionCheckingSe = true;
         setTimeout( () =>
-            this.pacsConnectionCheckingSe = false , 1000
+            this.pacsConnectionCheckingSe = false , 1500
         );
-        // [TODO] setSendPacsInfo는 단지 form의 value를 db에 넣는 것 뿐, 실제 pacs server와의 connection test가 필요하다,
-        this.pacsService.setSendPacsInfo(form.value, this.currentUser).subscribe(
-            () => {
-                console.log('success');
-                this.isSuccessSe = true;
-                this.seTestResult = 'PASS';
+
+        this.pacsService.doHospitalDicomNodeConnectionTest(form.value.ae, form.value.host, form.value.port).subscribe(
+            (result: any) => {
+                this.pacsConnectionChecking = false;
+                console.log(
+                    '[doHospitalDicomNodePortConnectionTest] result: ' +
+                    JSON.stringify(result)
+                );
+
+                if (result) {
+                    console.log(
+                    '[doHospitalDicomNodePortConnectionTest] result: ' +
+                        JSON.stringify(result)
+                    );
+                    if (result.code === 2000000) {
+                        this.isSuccessSe = true;
+                        this.seTestResult = 'PASS';
+                        this.pacsService.setSendPacsInfo(form.value, this.currentUser).subscribe(
+                            () => {
+                                console.log('successfully save data in server');
+                            },
+                            (error) => {
+                                console.log('pass connection test but failed to save data in server');
+                            }
+                        );
+                    } else {
+                        this.seTestResult = 'FAIL';
+                    }
+                }
             },
             (error) => {
-                console.log('fail');
+                this.pacsConnectionChecking = false;
                 this.isSuccessSe = false;
                 this.seTestResult = 'FAIL';
             }
         );
+        // [TODO] setSendPacsInfo는 단지 form의 value를 db에 넣는 것 뿐, 실제 pacs server와의 connection test가 필요하다,
+        // this.pacsService.setSendPacsInfo(form.value, this.currentUser).subscribe(
+        //     () => {
+        //         console.log('success');
+        //         this.isSuccessSe = true;
+        //         this.seTestResult = 'PASS';
+        //     },
+        //     (error) => {
+        //         console.log('fail');
+        //         this.isSuccessSe = false;
+        //         this.seTestResult = 'FAIL';
+        //     }
+        // );
     }
 }

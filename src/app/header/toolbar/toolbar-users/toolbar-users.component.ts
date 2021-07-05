@@ -49,8 +49,8 @@ export class ToolbarUsersComponent {
         console.log('settings');
         const dialogRef = this.dialog.open(UsersDialogComponent, {
             autoFocus: false,
-            width: '50vw',
-            height: '55vh'
+            width: '60rem',
+            // height: '55vh'
         });
 
         dialogRef.afterClosed().subscribe(result => {

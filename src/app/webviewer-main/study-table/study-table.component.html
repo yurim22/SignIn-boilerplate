@@ -42,7 +42,9 @@
         </ng-container>
         <ng-container matColumnDef="patient_id">
             <th mat-header-cell *matHeaderCellDef id="patient_id" mat-sort-header>
-                Patient ID
+                <nobr>
+                    Patient ID
+                </nobr>
                 <!-- <button mat-icon-button class="filter-icon-btn"><span class="material-icons filter-icon">filter_alt</span></button> -->
                 <div class="filter-icon-btn" (click)="onTextFilter($event, 1)"><span class="material-icons filter-icon"
                     [ngStyle]="{color: coloringFilterSymbol('patient_id') ? '#0288D1': 'grey'}">
@@ -53,7 +55,9 @@
         </ng-container>
         <ng-container matColumnDef="patient_name">
             <th mat-header-cell *matHeaderCellDef id="patient_name" mat-sort-header>
-                Patient Name
+                <nobr>
+                    Patient Name
+                </nobr>
                 <div class="filter-icon-btn" (click)="onTextFilter($event, 2)"><span class="material-icons filter-icon"
                     [ngStyle]="{color: coloringFilterSymbol('patient_name') ? '#0288D1': 'grey'}">filter_alt</span></div>
             </th>
