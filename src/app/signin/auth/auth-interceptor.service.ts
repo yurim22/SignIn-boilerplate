@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
@@ -13,7 +14,11 @@ export class AuthInterceptor implements HttpInterceptor{
     private isRefreshing: boolean;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     refreshToken: string;
-    constructor(private authService: AuthService, private cookieService: CookieService, private dialog: MatDialog){}
+    constructor(
+        private authService: AuthService,
+        private cookieService: CookieService,
+        private dialog: MatDialog,
+        private router: Router){}
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         // 헤더에 인증 토큰을 추가한 새로운 httpRequest 객체를 생성(클론)한다.
@@ -103,11 +108,13 @@ export class AuthInterceptor implements HttpInterceptor{
             name: 'Logout',
             title: 'Token Expired',
             description: 'Token was expired. Please signin again',
-            isConfirm: true,
-            actionButtonText: 'OK',
+            isConfirm: false,
         };
 
         const dialogRef = this.dialog.open(CommonDialogComponent, dialogConfig);
-        dialogRef.afterClosed().subscribe(() => this.dialog.closeAll());
+        dialogRef.afterClosed().subscribe(() => {
+            this.dialog.closeAll();
+            this.router.navigate(['/signin']);
+        });
     }
 }

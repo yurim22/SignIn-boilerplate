@@ -102,6 +102,8 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             val => {
                 if (val === 0) {
                     this.openSnackBar('There is no study data');
+                    this.isLoadingResults = false;
+                    return;
                 }
                 console.log('result of get the number of study data', val);
                 // paginator에 lable 표시

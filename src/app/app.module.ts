@@ -51,7 +51,7 @@ export function tokenGetter(): string {
         JwtModule.forRoot({
             config: {
                 tokenGetter,
-                allowedDomains: ['localhost:3000', 'localhost:3000/api'],
+                allowedDomains: ['localhost:3300', 'localhost:3300/api', '210.114.91.205:3300'],
                 disallowedRoutes: [],
                 skipWhenExpired: true,
             }

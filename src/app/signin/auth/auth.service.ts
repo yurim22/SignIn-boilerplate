@@ -39,7 +39,7 @@ export class AuthService {
                 console.log('res result', res);
                 this.setToken(res.accessToken);
                 this.cookieService.set('refreshToken', res.refreshToken);
-
+                console.log('token', this.tokenExpirationDate(res.accessToken));
             }),
             shareReplay()
         );
@@ -53,6 +53,7 @@ export class AuthService {
             tap(res => {
                 this.setToken(res.accessToken),
                 this.cookieService.set('refreshToken', res.refreshToken);
+                console.log('refresh token -----', this.jwtHelper.getTokenExpirationDate(res.accessToken))
             }),
             shareReplay()
         );
