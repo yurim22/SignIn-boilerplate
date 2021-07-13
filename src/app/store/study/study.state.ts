@@ -13,6 +13,7 @@ export interface StudyStateModel {
     selectedStudyStatus: string;
     allStudies: StudyRow[];
     confirmUser: string;
+    selectedStudyInstanceUid: string;
 }
 
 @State<StudyStateModel>({
@@ -23,6 +24,7 @@ export interface StudyStateModel {
         selectedStudyStatus: undefined,
         confirmUser: undefined,
         allStudies: [],
+        selectedStudyInstanceUid: undefined,
     }
 })
 
@@ -33,7 +35,9 @@ export class StudyState {
 
     @Selector()
     static getSeriesUrl(state: StudyStateModel): string {
-        return state.selectedSeries.image_url;
+        const imageUrl = `http://210.114.91.205:9435/study/studies/${state.selectedStudyInstanceUid}/series/${state.selectedSeries.series_instance_uid}/instances/`;
+        console.log(imageUrl);
+        return imageUrl;
     }
 
     @Selector()
@@ -58,16 +62,19 @@ export class StudyState {
 
     @Action(SetSeriesInfo)
     // tslint:disable-next-line: typedef
-    setSeriesInfo({getState, setState}: StateContext<StudyStateModel>, {studySeq, studyStatus, confirmedBy}: SetSeriesInfo){
+    setSeriesInfo({getState, setState}: StateContext<StudyStateModel>,
+                  {studySeq, studyStatus, confirmedBy, studyInstanceUid}: SetSeriesInfo){
         return this.studyTableService.getSeriesItem(studySeq).pipe(
             tap((res) => {
                 // res : series image_url 결과
+                console.log(res);
                 const state = getState();
                 setState({
                     ...state,
                     confirmUser: confirmedBy,
                     selectedSeries: res,
-                    selectedStudyStatus: studyStatus
+                    selectedStudyStatus: studyStatus,
+                    selectedStudyInstanceUid: studyInstanceUid
                 });
             })
         );
@@ -81,7 +88,9 @@ export class StudyState {
                 const state = getState();
                 const studyList = [...state.allStudies];
                 const studyIndex = studyList.findIndex(item => item.seq === studySeq);
+                console.log(studyList[studyIndex]);
                 studyList[studyIndex] = result;
+                console.log(result);
                 setState({
                     ...state,
                     confirmUser: confirmedBy,
@@ -97,6 +106,7 @@ export class StudyState {
         console.log('limit in study state', filter.limit);
         return this.studyTableService.getStudyList(filter.filterStatus, filter.limit, filter.skip).pipe(
             tap((res: StudyRow[]) => {
+                console.log(res);
                 from(res).pipe(
                     map(val => val.status = val.status[0] + val.status.slice(1).toLowerCase()),
                 ).subscribe();

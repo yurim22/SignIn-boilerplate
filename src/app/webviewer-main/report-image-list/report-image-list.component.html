@@ -27,11 +27,7 @@
         unselectable='on'
         onselectstart='return false;'
         onmousedown='return false;'>
-        <div #dicomImage
-            style="width: inherit; height:inherit; display: flex; justify-content: center;
-            align-items: center;">
-        </div>
-
+        <div #dicomImage id="dicomImage" class="image_wrapper" [style.width.px]="screenWidth" [style.height.px]="screenHeight"></div>
     </div>
 </div>
 <div *ngIf="isImageLoading" class="spinner-box">

@@ -10,7 +10,7 @@ export class GetSeriesImg {
 
 export class SetSeriesInfo {
     static readonly type = '[Series] Set Image Url';
-    constructor(public studySeq: number, public studyStatus: string, public confirmedBy: string) {}
+    constructor(public studySeq: number, public studyStatus: string, public confirmedBy: string, public studyInstanceUid: string) {}
 }
 
 export class IsStudySelected {

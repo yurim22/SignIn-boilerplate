@@ -42,6 +42,10 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
     element: any;
     imageIndex: number;
     isImageLoading: boolean;
+
+    screenHeight: number;
+    screenWidth: number;
+
     constructor(private snackBar: MatSnackBar,
                 private store: Store,
                 private readonly changeDetectorRef: ChangeDetectorRef,
@@ -49,6 +53,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
     ) {
         this.instances['#dicomImage'] = [];
         this.imageIndex = 0;
+        this.onResize();
     }
 
     ngOnInit(): void {
@@ -81,10 +86,15 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
                             });
                             this.instances['#dicomImage'] = newArr;
                             const wadoUri = `wadouri:${this.instances['#dicomImage'][this.imageIndex]}`;
+                            // cornerstone.resize(this.element, true);
                             cornerstone.enable(this.element);
+                            // cornerstone.resize(this.element, true);
                             this.csService.fetchDicomImage(this.element, wadoUri);
                             this.isImageLoading = false;
                             this.changeDetectorRef.detectChanges();
+                            // console.log(cornerstone.getImageSize(this.element).width);
+                            // this.csService.resizeCanvas(this.element);
+                            console.log(cornerstone.getEnabledElements());
                         } else{
                             alert('No report in this series');
                             return;
@@ -92,9 +102,11 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
                     },
                     (error) => {
                         alert('Error: This image is not supported by the Web viewer.');
-                    }
+                    },
                 );
+
             }
+
         );
 
         this.currentStudySeq$.pipe(
@@ -109,6 +121,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
             takeUntil(this.unsubscribe$)
         ).subscribe(
             (res) => {
+                console.log('study status res', res);
                 this.studyStatus = res;
                 this.changeDetectorRef.detectChanges();
             }
@@ -150,9 +163,18 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
         }
     }
 
+    @HostListener('window:resize', ['$event'])
+    onResize(event?): any {
+        this.screenHeight = window.innerHeight * 0.8;
+        this.screenWidth = window.innerWidth * 0.4;
+        console.log(`height: ${this.screenHeight}, width: ${this.screenWidth}`);
+        
+        this.csService.setCanvasSize(this.screenWidth, this.screenWidth);
+    }
 
     // [TODO] button이 text로 변하는 과정에서 약간 부자연스러운 부분이 존재.. 성능 개선 필요
     confirm(): any {
+        console.log('confirm study');
         const userName = JSON.parse(localStorage.getItem('userInfo')).name;
         this.store.dispatch(new UpdateStudyStatus(this.currentStudySeq, userName)).subscribe(
             (res) => {
@@ -168,7 +190,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
             this.changeDetectorRef.detectChanges();
         }, 800);
         // this.confirmedBy = JSON.parse(localStorage.getItem('userInfo')).name;
-        this.changeDetectorRef.detectChanges();
+        // this.changeDetectorRef.detectChanges();
     }
 
     openSnackBar(msg: string): void {

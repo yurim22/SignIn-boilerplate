@@ -29,9 +29,7 @@ export class AuthInterceptor implements HttpInterceptor{
 
         // 원본 HttpRequest 객체 대신 클론한 httpRequest 객체를 다음 미들웨어 체인으로 전달한다.
         // 다음 인터셉터가 없는 경우, Observable을 반환하고 종료
-        console.log(clonedRequest);
         if (clonedRequest){
-            console.log(this.isRefreshing);
             return next.handle(clonedRequest).pipe(catchError(
                 error => {
                     if (error instanceof HttpErrorResponse && error.status === 401) {
@@ -52,11 +50,8 @@ export class AuthInterceptor implements HttpInterceptor{
     // clonedrequest가 아닌 새로운 request를 생성해야함
     // tslint:disable-next-line: typedef
     private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-        console.log('401 error');
         this.refreshToken = this.cookieService.get('refreshToken');
-        console.log(this.isRefreshing);
         if (!this.isRefreshing) {
-            console.log('when isRefreshing is false');
             this.isRefreshing = true;
             this.refreshTokenSubject.next(null);
 
@@ -67,18 +62,15 @@ export class AuthInterceptor implements HttpInterceptor{
                     return next.handle(this.addToken(request, token.accessToken));
                 }),
                 catchError((error) => {
-                    console.log('isRefreshing is false', error);
                     this.showExpiredTokenModal();
                     return throwError(error);
                 })
             );
         }
         else{
-            console.log('when isRefreshing is true');
             return next.handle(request)
             .pipe(
                 catchError((error) => {
-                    console.log('when isRefreshing is true');
                     // this.showExpiredTokenModal();
                     return throwError(error);
                 })
@@ -89,7 +81,6 @@ export class AuthInterceptor implements HttpInterceptor{
     // request header에 새로운 token 붙여서 전달
     // tslint:disable-next-line: typedef
     private addToken(request: HttpRequest<any>, token: string) {
-        console.log('아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ-------------------')
         const newReq = request.clone({
             setHeaders: {
                 Authorization: `Bearer ${token}`

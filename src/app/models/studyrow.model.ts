@@ -9,4 +9,5 @@ export class StudyRow{
     seq: number;
     volumes: number;
     confirmed_by: string;
+    study_instance_uid: string;
 }

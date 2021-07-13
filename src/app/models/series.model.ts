@@ -1,5 +1,5 @@
 export interface Series {
     seq: number;
-    image_url: string;
+    series_instance_uid: string;
     study_seq: number;
 }

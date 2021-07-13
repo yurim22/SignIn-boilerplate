@@ -27,6 +27,14 @@
     align-items: center;
 }  */
 
+.report_image2 .image_wrapper {
+    /* width:790px; 
+    height:790px; */
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
 .error-image{
     display: flex;
     justify-content: center;
@@ -83,6 +91,7 @@
 }
 
 .img-btn-container{
+    margin-top: 0.8rem;
     display: flex;
     flex-direction: column;
     align-items: flex-end ;
@@ -142,44 +151,7 @@
     font-size: 0.8vw;
 }
 
-@media (max-width: 1224px) {
-    .img-btn-container{
-        max-height: 100%;
-        max-width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding-top: 10%
-    }
-    .error-image {
-        max-height: 100%;
-        max-width: 100%;
-        display: flex;
-        align-items: center;
-        padding-top: 12.6%;
-    }
-    .btn-container2{
-        padding: 0.5rem 0.7rem 0.5rem 0;
-    }
-    .custom-btn{
-        min-height: 2.2vw;
-    }
 
-    ::ng-deep snack-bar-container.custom-snackbar{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* margin: 15px; */
-        position: absolute;
-        right: 8%;
-        bottom: 3%;
-        /* max-width: fix-content;
-        padding: 14px 0.5vw; */
-    }
-    ::ng-deep .mat-simple-snackbar{
-        font-size: 1vw;
-    }
-}
 
 
 .spinner-box {

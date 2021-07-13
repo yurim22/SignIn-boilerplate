@@ -80,6 +80,15 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log('ngOnInit');
         this.dataSource.paginator = this.paginator;
         this.getStudyListWithLimitation();
+        // this.studyList$.pipe(
+        //     skip(1),
+        //     takeUntil(this.unsubscribe$)
+        // ).subscribe(
+        //     (res) => {
+        //         console.log(res);
+        //         // this.getStudyListWithLimitation();
+        //     }
+        // );
     }
 
     ngAfterViewInit(): void {
@@ -98,7 +107,7 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
     // get all study data with count limitation
     private async getStudyListWithLimitation(): Promise<void> {
         this.isLoadingResults = true;
-        await this.getSearchCount('', this.filterObj).subscribe(
+        this.getSearchCount('', this.filterObj).subscribe(
             val => {
                 if (val === 0) {
                     this.openSnackBar('There is no study data');
@@ -142,7 +151,8 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
     // 더블클릭하면, action파일의 SetSeriesInfo가 호출된다.
     onDblclick(row: StudyRow): void{
         this.confirmedStudy = row.seq;
-        this.store.dispatch(new SetSeriesInfo(row.seq, row.status, row.confirmed_by));
+        console.log(row);
+        this.store.dispatch(new SetSeriesInfo(row.seq, row.status, row.confirmed_by, row.study_instance_uid));
     }
 
     // tslint:disable-next-line: typedef
