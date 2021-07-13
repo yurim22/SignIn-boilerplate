@@ -14,14 +14,14 @@ export interface PeriodicElement {
 const ELEMENT_DATA: PeriodicElement[] = [
     {patientName: 'a', patientID: 'Hydrogen', studyInstanceUID: '1.0079', creationDate: 'b', creationTime: 'H'},
     {patientName: 'a', patientID: 'Helium', studyInstanceUID: '4.0026', creationDate: 'b', creationTime: 'He'},
-    {patientName: 'a', patientID: 'Lithium', studyInstanceUID: '6.941', creationDate: 'b',creationTime: 'Li'},
-    {patientName: 'a', patientID: 'Beryllium', studyInstanceUID: '9.0122', creationDate: 'b',creationTime: 'Be'},
-    {patientName: 'a', patientID: 'Boron', studyInstanceUID: '10.811', creationDate: 'b',creationTime: 'B'},
-    {patientName: 'a', patientID: 'Carbon', studyInstanceUID: '12.0107', creationDate: 'b',creationTime: 'C'},
-    {patientName: 'a', patientID: 'Nitrogen', studyInstanceUID: '14.0067', creationDate: 'b',creationTime: 'N'},
-    {patientName: 'a', patientID: 'Oxygen', studyInstanceUID: '15.9994',creationDate: 'b', creationTime: 'O'},
-    {patientName: 'a', patientID: 'Fluorine', studyInstanceUID: '18.9984', creationDate: 'b',creationTime: 'F'},
-    {patientName: 'a', patientID: 'Neon', studyInstanceUID: '20.1797',creationDate: 'b', creationTime: 'Ne'},
+    {patientName: 'a', patientID: 'Lithium', studyInstanceUID: '6.941', creationDate: 'b', creationTime: 'Li'},
+    {patientName: 'a', patientID: 'Beryllium', studyInstanceUID: '9.0122', creationDate: 'b', creationTime: 'Be'},
+    {patientName: 'a', patientID: 'Boron', studyInstanceUID: '10.811', creationDate: 'b', creationTime: 'B'},
+    {patientName: 'a', patientID: 'Carbon', studyInstanceUID: '12.0107', creationDate: 'b', creationTime: 'C'},
+    {patientName: 'a', patientID: 'Nitrogen', studyInstanceUID: '14.0067', creationDate: 'b', creationTime: 'N'},
+    {patientName: 'a', patientID: 'Oxygen', studyInstanceUID: '15.9994', creationDate: 'b', creationTime: 'O'},
+    {patientName: 'a', patientID: 'Fluorine', studyInstanceUID: '18.9984', creationDate: 'b', creationTime: 'F'},
+    {patientName: 'a', patientID: 'Neon', studyInstanceUID: '20.1797', creationDate: 'b', creationTime: 'Ne'},
 ];
 
 @Component({

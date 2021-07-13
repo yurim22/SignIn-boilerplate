@@ -94,7 +94,6 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
                         alert('Error: This image is not supported by the Web viewer.');
                     }
                 );
-
             }
         );
 

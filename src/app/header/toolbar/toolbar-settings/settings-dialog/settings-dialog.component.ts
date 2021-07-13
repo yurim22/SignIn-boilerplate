@@ -55,11 +55,13 @@ export class SettingsDialogComponent{
             takeUntil(this.unsubscribe$)
         ).subscribe(
             (res) => {
-                this.receiveForm.patchValue({
-                    ae: res.AE,
-                    ip: res.host_ip,
-                    port: res.port
-                });
+                if (res) {
+                    this.receiveForm.patchValue({
+                        ae: res.AE,
+                        ip: res.host_ip,
+                        port: res.port
+                    });
+                }
             },
             (error) => console.log(error)
         );
@@ -67,7 +69,6 @@ export class SettingsDialogComponent{
             takeUntil(this.unsubscribe$)
         ).subscribe(
             (res) => {
-                console.log(res);
                 if (res) {
                     this.sendForm.patchValue({
                         ae: res.AE,
@@ -168,18 +169,5 @@ export class SettingsDialogComponent{
                 this.seTestResult = 'FAIL';
             }
         );
-        // [TODO] setSendPacsInfo는 단지 form의 value를 db에 넣는 것 뿐, 실제 pacs server와의 connection test가 필요하다,
-        // this.pacsService.setSendPacsInfo(form.value, this.currentUser).subscribe(
-        //     () => {
-        //         console.log('success');
-        //         this.isSuccessSe = true;
-        //         this.seTestResult = 'PASS';
-        //     },
-        //     (error) => {
-        //         console.log('fail');
-        //         this.isSuccessSe = false;
-        //         this.seTestResult = 'FAIL';
-        //     }
-        // );
     }
 }

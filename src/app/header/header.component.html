@@ -16,7 +16,7 @@
                         </ng-container>
                     </div>
                     <ng-container *ngIf="permission === 'ADMINISTRATOR' || permission === 'DEVELOPER'">
-                        <toolbar-pacs class="top-menu-tools-container"></toolbar-pacs>
+                        <toolbar-pacs class="top-menu-tools-container" *ngIf="permission === 'DEVELOPER'"></toolbar-pacs>
                         <toolbar-users class="top-menu-tools-container"></toolbar-users>
                         <toolbar-settings class="top-menu-tools-container"></toolbar-settings>
                         <toolbar-about class="top-menu-tools-container"></toolbar-about>

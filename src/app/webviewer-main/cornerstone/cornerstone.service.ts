@@ -26,7 +26,7 @@ export class CornerstoneService {
     getSeriesImg(url: string): Observable<any> {
         return this.httpClient.get<any>(url);
     }
-    
+
     fetchDicomImage(element, url: string): any {
         console.log(`fetching: ${url}`);
         cornerstone.loadImage(url).then((image) => {
