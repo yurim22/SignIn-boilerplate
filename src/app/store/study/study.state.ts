@@ -96,6 +96,7 @@ export class StudyState {
                     confirmUser: confirmedBy,
                     allStudies: studyList
                 });
+                console.log(getState().allStudies);
             })
         );
     }

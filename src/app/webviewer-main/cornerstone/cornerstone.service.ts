@@ -37,7 +37,7 @@ export class CornerstoneService {
     }
 
 
-    setCanvasSize(currentWidth, currentHeight): any {
+    setCanvasSize(currentWidth: number, currentHeight: number): any {
         const element = document.getElementById('dicomImage');
         if (element === undefined) {
             return;
@@ -81,16 +81,12 @@ export class CornerstoneService {
                     const verticalScale = canvas.height / imageSize.height;
                     const horizontalScale = canvas.width / imageSize.width;
 
-                    console.log('verticalScale', verticalScale);
-                    console.log('horizontalScale', horizontalScale);
                     let newScale = Math.min(horizontalScale, verticalScale);
 
-                    console.log('first newScale', newScale);
                     // Prevent scale from getting too small
                     const MIN_VIEWPORT_SCALE = 0.0001;
                     newScale = Math.max(newScale, MIN_VIEWPORT_SCALE);
 
-                    console.log('second newScale', newScale);
                     enabledElements[i].viewport.scale = newScale;
 
                     cornerstone.invalidate(element);
@@ -112,10 +108,10 @@ export class CornerstoneService {
             height: enabledElement.image.width
         };
     }
-    isOneOf2x1Element(elementId): boolean {
-        if (elementId === '#dicomImage01' || elementId === '#dicomImage02') {
-            return true;
-        }
-        return false;
-    }
+    // isOneOf2x1Element(elementId): boolean {
+    //     if (elementId === '#dicomImage01' || elementId === '#dicomImage02') {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }
