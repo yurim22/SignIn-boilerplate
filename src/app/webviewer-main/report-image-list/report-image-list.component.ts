@@ -167,7 +167,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
     onResize(event?): any {
         this.screenHeight = window.innerHeight * 0.8;
         this.screenWidth = window.innerWidth * 0.4;
-        console.log(`height: ${this.screenHeight}, width: ${this.screenWidth}`);
+        // console.log(`height: ${this.screenHeight}, width: ${this.screenWidth}`);
 
         this.csService.setCanvasSize(this.screenWidth, this.screenWidth);
     }

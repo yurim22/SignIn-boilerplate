@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild, ViewEncapsulation, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { filter, map, skip, takeUntil, tap} from 'rxjs/operators';
+import { filter, map, skip, takeUntil, tap, take} from 'rxjs/operators';
 
 import { StudyRow} from '../../models/studyrow.model';
 import { MatTableDataSource } from '@angular/material/table';
@@ -80,6 +80,16 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log('ngOnInit');
         this.dataSource.paginator = this.paginator;
         this.getStudyListWithLimitation();
+        this.studyList$.pipe(
+            takeUntil(this.unsubscribe$),
+            // map(val => val.status = val.status[0] + val.status.slice(1).toLowerCase()),
+        ).subscribe(
+            (res) => {
+                // this.getStudyListWithLimitation();
+                console.log('study changes');
+                this.dataSource.data = res;
+            }
+        )
         // this.studyList$.pipe(
         //     skip(1),
         //     takeUntil(this.unsubscribe$)

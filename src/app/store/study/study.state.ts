@@ -83,6 +83,37 @@ export class StudyState {
     @Action(UpdateStudyStatus)
     // tslint:disable-next-line: typedef
     udpateStudyData({getState, setState}: StateContext<StudyStateModel>, {studySeq, confirmedBy}: UpdateStudyStatus) {
+        // const result = {
+        //     analysis_date: null,
+        //     confirm_user_id: "",
+        //     confirmed_by: "",
+        //     patient: {
+        //         creation_timestamp: null,
+        //         patient_age: "",
+        //         patient_id: "DKUS001122",
+        //         patient_name: null,
+        //         patient_sex: null,
+        //         seq: 1
+        //     },
+        //     patient_id: "DKUS001122",
+        //     results: null,
+        //     seq: 1,
+        //     status: "REVIEWED",
+        //     study_date: "2018-01-22T00:00:00.000Z",
+        //     study_instance_uid: "1.3.7.137.1.339018892107083246134012187371407534024259833",
+        //     volumes: 7
+        // }
+        // const state = getState();
+        // const studyList = [...state.allStudies];
+        // const studyIndex = studyList.findIndex(item => item.seq === studySeq);
+        // studyList[studyIndex] = result;
+        // studyList[studyIndex].status = 'Reviewed';
+        // setState({
+        //     ...state,
+        //     confirmUser: confirmedBy,
+        //     allStudies: studyList
+        // });
+        // console.log(getState().allStudies)
         return this.studyTableService.updateStudyStatus({status: 'REVIEWED'}, studySeq).pipe(
             tap((result) => {
                 const state = getState();
@@ -90,6 +121,7 @@ export class StudyState {
                 const studyIndex = studyList.findIndex(item => item.seq === studySeq);
                 console.log(studyList[studyIndex]);
                 studyList[studyIndex] = result;
+                studyList[studyIndex].status = 'Reviewed';
                 console.log(result);
                 setState({
                     ...state,
