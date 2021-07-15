@@ -114,7 +114,9 @@ export class StudyState {
         //     allStudies: studyList
         // });
         // console.log(getState().allStudies)
-        return this.studyTableService.updateStudyStatus({status: 'REVIEWED'}, studySeq).pipe(
+        const confirmDate = new Date();
+        console.log(confirmDate);
+        return this.studyTableService.updateStudyStatus({status: 'REVIEWED', confirmed_date: confirmDate}, studySeq).pipe(
             tap((result) => {
                 const state = getState();
                 const studyList = [...state.allStudies];

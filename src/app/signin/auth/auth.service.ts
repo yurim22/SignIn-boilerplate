@@ -68,7 +68,7 @@ export class AuthService {
         this.removeToken();
         this.cookieService.delete('refreshToken');
         this.router.navigate(['']);
-        this.store.reset(StudyState);
+        // this.store.reset(StudyState);
         // this.httpClient.patch(`${this.appUrl}/auth/signout`, {sign_out_timestamp: signout_time, history_seq: })
     }
 

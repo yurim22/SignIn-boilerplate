@@ -10,4 +10,5 @@ export class StudyRow{
     volumes: number;
     confirmed_by: string;
     study_instance_uid: string;
+    confirmed_date: Date;
 }

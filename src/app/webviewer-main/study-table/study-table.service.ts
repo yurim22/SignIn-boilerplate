@@ -21,7 +21,7 @@ export class StudyTableService {
         + '=' + encodeURIComponent(filterStatus[condition])).join('&');
         // const queryString = Object.entries(filterStatus).filter(status => status[1] === true).map(status =>
         //     encodeURIComponent('status') + '=' + encodeURIComponent(status[0])).join('&');
-        console.log('-------getStudyList')
+        console.log('-------getStudyList');
         return this.httpClient.get<StudyRow[]>(`${this.appUrl}/api/v1/studies?${queryString}&limit=${limit}&skip=${skip}`);
     }
 
@@ -37,6 +37,7 @@ export class StudyTableService {
 
     updateStudyStatus(updateStudyData: Partial<StudyRow>, seq: number): Observable<StudyRow> {
         const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        console.log(updateStudyData);
         return this.httpClient.patch<StudyRow>(`${this.appUrl}/api/v1/studies/${seq}`, {updateStudyData, userInfo});
     }
 }
