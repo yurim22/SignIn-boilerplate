@@ -85,20 +85,9 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
             // map(val => val.status = val.status[0] + val.status.slice(1).toLowerCase()),
         ).subscribe(
             (res) => {
-                // this.getStudyListWithLimitation();
-                console.log('study changes');
                 this.dataSource.data = res;
             }
-        )
-        // this.studyList$.pipe(
-        //     skip(1),
-        //     takeUntil(this.unsubscribe$)
-        // ).subscribe(
-        //     (res) => {
-        //         console.log(res);
-        //         // this.getStudyListWithLimitation();
-        //     }
-        // );
+        );
     }
 
     ngAfterViewInit(): void {
@@ -122,6 +111,8 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
                 if (val === 0) {
                     this.openSnackBar('There is no study data');
                     this.isLoadingResults = false;
+                    // search data 개수가 0일 경우, datasource를 빈 배열로 변경
+                    this.dataSource.data = [];
                     return;
                 }
                 console.log('result of get the number of study data', val);
@@ -145,7 +136,6 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
                 console.log('-----getStudyList()', res);
                 this.studyList = res;
                 this.dataSource.data = res;
-
             }
         );
     }
