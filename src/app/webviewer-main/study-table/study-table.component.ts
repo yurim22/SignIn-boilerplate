@@ -133,7 +133,6 @@ export class StudyTableComponent implements OnInit, AfterViewInit, OnDestroy {
         ).subscribe(
             (res: StudyRow[]) => {
                 this.isLoadingResults = false;
-                console.log('-----getStudyList()', res);
                 this.studyList = res;
                 this.dataSource.data = res;
             }

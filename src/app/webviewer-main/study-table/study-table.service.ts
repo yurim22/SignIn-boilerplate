@@ -21,7 +21,6 @@ export class StudyTableService {
         + '=' + encodeURIComponent(filterStatus[condition])).join('&');
         // const queryString = Object.entries(filterStatus).filter(status => status[1] === true).map(status =>
         //     encodeURIComponent('status') + '=' + encodeURIComponent(status[0])).join('&');
-        console.log('-------getStudyList');
         return this.httpClient.get<StudyRow[]>(`${this.appUrl}/api/v1/studies?${queryString}&limit=${limit}&skip=${skip}`);
     }
 

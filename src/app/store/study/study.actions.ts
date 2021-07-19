@@ -26,3 +26,8 @@ export class GetStudyList {
     static readonly type = '[Study] Get Study Data';
     constructor(public filterStatus: object, public limit: number, public skip: number) {}
 }
+
+export class ResetSelectedStudy {
+    static readonly type = '[Study] Initialize selected study info';
+    constructor() {}
+}

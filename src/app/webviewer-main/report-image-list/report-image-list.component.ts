@@ -45,6 +45,7 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
 
     screenHeight: number;
     screenWidth: number;
+    imgSize: number;
 
     constructor(private snackBar: MatSnackBar,
                 private store: Store,
@@ -118,10 +119,11 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
             }
         );
         this.studyStatus$.pipe(
+            // skip(1),
             takeUntil(this.unsubscribe$)
         ).subscribe(
             (res) => {
-                console.log('study status res', res);
+                console.log('[report-image]study status res', res);
                 this.studyStatus = res;
                 this.changeDetectorRef.detectChanges();
             }
@@ -167,9 +169,10 @@ export class ReportImageListComponent implements OnInit, OnDestroy {
     onResize(event?): any {
         this.screenHeight = window.innerHeight * 0.8;
         this.screenWidth = window.innerWidth * 0.4;
-        // console.log(`height: ${this.screenHeight}, width: ${this.screenWidth}`);
 
-        this.csService.setCanvasSize(this.screenWidth, this.screenWidth);
+        this.imgSize = this.screenWidth > this.screenHeight ? this.screenHeight : this.screenHeight;
+        console.log(this.imgSize);
+        this.csService.setCanvasSize(this.screenWidth, this.screenHeight);
     }
 
     // [TODO] button이 text로 변하는 과정에서 약간 부자연스러운 부분이 존재.. 성능 개선 필요

@@ -6,6 +6,7 @@ import { Store } from '@ngxs/store';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable, Subscription } from 'rxjs';
 import { shareReplay, tap } from 'rxjs/operators';
+import { ResetSelectedStudy, SetSeriesInfo } from 'src/app/store/study/study.actions';
 import { StudyState } from 'src/app/store/study/study.state';
 import { environment } from 'src/environments/environment';
 import { Token } from '../models/token.model';
@@ -64,11 +65,13 @@ export class AuthService {
     }
 
     logout(): void {
-        const signoutTime = new Date();
+        // const signoutTime = new Date();
         this.removeToken();
         this.cookieService.delete('refreshToken');
         this.router.navigate(['']);
+        this.store.dispatch(new ResetSelectedStudy());
         // this.store.reset(StudyState);
+        // this.store.dispatch(new SetSeriesInfo());
         // this.httpClient.patch(`${this.appUrl}/auth/signout`, {sign_out_timestamp: signout_time, history_seq: })
     }
 

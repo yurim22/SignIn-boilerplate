@@ -5,26 +5,28 @@ import { map, tap } from 'rxjs/operators';
 import { Series } from 'src/app/models/series.model';
 import { StudyRow } from 'src/app/models/studyrow.model';
 import { StudyTableService } from 'src/app/webviewer-main/study-table/study-table.service';
-import { GetStudyList, SetSeriesInfo, UpdateStudyStatus } from './study.actions';
+import { GetStudyList, ResetSelectedStudy, SetSeriesInfo, UpdateStudyStatus } from './study.actions';
 
 export interface StudyStateModel {
-    selectedSeries: Series;
-    hasSelectedStudy: boolean;
-    selectedStudyStatus: string;
     allStudies: StudyRow[];
     confirmUser: string;
-    selectedStudyInstanceUid: string;
+    selectedStudyInfo: {
+        selectedSeries: Series;
+        selectedStudyInstanceUid: string;
+        selectedStudyStatus: string;
+    };
 }
 
 @State<StudyStateModel>({
     name: 'study',
     defaults: {
-        selectedSeries: null,
-        hasSelectedStudy: false,
-        selectedStudyStatus: undefined,
         confirmUser: undefined,
         allStudies: [],
-        selectedStudyInstanceUid: undefined,
+        selectedStudyInfo: {
+            selectedSeries: undefined,
+            selectedStudyInstanceUid: undefined,
+            selectedStudyStatus: undefined
+        }
     }
 })
 
@@ -35,19 +37,18 @@ export class StudyState {
 
     @Selector()
     static getSeriesUrl(state: StudyStateModel): string {
-        const imageUrl = `http://210.114.91.205:9435/study/studies/${state.selectedStudyInstanceUid}/series/${state.selectedSeries.series_instance_uid}/instances/`;
-        console.log(imageUrl);
+        const imageUrl = `http://210.114.91.205:9435/study/studies/${state.selectedStudyInfo.selectedStudyInstanceUid}/series/${state.selectedStudyInfo.selectedSeries.series_instance_uid}/instances/`;
         return imageUrl;
     }
 
     @Selector()
     static getStudySeq(state: StudyStateModel): number {
-        return state.selectedSeries.study_seq;
+        return state.selectedStudyInfo.selectedSeries.study_seq;
     }
 
     @Selector()
     static selectedStudyStatus(state: StudyStateModel): string {
-        return state.selectedStudyStatus;
+        return state.selectedStudyInfo.selectedStudyStatus;
     }
 
     @Selector()
@@ -72,10 +73,13 @@ export class StudyState {
                 setState({
                     ...state,
                     confirmUser: confirmedBy,
-                    selectedSeries: res,
-                    selectedStudyStatus: studyStatus,
-                    selectedStudyInstanceUid: studyInstanceUid
+                    selectedStudyInfo: {
+                        selectedSeries: res,
+                        selectedStudyStatus: studyStatus,
+                        selectedStudyInstanceUid: studyInstanceUid
+                    }
                 });
+                console.log(getState());
             })
         );
     }
@@ -128,7 +132,12 @@ export class StudyState {
                 setState({
                     ...state,
                     confirmUser: confirmedBy,
-                    allStudies: studyList
+                    allStudies: studyList,
+                    selectedStudyInfo: {
+                        selectedSeries: state.selectedStudyInfo.selectedSeries,
+                        selectedStudyInstanceUid: state.selectedStudyInfo.selectedStudyInstanceUid,
+                        selectedStudyStatus: 'Reviewed'
+                    }
                 });
                 console.log(getState().allStudies);
             })
@@ -138,10 +147,8 @@ export class StudyState {
     @Action(GetStudyList)
     // tslint:disable-next-line: typedef
     getStudyList({getState, setState}: StateContext<StudyStateModel>, filter){
-        console.log('limit in study state', filter.limit);
         return this.studyTableService.getStudyList(filter.filterStatus, filter.limit, filter.skip).pipe(
             tap((res: StudyRow[]) => {
-                console.log(res);
                 from(res).pipe(
                     map(val => val.status = val.status[0] + val.status.slice(1).toLowerCase()),
                 ).subscribe();
@@ -153,4 +160,19 @@ export class StudyState {
             })
         );
     }
+
+    @Action(ResetSelectedStudy)
+    resetSelectedStudy({getState, setState}: StateContext<StudyStateModel>): void {
+        const state = getState();
+        setState({
+            ...state,
+            selectedStudyInfo : {
+                selectedStudyStatus: undefined,
+                selectedSeries: state.selectedStudyInfo.selectedSeries,
+                selectedStudyInstanceUid: state.selectedStudyInfo.selectedStudyInstanceUid
+            }
+        });
+        console.log('resetSelectedStudy action', getState())
+    }
+
 }

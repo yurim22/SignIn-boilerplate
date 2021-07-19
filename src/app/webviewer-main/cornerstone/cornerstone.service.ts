@@ -44,14 +44,16 @@ export class CornerstoneService {
         }
         const enabledElements = cornerstone.getEnabledElements();
 
+        const imgSize = currentWidth > currentHeight ? currentHeight : currentWidth;
+
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < enabledElements.length; i++) {
             if (enabledElements[i].element === element) {
                 const canvas = enabledElements[i].canvas;
                 const image = enabledElements[i].image;
 
-                let width = currentWidth;
-                let height = currentHeight;
+                let width = imgSize;
+                let height = imgSize;
 
                 //
                 // 윈도우의 크기가 극도로 작아졌을때 왼쪽 사이드 바와 오른쪽 사이드 바는

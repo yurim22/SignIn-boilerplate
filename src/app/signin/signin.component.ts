@@ -9,6 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { UserInfoService } from './services/user-info.service';
 import { Store } from '@ngxs/store';
 import { UpdateUserLoginStatus } from '../store/users/users.actions';
+import { StudyState } from '../store/study/study.state';
 
 @Component({
     selector: 'app-signin',
@@ -71,7 +72,7 @@ export class SigninComponent implements OnInit {
                 this.isSystemIntegrityCheckingSuccess = false;
             }
         );
-
+        // this.store.reset(StudyState);
         // const userId = this.activatedRoute.snapshot.paramMap.get('userId');
     }
 
