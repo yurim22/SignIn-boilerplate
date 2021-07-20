@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     // apiUrl: 'http://210.114.91.205:3300',
     // apiUrl: 'http://tnl.monitorcorp.ai:3300',
-    apiUrl: 'http://localhost:3300/api/v1',
+    apiUrl: 'http://localhost:3000/api/v1',
     cloudServerHostIp: '210.114.91.205',
 };
 
