@@ -4,7 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, switchMap} from 'rxjs/operators';
 import { CommonDialogComponent } from 'src/app/common/dialog/common-dialog.component';
 import { AuthService } from './auth.service';
 

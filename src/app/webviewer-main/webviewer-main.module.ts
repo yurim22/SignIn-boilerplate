@@ -3,17 +3,10 @@ import { CommonModule } from '@angular/common';
 import {AngularMaterialsModule} from '../common/shared/angular-materials.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {WebviewerMainComponent} from './webviewer-main.component';
-import { ReportImageListComponent } from './report-image-list/report-image-list.component';
 import { HeaderModule } from '../header/header.module';
-import { StudyTableComponent } from './study-table/study-table.component';
-import { FilterTextDialogComponent } from './study-table/filter-text-dialog/filter-text-dialog.component';
-import { AutofocusDirective } from './study-table/filter-text-dialog/autofocus.directive';
 
 @NgModule({
-    declarations: [WebviewerMainComponent, ReportImageListComponent,
-        StudyTableComponent,
-        FilterTextDialogComponent,
-        AutofocusDirective],
+    declarations: [WebviewerMainComponent],
     imports: [
         CommonModule,
         AngularMaterialsModule,
@@ -23,16 +16,7 @@ import { AutofocusDirective } from './study-table/filter-text-dialog/autofocus.d
     ],
     bootstrap: [WebviewerMainComponent],
     exports: [
-        ReportImageListComponent,
-        StudyTableComponent,
         AngularMaterialsModule,
     ],
-    // providers:[
-    //     {
-    //         provide: HTTP_INTERCEPTORS,
-    //         useClass: AuthInterceptor,
-    //         multi: true
-    //     },
-    // ]
 })
 export class WebviewerMainModule { }

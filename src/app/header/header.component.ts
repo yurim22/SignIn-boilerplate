@@ -33,10 +33,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         );
     }
 
-    openSettingsDialog(): void {
-        console.log('settings');
-    }
-
     showLogoutModal(): void {
         // tslint:disable-next-line: new-parens
         const dialogConfig = new MatDialogConfig;

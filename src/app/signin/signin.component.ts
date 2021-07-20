@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-// import { UserInfoService } from '../services/user-info.service';
-// import { Apollo, gql, Query } from 'apollo-angular';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { UserInfoService } from './services/user-info.service';
 import { Store } from '@ngxs/store';
 import { UpdateUserLoginStatus } from '../store/users/users.actions';
-import { StudyState } from '../store/study/study.state';
 
 @Component({
     selector: 'app-signin',
@@ -105,10 +102,8 @@ export class SigninComponent implements OnInit {
                 (error) => {
                     this.isSigninFailed = true;
                     if (error.error.message === 'Wrong password more than 5 times'){
-                        console.log('너 이제 락걸렸어');
                         this.signInFailedMsg = 'Your account is locked';
                     }else{
-                        console.log('비밀번호 틀렸어');
                         this.signInFailedMsg = 'Invalid username or password.';
                     }
                 }

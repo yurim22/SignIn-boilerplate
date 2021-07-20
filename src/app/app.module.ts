@@ -14,15 +14,11 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularMaterialsModule } from './common/shared/angular-materials.module';
 import { NgxsModule } from '@ngxs/store';
 import { CookieService } from 'ngx-cookie-service';
-import {NgxsSelectSnapshotModule} from '@ngxs-labs/select-snapshot';
-// import { GraphQLModule } from './graphql.module';
 
 import { AuthInterceptor } from './signin/auth/auth-interceptor.service';
 import { GlobalErrorHandlerService } from './common/error/global-error-handler.service';
-import { StudyState } from './store/study/study.state';
 import { AccountComponent } from './account/account.component';
 import { CurrentUserState } from './store/users/users.state';
-import { CornerstoneService } from './webviewer-main/cornerstone/cornerstone.service';
 import { environment } from 'src/environments/environment';
 
 export function tokenGetter(): string {
@@ -57,17 +53,14 @@ export function tokenGetter(): string {
             }
         }),
         NgxsModule.forRoot([
-            StudyState,
             CurrentUserState
         ],
             {developmentMode: !environment.production}
         ),
-        NgxsSelectSnapshotModule.forRoot(),
     ],
     bootstrap: [AppComponent],
     exports: [
         SigninComponent,
-        // HighlightDirective
     ],
     providers:
       [
@@ -77,14 +70,8 @@ export function tokenGetter(): string {
             useClass: AuthInterceptor,
             multi: true
         },
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     useClass: HttpInterceptorService,
-        //     multi: true
-        // },
         GlobalErrorHandlerService,
         {provide: ErrorHandler, useClass: GlobalErrorHandlerService},
-        CornerstoneService
     ]
 })
 export class AppModule {}

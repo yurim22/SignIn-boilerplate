@@ -16,14 +16,11 @@
                         </ng-container>
                     </div>
                     <ng-container *ngIf="permission === 'ADMINISTRATOR' || permission === 'DEVELOPER'">
-                        <toolbar-pacs class="top-menu-tools-container" *ngIf="permission === 'DEVELOPER'"></toolbar-pacs>
                         <toolbar-users class="top-menu-tools-container"></toolbar-users>
-                        <toolbar-settings class="top-menu-tools-container"></toolbar-settings>
                         <toolbar-about class="top-menu-tools-container"></toolbar-about>
                         <toolbar-logout class="top-menu-tools-container" (click)="showLogoutModal()"></toolbar-logout>
                     </ng-container>
                     <ng-container *ngIf="permission === 'PHYSICIAN'">
-                        <toolbar-settings class="top-menu-tools-container"></toolbar-settings>
                         <toolbar-about class="top-menu-tools-container"></toolbar-about>
                         <toolbar-logout class="top-menu-tools-container" (click)="showLogoutModal()"></toolbar-logout>
                     </ng-container>
