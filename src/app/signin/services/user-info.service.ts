@@ -59,11 +59,11 @@ export class UserInfoService {
     getCurrentUser(): Observable<User>{
         this.userid = this.authService.getUserid();
         console.log('this.userid', this.userid);
-        return this.httpClient.get<User>(`${this.appUrl}/api/v1/users/${this.userid}`).pipe(shareReplay());
+        return this.httpClient.get<User>(`${this.appUrl}/users/${this.userid}`).pipe(shareReplay());
     }
 
     getVersionInfo(): Observable<any> {
-        return this.httpClient.get(`${this.appUrl}/api/v1/environment`);
+        return this.httpClient.get(`${this.appUrl}/environment`);
     }
     public get currentUserValue(): string {
         return this.currentUserIdSubject.value;
